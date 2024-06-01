@@ -33,7 +33,6 @@ def chat(speech: Speech):
         model=model,
         messages=[ChatMessage(role="user", content=f"""
                            {getPrompt(speech)} \n
-                            {speech.speaker} is speaking and says : "{speech.content}" \n
                             Respond in french if needed.
                             """)]
         )

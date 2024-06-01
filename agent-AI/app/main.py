@@ -32,8 +32,8 @@ async def hear(speech: Speech): # TODO move npc to listener
         f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
     return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
 
-@app.get("/files/{file}}")
-async def get_file():
+@app.get("/files/<file>")
+async def get_file(file: str):
     with open("data/"+{file}, 'r') as f:
         return f.read()
 
