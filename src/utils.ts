@@ -1,4 +1,4 @@
-import { DEFAULT_BACKGROUND_COLOR } from "./constants";
+import { DEFAULT_BACKGROUND_COLOR, scaleFactor } from "./constants";
 import { k } from "./lib/ctx";
 
 export const setupKaboom = () => {
@@ -38,3 +38,10 @@ export const setupKaboom = () => {
 
   k.setBackground(k.Color.fromHex(DEFAULT_BACKGROUND_COLOR));
 };
+
+export function fromXYToGrid(x: number, y: number, cellSize: number) {
+  return {
+    x: Math.floor(x / scaleFactor / cellSize),
+    y: Math.floor(y / scaleFactor / cellSize),
+  };
+}
