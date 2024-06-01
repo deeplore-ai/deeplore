@@ -75,4 +75,5 @@ async def hearLangchain(speech: Speech):
         f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
     return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
 
+
 # print(chat_langchain(test_speech()))

@@ -54,7 +54,7 @@ def chat_langchain(speech: Speech):
     {context}
     </context>
 
-    {getPrompt}""")
+    {prompt \n{getPrompt}}""")
 
     # Create a retrieval chain to answer questions
     document_chain = create_stuff_documents_chain(model, prompt)
