@@ -10,7 +10,8 @@ socket.onopen = () => {
 };
 
 socket.onmessage = (message) => {
-  console.log({ event: "onmessage", message });
+  const data = JSON.parse(message.data);
+  console.log({ event: "onmessage", data });
 };
 
 socket.onclose = () => {
