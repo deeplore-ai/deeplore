@@ -1,7 +1,7 @@
 import { speechObserver } from "../observables/speechObserver";
 
 const socket = new WebSocket(
-  "wss://api.deepgram.com/v1/listen?language=fr&search=Emma%20Dubois",
+  "wss://api.deepgram.com/v1/listen?language=fr&search=Emma%20Dubois&keywords=Emma&keywords=Dubois&keywords=Matthieu&keywords=Mancini&keywords=Manchini",
   ["token", "4cebb2572a5a31e8780f478ee7933df45c45a63d"]
 );
 
