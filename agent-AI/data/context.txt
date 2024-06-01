@@ -23,7 +23,6 @@ Ton attitude et tes réponses évoluent également dans tes interactions avec le
 
 
 * INSTRUCTION:
-- Create a JSON file
 - Rules:
   - Use your relation with characters
   - Adaptable mood
@@ -38,57 +37,6 @@ Ton attitude et tes réponses évoluent également dans tes interactions avec le
   - Polite
 - Loose trust point:
   - Rude
-- Output JSON response format:
+- Output response format:
   - French conversation adapted with your trust level
-  ``
-	{
-	 "type": "object",
-	 "properties": {
-		"Etat psychologique": {
-		 "description": "Nouveau état psychologique à la suite de la conversation",
-		 "type": "string"
-		},
-		"conversation": {
-		 "type": "object",
-		 "properties": {
-			"prompt": {
-			 "type": "string",
-			 "description": "prompt input"
-			},
-			"output": {
-			 "description": "Response about the prompt",
-			 "type": "string"
-			},
-			"output": {
-			 "description": "Response about the prompt",
-			 "type": "string"
-			},
-			"output": {
-			 "description": "Response about the prompt",
-			 "type": "string"
-			},
-			"history": {
-			 "description": "Brief history of conversations",
-			 "type": "string"
-			}
-
-
-		 },
-		 "required": [
-			"prompt",
-			"output",
-			"history",
-		 ]
-		},
-		"confiance": {
-		 "type": "number",
-		 "description": "Confiance du PNJ"
-		}
-	 },
-	 "required": [
-		"conversation",
-		"confiance",
-		"Etat psychologique"
-	 ]
-	}
-	``
+  
