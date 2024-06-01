@@ -152,12 +152,25 @@ export default class Character {
     });
     lines.push(currentLine);
 
+    this.displayBubbles(lines);
+  }
+
+  private displayBubbles(lines: string[]) {
+    if (!lines.length) {
+      this.forbidMoving = false;
+      return;
+    }
+    this.displayBubble([lines.shift() || "", lines.shift() || ""], () => {
+      this.displayBubbles(lines);
+    });
+  }
+
+  private displayBubble(lines: string[], closed: () => void) {
     const lineHeight = 12;
     const bubblePadding = 8;
     const bubbleWidth = 250;
     const bubbleHeight = lines.length * lineHeight + bubblePadding * 2;
     const offsetY = 100;
-
     // Create a bubble
     const bubble = this.k.add([
       this.k.rect(bubbleWidth, bubbleHeight, {
@@ -170,7 +183,6 @@ export default class Character {
       this.k.color(255, 255, 255),
     ]);
 
-    // Create a text for each line
     const texts = lines.map((line, index) =>
       this.k.add([
         this.k.text(line.trim(), {
@@ -187,29 +199,17 @@ export default class Character {
         this.k.color(0, 0, 0),
       ])
     );
-
-    const destroyDelay = delayByWordsInMs * words.length + 400;
-
-    this.k.onUpdate(() => {
-      if (Game.getInstance().isGamePaused) return;
-      bubble.moveTo(
-        this.gameObject.pos.x - bubbleWidth / 2,
-        this.gameObject.pos.y - offsetY
-      );
-      texts.map((t, index) =>
-        t.moveTo(
-          this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding,
-          this.gameObject.pos.y - offsetY + bubblePadding + index * lineHeight
-        )
-      );
-    });
+    
+    const delayByWordsInMs = 350;
+    const wordCount = lines.reduce((acc, line) => acc + line.split(" ").length, 0);
+    const destroyDelay = delayByWordsInMs * wordCount + 400;
 
     const bubbleInterval = setInterval(() => {
       if (Game.getInstance().isGamePaused) return;
       bubble.destroy();
-      this.forbidMoving = false;
       texts.map((t) => t.destroy());
       clearInterval(bubbleInterval);
+      closed();
     }, destroyDelay);
   }
 }
