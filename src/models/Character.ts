@@ -1,7 +1,8 @@
 import { GameObj, KaboomCtx, Vec2 } from "kaboom";
 import { PlayerDirection } from "../types";
-import { scaleFactor } from "../constants";
+import { LISTEN_RANGE, scaleFactor } from "../constants";
 import Game from "./Game";
+import { calculateDistance, truncateText } from "../utils";
 
 export type PlayerMovement = {
   move: (character: Character) => void;
@@ -47,13 +48,17 @@ export default class Character {
   isMoving: boolean;
   target?: { x: number; y: number };
   forbidMoving: boolean;
+  firstName: string;
+  lastName: string;
 
   constructor(
     name: string,
     initialPosition: Vec2,
     speed: number,
     scaleFactor: number,
-    k: KaboomCtx
+    k: KaboomCtx,
+    firstName: string,
+    lastName: string
   ) {
     this.name = name;
     this.initialPosition = initialPosition;
@@ -67,13 +72,15 @@ export default class Character {
       k.anchor("center"),
       k.pos(initialPosition),
       k.scale(scaleFactor),
-      "name",
+      name,
     ]);
 
     this.k = k;
     this.direction = "down";
     this.isMoving = false;
     this.forbidMoving = false;
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
 
   startMovement(direction: PlayerDirection) {
@@ -97,7 +104,7 @@ export default class Character {
     this.direction = direction;
   }
 
-  hear(text: string) {
+  hear(text: string, speaker: string) {
     fetch("https://app-fqj7trlqhq-od.a.run.app/hear", {
       method: "POST",
       // no cors
@@ -107,8 +114,11 @@ export default class Character {
       },
       body: JSON.stringify({
         content: text,
-        npc: "priest",
-        speaker: "Dietrich Hoffman",
+        npc: this.name,
+        id: this.name,
+        firstname: this.firstName,
+        lastname: this.lastName,
+        speaker: speaker,
       }),
     })
       .then((res) => {
@@ -137,6 +147,14 @@ export default class Character {
     const y = this.gameObject.pos.y / scaleFactor;
     console.log(x, y, mapWidth, mapHeight);
     return x % mapWidth === 0 && y % mapHeight === 0;
+  }
+
+  obfuscateBasedOnDistance(lines: string[], speakingCharacter: Character): string[] {
+    const distance = calculateDistance(this.gameObject.pos, speakingCharacter.gameObject.pos);
+    if (distance < LISTEN_RANGE) {
+      return lines.map(line => truncateText(line, distance - LISTEN_RANGE));
+    }
+    return lines;
   }
 
   speak(text: string) {

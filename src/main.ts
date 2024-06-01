@@ -4,7 +4,7 @@ import { setupKaboom } from "./utils";
 import { createMainScene } from "./scenes/mainScene";
 import { createInitialScene } from "./scenes/initialScene";
 
-const DEV_MODE = false;
+const DEV_MODE = true;
 
 setupKaboom();
 createMainScene();
