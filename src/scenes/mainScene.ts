@@ -5,7 +5,7 @@ import { PlayerDirection } from "../types";
 import Character from "../models/Character";
 import * as easystarjs from "easystarjs";
 import { calculateDistance, fromXYToGrid } from "../utils";
-import { canvas, chatButton, isUIOpen, openUI } from "../lib/UI";
+import { canvas, chatButton, closeUI, isUIOpen, openUI } from "../lib/UI";
 import type jsonMap from "../../public/map.json";
 
 type Map = typeof jsonMap;
@@ -14,9 +14,33 @@ const easystar = new easystarjs.js();
 import Game from "../models/Game";
 
 const characters = [
-  new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k, "Paul", "Martinez"),
-  new Character("Girl", k.vec2(1343, 1400), 250, scaleFactor, k, "Emma", "Dubois"),
-  new Character("Priest", k.vec2(1250, 900), 250, scaleFactor, k, "Matthieu", "Mancini"),
+  new Character(
+    "char1",
+    k.vec2(1343, 1052),
+    250,
+    scaleFactor,
+    k,
+    "Paul",
+    "Martinez"
+  ),
+  new Character(
+    "Girl",
+    k.vec2(1343, 1400),
+    250,
+    scaleFactor,
+    k,
+    "Emma",
+    "Dubois"
+  ),
+  new Character(
+    "Priest",
+    k.vec2(1250, 900),
+    250,
+    scaleFactor,
+    k,
+    "Matthieu",
+    "Mancini"
+  ),
 ];
 
 export const createMainScene = () => {
@@ -24,6 +48,13 @@ export const createMainScene = () => {
     canvas.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !isUIOpen()) {
         openUI(onPlayerAskQuestion);
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isUIOpen()) {
+        canvas.focus();
+        closeUI();
       }
     });
 
@@ -84,7 +115,6 @@ export const createMainScene = () => {
         characters[0].stopMovement();
       });
     }
-
 
     // characters[2].setTarget(characters[0].gameObject.pos);
     // recalculatePath(characters[2]);
@@ -176,8 +206,14 @@ function recalculatePath(character: Character) {
 }
 
 function onPlayerAskQuestion(textInput: string) {
-  const priestDistance = calculateDistance(characters[0].gameObject.pos, characters[2].gameObject.pos);
-  const emmaDistance = calculateDistance(characters[0].gameObject.pos, characters[1].gameObject.pos);
+  const priestDistance = calculateDistance(
+    characters[0].gameObject.pos,
+    characters[2].gameObject.pos
+  );
+  const emmaDistance = calculateDistance(
+    characters[0].gameObject.pos,
+    characters[1].gameObject.pos
+  );
   if (priestDistance < LISTEN_RANGE) {
     characters[2].hear(textInput, "Paul Martinez");
   }
