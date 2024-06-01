@@ -32,7 +32,7 @@ export const openUI = (onEnter: (textInput: string) => void) => {
       .replace("(\\W|^)emma du bois(\\W|$)", "$1Emma Dubois$2")
       .replace("(\\W|^)emma du dubois(\\W|$)", "$1Emma Dubois$2")
       .replace("(\\W|^)emma(\\W|$)", "$1Emma$2");
-    input.value += transcript;
+    input.value += cleaned;
   };
 
   speechObserver.on("speech", onTranscript);
