@@ -1,4 +1,4 @@
-const socket = new WebSocket("ws://api.deepgram.com/v1/listen", [
+const socket = new WebSocket("wss://api.deepgram.com/v1/listen", [
   "token",
   "4cebb2572a5a31e8780f478ee7933df45c45a63d",
 ]);
