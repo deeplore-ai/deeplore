@@ -8,43 +8,42 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 
 from .config import MISTRAL_API_KEY, DEBUG
+from .classes import Speech
 
-
-# Load data
-loader = DirectoryLoader('data', glob="**/*.txt")
-docs = loader.load()
-
-for document in docs:
-    print("Document source:", document.metadata.get('source', 'Unknown'))
-    # print("Page content:", document.page_content)
-    print()  # Add a new line between documents
-
-
-
-
-# Split text into chunks 
 text_splitter = RecursiveCharacterTextSplitter()
-documents = text_splitter.split_documents(docs)
-# Define the embedding model
-embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY)
-# Create the vector store 
-vector = FAISS.from_documents(documents, embeddings)
 
-# Define a retriever interface
-retriever = vector.as_retriever()
-# Define LLM
-model = ChatMistralAI(mistral_api_key=MISTRAL_API_KEY)
-# Define prompt template
-prompt = ChatPromptTemplate.from_template("""
+def chat_langchain(speech: Speech):
+    # Load data
+    loader = DirectoryLoader('data', glob="**/*.txt")
+    docs = loader.load()
 
-<context>
-{context}
-</context>
+    # for document in docs:
+    #     print("Document source:", document.metadata.get('source', 'Unknown'))
+    #     # print("Page content:", document.page_content)
+    #     print()  # Add a new line between documents
 
-Question: {input}""")
+    # Split text into chunks 
+    documents = text_splitter.split_documents(docs)
+    # Define the embedding model
+    embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY)
+    # Create the vector store 
+    vector = FAISS.from_documents(documents, embeddings)
 
-# Create a retrieval chain to answer questions
-document_chain = create_stuff_documents_chain(model, prompt)
-retrieval_chain = create_retrieval_chain(retriever, document_chain)
-response = retrieval_chain.invoke({"input": "Qui est Emma Dubois ?"})
-print(response["answer"])
+    # Define a retriever interface
+    retriever = vector.as_retriever()
+    # Define LLM
+    model = ChatMistralAI(mistral_api_key=MISTRAL_API_KEY)
+    # Define prompt template
+    prompt = ChatPromptTemplate.from_template("""
+
+    <context>
+    {context}
+    </context>
+
+    Tu es {speech.firstname} {speech.lastname} et {speech.speaker} dit :"{speech.content}" }""")
+
+    # Create a retrieval chain to answer questions
+    document_chain = create_stuff_documents_chain(model, prompt)
+    retrieval_chain = create_retrieval_chain(retriever, document_chain)
+    response = retrieval_chain.invoke({"speech": speech})
+    return response["answer"]

@@ -4,7 +4,7 @@ from .mistral import *
 from .config import DEBUG
 from .classes import Speech
 from .utils import getPrompt
-#from .gemini import chat_gemini
+from .gemini import chat_gemini
 from .langchain_test import *
 
 origins = ["*"]
@@ -23,7 +23,7 @@ async def root():
     return {"Status" : "Alive"}
 
 @app.post("/hear")
-async def hear(speech: Speech): # TODO move npc to listener
+async def hear(speech: Speech): 
     result = chat(speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ ' : ' + speech.content)
@@ -32,14 +32,17 @@ async def hear(speech: Speech): # TODO move npc to listener
 
 
 @app.post("/hearGemini")
-async def hear(speech: Speech): # TODO move npc to listener
+async def hearGemini(speech: Speech):
     result = chat_gemini(speech)
     return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
 
-# @app.get("/hear")
-# async def get_hear(speech: Speech):
-#     with open("data/head_conversation_"+Speech.firstname+'_'+Speech.lastname+'.txt', 'a') as file:
-#         file.write("\n"+Speech.speaker+ ' ; ' + Speech.distance + ';' + Speech.content)
 
+@app.post("/hearLangchain")
+async def hearLangchain(speech: Speech): 
+    result = chat_langchain(speech)
+    with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+        f.write("\n"+speech.speaker+ ' : ' + speech.content)
+        f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
+    return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
 
 
