@@ -12,6 +12,19 @@ from .classes import Speech, test_speech
 
 text_splitter = RecursiveCharacterTextSplitter()
 
+# Load first time to avoid NLTK delay
+loader = DirectoryLoader('data', glob="**/*.txt")
+docs = loader.load()
+# Split text into chunks 
+documents = text_splitter.split_documents(docs)
+# Define the embedding model
+embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY)
+# Create the vector store 
+vector = FAISS.from_documents(documents, embeddings)
+# Define a retriever interface
+retriever = vector.as_retriever()
+
+
 def chat_langchain(speech: Speech):
     # Load data
     loader = DirectoryLoader('data', glob="**/*.txt")
