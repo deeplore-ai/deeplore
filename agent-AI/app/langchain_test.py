@@ -50,7 +50,7 @@ def chat_langchain(speech: Speech):
     # Define prompt template
     prompt = ChatPromptTemplate.from_messages([
         ("system", getPrompt(speech)),
-        (speech.speaker, "{question}")
+        ("user", "{question}")
     ])
 
     # Create a retrieval chain to answer questions
