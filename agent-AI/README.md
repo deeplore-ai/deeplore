@@ -12,6 +12,12 @@ For local dev, use
 pip install -r requirements.txt
 ```
 
+and set the environment variables in a `.env.yaml` file.
+
+```bash
+cp .env.yaml.example .env.yaml
+```
+
 ## Running
 
 To run the app locally, use
@@ -25,8 +31,8 @@ uvicorn app/main:app --reload
 To deploy the app, use
 
 ```bash
-docker build -t fastapi-app .
-docker run -p 8000:8000 fastapi-app
+docker build -t fastapi-app . --env-file .env.yaml
+docker run -p 8000:8000 fastapi-app 
 ```
 
 ## Online deployment
@@ -34,7 +40,7 @@ docker run -p 8000:8000 fastapi-app
 To deploy the app online, setup gcloud CLI and use
 
 ```bash
-gcloud run deploy app --port 8080 --source .
+gcloud run deploy app --port 8080 --source . --env-vars-file .env.yaml
 ```
 
 

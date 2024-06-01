@@ -2,3 +2,5 @@
 
 # Python
 *.pyc
+.env
+.env.yaml

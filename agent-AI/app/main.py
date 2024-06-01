@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from .mistral import *
+
 
 app = FastAPI()
 
