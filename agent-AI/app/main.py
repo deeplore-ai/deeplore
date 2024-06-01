@@ -23,6 +23,8 @@ async def root():
 
 @app.post("/hear")
 async def hear(speech: Speech): # TODO move npc to listener
+    with open("data/heard_conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+        f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     result = chat(speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ ' : ' + speech.content)

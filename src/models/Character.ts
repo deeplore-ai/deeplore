@@ -111,7 +111,7 @@ export default class Character {
 
   hear(text: string, speaker: string) {
     this.startThinking();
-    fetch("https://app-fqj7trlqhq-od.a.run.app/hear", {
+    fetch("https://app-fqj7trlqhq-od.a.run.app/hearGemini", {
       method: "POST",
       // no cors
       headers: {

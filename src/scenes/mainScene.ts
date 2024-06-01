@@ -41,7 +41,7 @@ const characters = [
 ];
 
 const askQuestion = () => {
-  listenSpeech();
+  // listenSpeech();
   openUI(onPlayerAskQuestion);
 };
 
