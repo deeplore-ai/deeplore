@@ -1,4 +1,4 @@
-from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import DirectoryLoader
 from langchain_mistralai.chat_models import ChatMistralAI
 from langchain_mistralai.embeddings import MistralAIEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -7,9 +7,19 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 
+
 # Load data
-loader = TextLoader("essay.txt")
+loader = DirectoryLoader(r'data', glob="**/*.txt")
 docs = loader.load()
+
+for document in docs:
+    print("Document source:", document.metadata.get('source', 'Unknown'))
+    # print("Page content:", document.page_content)
+    print()  # Add a new line between documents
+
+
+
+
 # Split text into chunks 
 text_splitter = RecursiveCharacterTextSplitter()
 documents = text_splitter.split_documents(docs)
@@ -17,6 +27,7 @@ documents = text_splitter.split_documents(docs)
 embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=api_key)
 # Create the vector store 
 vector = FAISS.from_documents(documents, embeddings)
+
 # Define a retriever interface
 retriever = vector.as_retriever()
 # Define LLM
