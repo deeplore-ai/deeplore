@@ -241,10 +241,75 @@ export default class Character {
     });
     lines.push(currentLine);
 
-    this.displayBubbles(lines, () => {
+    this.displayDynamicBubble(lines, () => {
       this.forbidMoving = false;
       EventBus.publish("character:speak", { speaker: this, text });
     });
+  }
+
+  private async displayDynamicBubble(lines: string[], onFinished: () => void) {
+    const lineHeight = 12;
+    const bubblePadding = 8;
+    const bubbleWidth = 250;
+    const bubbleHeight = 2 * lineHeight + bubblePadding * 2;
+    const offsetY = 100;
+    // Create a bubble
+    const bubble = this.k.add([
+      this.k.rect(bubbleWidth, bubbleHeight, {
+        radius: 5,
+      }),
+      this.k.pos(
+        this.gameObject.pos.x - bubbleWidth / 2,
+        this.gameObject.pos.y - offsetY
+      ),
+      this.k.color(255, 255, 255),
+    ]);
+
+    const textFirstLine = this.k.add([
+      this.k.text("", {
+        size: 12,
+        font: "monospace",
+        transform: {
+          color: this.k.rgb(0, 0, 0),
+        },
+      }),
+      this.k.pos(
+        this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding, // Adjust the x position
+        this.gameObject.pos.y - offsetY + bubblePadding // Adjust the y position for each line
+      ),
+      this.k.color(0, 0, 0),
+    ]);
+
+    const textSecondLine = this.k.add([
+      this.k.text("", {
+        size: 12,
+          font: "monospace",
+          transform: {
+          color: this.k.rgb(0, 0, 0),
+        },
+      }),
+      this.k.pos(
+        this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding, // Adjust the x position
+        this.gameObject.pos.y - offsetY + bubblePadding + lineHeight // Adjust the y position for each line
+      ),
+      this.k.color(0, 0, 0),
+    ]);
+
+    let line;
+    while (line = lines.shift()) {
+      const obfuscatedLine = this.obfuscateBasedOnDistance(line, this.player);
+      for (let char of obfuscatedLine) {
+        textSecondLine.text += char;
+        await this.k.wait(0.05);
+      }
+      textFirstLine.text = textSecondLine.text;
+      textSecondLine.text = "";
+    }
+    await this.k.wait(1);
+    bubble.destroy();
+    textFirstLine.destroy();
+    textSecondLine.destroy();
+    onFinished();
   }
 
   private displayBubbles(lines: string[], onFinished: () => void) {

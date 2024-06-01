@@ -11,7 +11,6 @@ import { listenSpeech } from "../speech-to-text/listenSpeech";
 
 type Map = typeof jsonMap;
 
-
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
 import EventBus from "../EventBus";
