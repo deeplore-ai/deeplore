@@ -15,7 +15,15 @@ type Map = typeof jsonMap;
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
 import EventBus from "../EventBus";
-const player = new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k, "Paul", "Martinez");
+const player = new Character(
+  "char1",
+  k.vec2(1343, 1052),
+  250,
+  scaleFactor,
+  k,
+  "Paul",
+  "Martinez"
+);
 
 const characters = [
   player,
@@ -39,7 +47,6 @@ const characters = [
     "Mancini",
     player
   ),
-
 ];
 
 EventBus.subscribe("character:speak", onCharacterSpeak);
@@ -54,7 +61,7 @@ function onCharacterSpeak({ speaker, text }: { speaker: Character; text: string 
 }
 
 const askQuestion = () => {
-  // listenSpeech();
+  listenSpeech();
   openUI(onPlayerAskQuestion);
 };
 
@@ -79,9 +86,7 @@ export const createMainScene = () => {
       }
     });
 
-    chatButton.addEventListener("click", () => {
-      openUI(onPlayerAskQuestion);
-    });
+    chatButton.addEventListener("click", askQuestion);
 
     canvas.focus();
 
