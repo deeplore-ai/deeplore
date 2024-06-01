@@ -1,7 +1,7 @@
 import json 
 import os
 import pathlib
-import Speech 
+from .classes import Speech 
 
 context = open(pathlib.Path("data/context.txt"), 'r').read()
 output = open(pathlib.Path("data/context.txt"), 'r').read()
