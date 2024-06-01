@@ -49,6 +49,7 @@ def chat_langchain(speech: Speech):
     model = ChatMistralAI(mistral_api_key=MISTRAL_API_KEY)
     # Define prompt template
     prompt = ChatPromptTemplate.from_template("""
+        <context> {context} </context> \n
         Contexte :  {input} \n
         Question : {question}"""
     )
