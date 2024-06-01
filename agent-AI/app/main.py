@@ -21,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 executor = ThreadPoolExecutor(max_workers=8)
+loop = asyncio.get_event_loop()
 
 @app.get("/", tags=["root"])
 async def root():
@@ -47,7 +48,7 @@ async def get_file(file: str):
 async def hearGemini(speech: Speech):
     with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n" + speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
-    result = chat_gemini(speech)
+    rresult = await loop.run_in_executor(executor,chat_gemini,speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n" + speech.speaker+ ' : ' + speech.content)
         f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
@@ -57,7 +58,7 @@ async def hearGemini(speech: Speech):
 async def hearGemini(speech: Speech):
     with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n" + speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
-    result = chat_gemini_flash(speech)
+    result = await loop.run_in_executor(executor,chat_gemini_flash,speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n" + speech.speaker+ ' : ' + speech.content)
         f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
@@ -68,7 +69,7 @@ async def hearGemini(speech: Speech):
 async def hearLangchain(speech: Speech): 
     with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
-    loop = asyncio.get_event_loop()
+    
     result = await loop.run_in_executor(executor, chat_langchain, speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ ' : ' + speech.content)
