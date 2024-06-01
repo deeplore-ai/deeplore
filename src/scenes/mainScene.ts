@@ -12,6 +12,7 @@ type Map = typeof jsonMap;
 
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
+import { listenSpeech } from "../speech-to-text/listenSpeech";
 
 const characters = [
   new Character(
@@ -43,18 +44,22 @@ const characters = [
   ),
 ];
 
+const askQuestion = () => {
+  listenSpeech();
+  openUI(onPlayerAskQuestion);
+};
+
 export const createMainScene = () => {
   k.scene("main", async () => {
     canvas.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !isUIOpen()) {
-        openUI(onPlayerAskQuestion);
+        askQuestion();
       }
     });
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && isUIOpen()) {
-        canvas.focus();
-        closeUI();
+        askQuestion();
       }
     });
 
