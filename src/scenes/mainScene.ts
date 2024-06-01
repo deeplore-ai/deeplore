@@ -4,8 +4,8 @@ import { k } from "../lib/ctx";
 import { PlayerDirection } from "../types";
 import Character from "../models/Character";
 import * as easystarjs from "easystarjs";
-import { fromXYToGrid } from "../utils";
-import { canvas, isUIOpen, openUI } from "../lib/UI";
+import { calculateDistance, fromXYToGrid, truncateText } from "../utils";
+import { canvas, debug, isUIOpen, openUI } from "../lib/UI";
 
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
@@ -76,12 +76,28 @@ export const createMainScene = () => {
 
     setInterval(() => {
       if (Game.getInstance().isGamePaused) return;
+      const player = characters[0];
+      const playerDistance = calculateDistance(
+        player.gameObject.pos,
+        characters[1].gameObject.pos
+      );
+
       // Random between speak and move
       if (Math.random() > 0.5) {
         characters[1].startMovement(characters[1].direction);
       } else {
         characters[1].stopMovement();
-        characters[1].speak("Hello les reufs");
+
+        const LISTEN_RANGE = 300;
+        if (playerDistance < LISTEN_RANGE) {
+          characters[1].speak("Hello les reufs");
+        } else {
+          const message = truncateText(
+            "Hello les reufs",
+            playerDistance - LISTEN_RANGE
+          );
+          characters[1].speak(message);
+        }
       }
     }, 1000);
 

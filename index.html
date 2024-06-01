@@ -68,8 +68,21 @@
       input:focus {
         outline: none;
       }
+
+      #debug {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 35px;
+        color: white;
+        font-size: 1rem;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+      }
     </style>
     <div id="app">
+      <span id="debug"></span>
       <div id="ui">
         <h3>Votre question</h3>
         <input type="text" id="question" />
