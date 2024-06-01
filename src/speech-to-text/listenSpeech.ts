@@ -58,7 +58,8 @@ async function createMediaRecorder(onTranscript: (transcript: string) => void) {
 
   socket.onmessage = (message) => {
     const received = JSON.parse(message.data);
-    const transcript = received.channel.alternatives[0].transcript as string;
+    const transcript = (received.channel.alternatives?.[0].transcript ??
+      "") as string;
     if (transcript) {
       onTranscript(transcript);
       console.log(transcript);
