@@ -6,6 +6,7 @@ from .classes import Speech
 from .utils import getPrompt
 from .gemini import chat_gemini
 from .langchain_test import *
+from .gemini_flash import chat_gemini_flash
 
 origins = ["*"]
 app = FastAPI()
@@ -24,7 +25,7 @@ async def root():
 
 @app.post("/hear")
 async def hear(speech: Speech): # TODO move npc to listener
-    with open("data/heard_conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+    with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     result = chat(speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
@@ -41,18 +42,28 @@ async def get_file(file: str):
 
 @app.post("/hearGemini")
 async def hearGemini(speech: Speech):
-    with open("data/heard_conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
-        f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
+    with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+        f.write(speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     result = chat_gemini(speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
-        f.write("\n"+speech.speaker+ ' : ' + speech.content)
-        f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
+        f.write(speech.speaker+ ' : ' + speech.content)
+        f.write(speech.firstname+ ' ' + speech.lastname + ':' + result)
+    return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+
+@app.post("/hearGeminiFlash")
+async def hearGemini(speech: Speech):
+    with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+        f.write(speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
+    result = chat_gemini_flash(speech)
+    with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+        f.write(speech.speaker+ ' : ' + speech.content)
+        f.write(speech.firstname+ ' ' + speech.lastname + ':' + result)
     return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
 
 
 @app.post("/hearLangchain")
 async def hearLangchain(speech: Speech): 
-    with open("data/heard_conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+    with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     result = chat_langchain(speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
