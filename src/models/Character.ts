@@ -1,6 +1,7 @@
 import { GameObj, KaboomCtx, Vec2 } from "kaboom";
 import { PlayerDirection } from "../types";
 import { scaleFactor } from "../constants";
+import Game from "./Game";
 
 export type PlayerMovement = {
   move: (character: Character) => void;
@@ -89,6 +90,7 @@ export default class Character {
   }
 
   move(direction: PlayerDirection) {
+    if (Game.getInstance().isGamePaused) return;
     movement[direction].move(this);
     this.direction = direction;
   }
@@ -161,9 +163,27 @@ export default class Character {
       ])
     );
 
-    setTimeout(() => {
+    const destroyDelay = delayByWordsInMs * words.length + 400;
+
+    this.k.onUpdate(() => {
+      if (Game.getInstance().isGamePaused) return;
+      bubble.moveTo(
+        this.gameObject.pos.x - bubbleWidth / 2,
+        this.gameObject.pos.y - offsetY
+      );
+      texts.map((t, index) =>
+        t.moveTo(
+          this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding,
+          this.gameObject.pos.y - offsetY + bubblePadding + index * lineHeight
+        )
+      );
+    });
+
+    const bubbleInterval = setInterval(() => {
+      if (Game.getInstance().isGamePaused) return;
       bubble.destroy();
       texts.map((t) => t.destroy());
-    }, delayByWordsInMs * words.length + 400);
+      clearInterval(bubbleInterval);
+    }, destroyDelay);
   }
 }
