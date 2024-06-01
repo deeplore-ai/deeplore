@@ -98,7 +98,7 @@ export const createMainScene = () => {
 function convertCollisionLayerToGrid(map: unknown) {
   const flatCollisions: number[] = [];
   for (const layer of map.layers) {
-    if (layer.name === "tree" || layer.name === "house" || layer.name === "house-outside") {
+    if (layer.name === "tree" || layer.name === "house" || layer.name === "water") {
       for (let i = 0; i < layer.data.length; i++) {
         const value = layer.data[i];
         flatCollisions[i] = value > 0 ? 1 : (flatCollisions[i] || 0);
@@ -113,7 +113,6 @@ function convertCollisionLayerToGrid(map: unknown) {
 }
 
 function fromGridToDirection(nextPos: { x: number; y: number }, charGridPos: { x: number; y: number }) {
-  console.log(nextPos, charGridPos);
   if (nextPos.x < charGridPos.x) {
     return "left";
   } else if (nextPos.x > charGridPos.x) {
