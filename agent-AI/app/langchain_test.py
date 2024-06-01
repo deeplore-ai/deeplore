@@ -49,12 +49,13 @@ def chat_langchain(speech: Speech):
     model = ChatMistralAI(mistral_api_key=MISTRAL_API_KEY)
     # Define prompt template
     prompt = ChatPromptTemplate.from_template("""
-        {input} \n
-        "Question" : {question}"""
+        Contexte :  {input} \n
+        Question : {question}"""
     )
 
     # Create a retrieval chain to answer questions
     document_chain = create_stuff_documents_chain(model, prompt)
     retrieval_chain = create_retrieval_chain(retriever, document_chain)
-    response = retrieval_chain.invoke(speech.content)
+    response = retrieval_chain.invoke({"input": getPrompt(speech), "question":speech.content})
+    print(response)
     return response["answer"]
