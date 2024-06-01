@@ -4,7 +4,7 @@ import { k } from "../lib/ctx";
 import { PlayerDirection } from "../types";
 import Character from "../models/Character";
 import * as easystarjs from "easystarjs";
-import { calculateDistance, fromXYToGrid, truncateText } from "../utils";
+import { fromXYToGrid } from "../utils";
 import { canvas, chatButton, isUIOpen, openUI } from "../lib/UI";
 
 const easystar = new easystarjs.js();
@@ -22,8 +22,17 @@ characters[2].stopMovement();
 const LISTEN_RANGE = 300;
 
 export const createMainScene = () => {
-  canvas.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !isUIOpen()) {
+  k.scene("main", async () => {
+    canvas.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !isUIOpen()) {
+        openUI((textInput) => {
+          characters[0].speak(textInput);
+          characters[2].hear(textInput);
+        });
+      }
+    });
+
+    chatButton.addEventListener("click", () => {
       openUI((textInput) => {
         const priestDistance = calculateDistance(characters[0].gameObject.pos, characters[2].gameObject.pos);
         const emmaDistance = calculateDistance(characters[0].gameObject.pos, characters[1].gameObject.pos);
@@ -35,16 +44,13 @@ export const createMainScene = () => {
         }
         characters[0].speak(textInput);
       });
-    }
-  });
-
-  chatButton.addEventListener("click", () => {
-    openUI((textInput) => {
-      characters[0].speak(textInput);
     });
-  });
 
-  k.scene("main", async () => {
+    canvas.focus();
+
+    // display chat icon
+    chatButton.style.display = "flex";
+
     const mapData = await (await fetch("./map.json")).json();
     easystar.setGrid(convertCollisionLayerToGrid(mapData));
     easystar.setAcceptableTiles([0]);

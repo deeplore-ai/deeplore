@@ -8,6 +8,7 @@ export const pauseScreen = document.getElementById(
   "pause-overlay"
 ) as HTMLDivElement;
 export const chatButton = document.getElementById("chat") as HTMLButtonElement;
+export const nextButton = document.getElementById("next") as HTMLButtonElement;
 
 export const openUI = (onEnter: (textInput: string) => void) => {
   if (UIElement === null) return;

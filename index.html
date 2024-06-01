@@ -98,9 +98,33 @@
         z-index: 10;
       }
 
+      #next {
+        position: absolute;
+        display: none;
+        flex-direction: column;
+        bottom: 20px;
+        right: 20px;
+        width: 120px;
+        height: 120px;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 100;
+        background: transparent;
+        padding: 5px;
+        z-index: 10;
+        border: none;
+      }
+
+      #next:hover {
+        background: #cd7f32;
+        border-radius: 8px;
+        color: white;
+      }
+
       #chat {
         position: absolute;
-        display: flex;
+        display: none;
         flex-direction: column;
         bottom: 20px;
         right: 20px;
@@ -136,6 +160,15 @@
         width: 100%;
         height: 100%;
       }
+
+      #next-image {
+        background-image: url("arrow.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+      }
     </style>
     <div id="app">
       <span id="debug"></span>
@@ -148,6 +181,9 @@
       </div>
       <button id="chat">
         <div id="chat-image"></div>
+      </button>
+      <button id="next">
+        <div id="next-image"></div>
       </button>
 
       <canvas id="game"></canvas>
