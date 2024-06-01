@@ -4,10 +4,9 @@ import { k } from "../lib/ctx";
 import { PlayerDirection } from "../types";
 import Character from "../models/Character";
 
-
 const characters = [
-    new Character("char1", k.vec2(100, 100), 250, scaleFactor, k),
-    new Character("char2", k.vec2(200, 200), 250, scaleFactor, k),
+  new Character("char1", k.vec2(100, 100), 250, scaleFactor, k),
+  new Character("char2", k.vec2(200, 200), 250, scaleFactor, k),
 ];
 
 export const createMainScene = () => {
@@ -44,7 +43,7 @@ export const createMainScene = () => {
     const directionKeys = ["up", "down", "left", "right"];
     for (const direction of directionKeys) {
       k.onKeyPress(direction as Key, () => {
-          characters[0].startMovement(direction as PlayerDirection);
+        characters[0].startMovement(direction as PlayerDirection);
       });
 
       k.onKeyDown(direction as Key, () => {
@@ -57,12 +56,23 @@ export const createMainScene = () => {
     }
 
     setInterval(() => {
-      characters[1].startMovement(directionKeys[Math.floor(Math.random() * 4)] as PlayerDirection);
+      // Random between speak and move
+      if (Math.random() > 0.5) {
+        characters[1].startMovement(
+          directionKeys[Math.floor(Math.random() * 4)] as PlayerDirection
+        );
+      } else {
+        characters[1].stopMovement();
+        characters[1].speak("Hello les reufs");
+      }
     }, 1000);
 
     // Camera
     k.onUpdate(() => {
-      k.camPos(characters[0].gameObject.worldPos().x, characters[0].gameObject.worldPos().y - 100);
+      k.camPos(
+        characters[0].gameObject.worldPos().x,
+        characters[0].gameObject.worldPos().y - 100
+      );
       characters[1].move(characters[1].direction);
     });
   });
