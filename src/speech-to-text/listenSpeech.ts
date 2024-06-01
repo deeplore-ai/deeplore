@@ -56,7 +56,12 @@ async function createMediaRecorder() {
   mediaRecorder = new MediaRecorder(stream);
   mediaRecorder.ondataavailable = (e) => {
     console.log(e.data);
-    //  socket.send(e.data);
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(e.data);
+    }
+    socket.onmessage = (message) => {
+      console.log({ event: "onmessage", message });
+    };
   };
   return mediaRecorder;
 }
