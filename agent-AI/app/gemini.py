@@ -1,9 +1,9 @@
 import os
 from .utils import getPrompt
-from google.colab import userdata
-
+from .config import GOOGLE_API_KEY, DEBUG
 import pathlib
 import textwrap
+from .classes import Speech
 
 import google.generativeai as genai
 
@@ -15,12 +15,11 @@ def to_markdown(text):
   text = text.replace('•', '  *')
   return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
 
-GOOGLE_API_KEY=userdata.get('GOOGLE_API_KEY')
 
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
-model = genai.GenerativeModel(name='gemini-pro')
+model = genai.GenerativeModel(model_name='gemini-pro')
 
 def chat_gemini(speech: Speech):
     chat_response = model.generate_content(getPrompt(speech))  

@@ -29,13 +29,13 @@ def test_chat_priest(speech: Speech):
     
 def chat(speech: Speech):
     
-    
-    
     chat_response = client.chat(
         model=model,
         messages=[ChatMessage(role="user", content=f"""
                            {getPrompt(speech)} \n
-                            You respond to {speech.speaker} who says : "{speech.content}" """)]
+                            {speech.speaker} is speaking and says : "{speech.content}" \n
+                            Respond in french if needed.
+                            """)]
         )
     if DEBUG :
         print(chat_response)
