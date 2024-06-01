@@ -19,9 +19,9 @@ def to_markdown(text):
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
-model = genai.GenerativeModel(model_name='gemini-pro')
+model = genai.GenerativeModel(model_name='gemini-flash')
 
-def chat_gemini(speech: Speech):
+def chat_gemini_flash(speech: Speech):
     chat_response = model.generate_content(f"""
                            {getPrompt(speech)} \n
                             """)  
