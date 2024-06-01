@@ -24,3 +24,9 @@ async def hear(speech: Speech): # TODO move npc to listener
     result = chat(speech)
     return {"NPC": speech.speaker,"Speaker": speech.npc, "Speech": f"{result}"}
 
+@app.get("/hear")
+async def get_hear(speech: Speech):
+    with open("data/head_conversation_"+Speech.firstname+'_'+Speech.lastname+'.txt', 'a') as file:
+        file.write("\n"+Speech.speaker+ ' ; ' + Speech.distance + ';' + Speech.content)
+
+
