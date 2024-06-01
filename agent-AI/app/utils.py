@@ -1,13 +1,14 @@
 import json 
 import os
 import pathlib
+import Speech 
 
 context = open(pathlib.Path("data/context.txt"), 'r').read()
 output = open(pathlib.Path("data/context.txt"), 'r').read()
 
 
-def getPrompt(Speech):
-    concat_id = Speech.firstname+'_'+Speech.lastname+'.txt'
+def getPrompt(speech: Speech):
+    concat_id = speech.firstname+'_'+speech.lastname+'.txt'
     conversations = open("data/conversations_"+concat_id, 'r').read()
     heard_conversations = open("data/heard_conversations_"+concat_id, 'r').read()
     npc = open("data/npc_"+concat_id, 'r').read()
