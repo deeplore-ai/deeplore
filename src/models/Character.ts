@@ -46,6 +46,7 @@ export default class Character {
   k: KaboomCtx;
   isMoving: boolean;
   target: { x: number; y: number };
+  forbidMoving: boolean;
 
   constructor(
     name: string,
@@ -72,6 +73,7 @@ export default class Character {
     this.k = k;
     this.direction = "down";
     this.isMoving = false;
+    this.forbidMoving = false;
   }
 
   startMovement(direction: PlayerDirection) {
@@ -90,9 +92,31 @@ export default class Character {
   }
 
   move(direction: PlayerDirection) {
-    if (Game.getInstance().isGamePaused) return;
+    if (Game.getInstance().isGamePaused || this.forbidMoving) return;
     movement[direction].move(this);
     this.direction = direction;
+  }
+
+  hear(text: string) {
+    fetch("https://app-fqj7trlqhq-od.a.run.app/hear", {
+      method: "POST",
+      // no cors
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content: text, npc: "priest", speaker: "policeman" }),
+    }).then((res) => {
+      return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        this.speak(data.Speech);
+      })
+      .catch((e) => {
+        console.log(e);
+        this.speak("Nolo comprendo");
+      });
   }
 
   playAnimation(animation: string) {
@@ -116,6 +140,7 @@ export default class Character {
     const words = text.split(" ");
     let lines = [];
     let currentLine = "";
+    this.forbidMoving = true;
 
     words.forEach((word) => {
       if ((currentLine + word).length <= maxCharsPerLine) {
@@ -182,6 +207,7 @@ export default class Character {
     const bubbleInterval = setInterval(() => {
       if (Game.getInstance().isGamePaused) return;
       bubble.destroy();
+      this.forbidMoving = false;
       texts.map((t) => t.destroy());
       clearInterval(bubbleInterval);
     }, destroyDelay);

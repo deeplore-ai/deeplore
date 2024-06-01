@@ -20,6 +20,7 @@ export const createMainScene = () => {
     if (e.key === "Enter" && !isUIOpen()) {
       openUI((textInput) => {
         characters[0].speak(textInput);
+        characters[1].hear(textInput);
       });
     }
   });
@@ -81,7 +82,7 @@ export const createMainScene = () => {
         characters[1].startMovement(characters[1].direction);
       } else {
         characters[1].stopMovement();
-        characters[1].speak("Hello les reufs");
+        // characters[1].speak("Hello les reufs");
       }
     }, 1000);
 
