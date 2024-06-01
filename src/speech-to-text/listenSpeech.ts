@@ -1,7 +1,7 @@
 import { speechObserver } from "../observables/speechObserver";
 
 const socket = new WebSocket(
-  "wss://api.deepgram.com/v1/listen?language=fr&search=Emma%20Dubois",
+  "wss://api.deepgram.com/v1/listen?language=fr&search=Emma%20Dubois&keywords=Emma&keywords=Dubois&keywords=Matthieu&keywords=Mancini&keywords=Manchini",
   ["token", "4cebb2572a5a31e8780f478ee7933df45c45a63d"]
 );
 
@@ -20,6 +20,10 @@ socket.onerror = (error) => {
 };
 
 let mediaRecorder: MediaRecorder | null = null;
+
+export function stopMediaRecorder() {
+  mediaRecorder?.stop();
+}
 
 // const connection = deepgram.listen.live({
 //   model: "nova-2",
@@ -55,7 +59,7 @@ async function createMediaRecorder(onTranscript: (transcript: string) => void) {
   socket.onmessage = (message) => {
     const received = JSON.parse(message.data);
     const transcript = received.channel.alternatives[0].transcript as string;
-    if (transcript && received.is_final) {
+    if (transcript) {
       onTranscript(transcript);
       console.log(transcript);
     }

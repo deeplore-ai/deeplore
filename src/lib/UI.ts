@@ -1,5 +1,6 @@
 import Game from "../models/Game";
 import { speechObserver } from "../observables/speechObserver";
+import { stopMediaRecorder } from "../speech-to-text/listenSpeech";
 
 const UIElement = document.getElementById("ui");
 const input = document.getElementById("question") as HTMLInputElement;
@@ -22,7 +23,17 @@ export const openUI = (onEnter: (textInput: string) => void) => {
   input.focus();
 
   const onTranscript = (transcript: string) => {
-    input.value += transcript;
+    let cleaned = transcript.trim();
+    if (input.value === "") {
+      cleaned = cleaned[0].toUpperCase() + cleaned.slice(1);
+    } else {
+      cleaned = " " + cleaned;
+    }
+    cleaned = cleaned
+      .replace("(\\W|^)emma du bois(\\W|$)", "$1Emma Dubois$2")
+      .replace("(\\W|^)emma du dubois(\\W|$)", "$1Emma Dubois$2")
+      .replace("(\\W|^)emma(\\W|$)", "$1Emma$2");
+    input.value += cleaned;
   };
 
   speechObserver.on("speech", onTranscript);
@@ -30,6 +41,7 @@ export const openUI = (onEnter: (textInput: string) => void) => {
   const exit = () => {
     closeUI();
     speechObserver.off("speech", onTranscript);
+    stopMediaRecorder();
     input.removeEventListener("keydown", handleKeyDown);
     canvas.focus();
     Game.getInstance().isGamePaused = false;
