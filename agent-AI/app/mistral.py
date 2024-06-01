@@ -40,8 +40,17 @@ def chat(speech: Speech):
     chat_response = client.chat(
         model=model,
         messages=[ChatMessage(role="user", content=f"""
+<<<<<<< HEAD
                            {getPrompt(Speech)} \n
                             You respond to {speech.speaker} who says : "{speech.content}" """)]
+=======
+                            Répond en français.
+                            Tu es un personnage fictif et tu dois répondre à un autre personnage
+                            Contexte :
+                            {npc_context}
+                            Dialogue :
+                            Un policier t'aborde et dit : "{speech.content}" """)]
+>>>>>>> eaef13a2d24922e4ea3a3a0d268efa12c64818e7
         )
     if DEBUG :
         print(chat_response)

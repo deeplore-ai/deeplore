@@ -23,7 +23,7 @@ async def root():
 @app.post("/hear")
 async def hear(speech: Speech): # TODO move npc to listener
     result = chat(speech)
-    return {"NPC": Speech.speaker,"Speaker": Speech.npc, "Speech": f"{result}"}
+    return {"NPC": speech.speaker,"Speaker": speech.npc, "Speech": f"{result}"}
 
 # @app.get("/hear")
 # async def get_hear(speech: Speech):
