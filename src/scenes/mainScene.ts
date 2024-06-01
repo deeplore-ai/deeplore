@@ -1,10 +1,10 @@
 import { Key } from "kaboom";
-import { scaleFactor } from "../constants";
+import { LISTEN_RANGE, scaleFactor } from "../constants";
 import { k } from "../lib/ctx";
 import { PlayerDirection } from "../types";
 import Character from "../models/Character";
 import * as easystarjs from "easystarjs";
-import { fromXYToGrid } from "../utils";
+import { calculateDistance, fromXYToGrid } from "../utils";
 import { canvas, chatButton, isUIOpen, openUI } from "../lib/UI";
 
 const easystar = new easystarjs.js();
@@ -13,37 +13,19 @@ import Game from "../models/Game";
 const characters = [
   new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k, "Paul", "Martinez"),
   new Character("Girl", k.vec2(1343, 1400), 250, scaleFactor, k, "Emma", "Dubois"),
-  new Character("Priest", k.vec2(1250, 900), 250, scaleFactor, k, "Dieter", "Hoffman"),
+  new Character("Priest", k.vec2(1250, 900), 250, scaleFactor, k, "Matthieu", "Mancini"),
 ];
-
-characters[1].direction = "left";
-characters[2].stopMovement();
-
-const LISTEN_RANGE = 300;
 
 export const createMainScene = () => {
   k.scene("main", async () => {
     canvas.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !isUIOpen()) {
-        openUI((textInput) => {
-          characters[0].speak(textInput);
-          characters[2].hear(textInput);
-        });
+        openUI(onPlayerAskQuestion);
       }
     });
 
     chatButton.addEventListener("click", () => {
-      openUI((textInput) => {
-        const priestDistance = calculateDistance(characters[0].gameObject.pos, characters[2].gameObject.pos);
-        const emmaDistance = calculateDistance(characters[0].gameObject.pos, characters[1].gameObject.pos);
-        if (priestDistance < LISTEN_RANGE) {
-          characters[2].hear(textInput, "Paul Martinez");
-        }
-        if (emmaDistance < LISTEN_RANGE) {
-          characters[1].hear(textInput, "Paul Martinez");
-        }
-        characters[0].speak(textInput);
-      });
+      openUI(onPlayerAskQuestion);
     });
 
     canvas.focus();
@@ -186,4 +168,16 @@ function recalculatePath(character: Character) {
     }
   );
   easystar.calculate();
+}
+
+function onPlayerAskQuestion(textInput: string) {
+  const priestDistance = calculateDistance(characters[0].gameObject.pos, characters[2].gameObject.pos);
+  const emmaDistance = calculateDistance(characters[0].gameObject.pos, characters[1].gameObject.pos);
+  if (priestDistance < LISTEN_RANGE) {
+    characters[2].hear(textInput, "Paul Martinez");
+  }
+  if (emmaDistance < LISTEN_RANGE) {
+    characters[1].hear(textInput, "Paul Martinez");
+  }
+  characters[0].speak(textInput);
 }

@@ -1,7 +1,8 @@
 import { GameObj, KaboomCtx, Vec2 } from "kaboom";
 import { PlayerDirection } from "../types";
-import { scaleFactor } from "../constants";
+import { LISTEN_RANGE, scaleFactor } from "../constants";
 import Game from "./Game";
+import { calculateDistance, truncateText } from "../utils";
 
 export type PlayerMovement = {
   move: (character: Character) => void;
@@ -104,17 +105,6 @@ export default class Character {
   }
 
   hear(text: string, speaker: string) {
-    fetch("https://app-fqj7trlqhq-od.a.run.app", {
-      method: "GET",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-
     fetch("https://app-fqj7trlqhq-od.a.run.app/hear", {
       method: "POST",
       // no cors
@@ -157,6 +147,14 @@ export default class Character {
     const y = this.gameObject.pos.y / scaleFactor;
     console.log(x, y, mapWidth, mapHeight);
     return x % mapWidth === 0 && y % mapHeight === 0;
+  }
+
+  obfuscateBasedOnDistance(lines: string[], speakingCharacter: Character): string[] {
+    const distance = calculateDistance(this.gameObject.pos, speakingCharacter.gameObject.pos);
+    if (distance < LISTEN_RANGE) {
+      return lines.map(line => truncateText(line, distance - LISTEN_RANGE));
+    }
+    return lines;
   }
 
   speak(text: string) {
