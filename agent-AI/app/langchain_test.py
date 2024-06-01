@@ -8,7 +8,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 
 from .config import MISTRAL_API_KEY, DEBUG
-from .classes import Speech
+from .classes import Speech, test_speech
 
 text_splitter = RecursiveCharacterTextSplitter()
 
@@ -40,10 +40,13 @@ def chat_langchain(speech: Speech):
     {context}
     </context>
 
-    Tu es {speech.firstname} {speech.lastname} et {speech.speaker} dit :"{speech.content}" }""")
+    You : {you}
+    Speaker : {speaker}
+    
+    Speech: {input}""")
 
     # Create a retrieval chain to answer questions
     document_chain = create_stuff_documents_chain(model, prompt)
     retrieval_chain = create_retrieval_chain(retriever, document_chain)
-    response = retrieval_chain.invoke({"speech": speech})
+    response = retrieval_chain.invoke({"input": speech.content, "speaker": speech.speaker, "you": speech.firstname + " " + speech.lastname})
     return response["answer"]
