@@ -1,6 +1,7 @@
 import { Vec2 } from "kaboom";
 import { DEFAULT_BACKGROUND_COLOR, scaleFactor } from "./constants";
 import { k } from "./lib/ctx";
+import { wordsToTruncate } from "./data/wordsToTruncate";
 
 export const setupKaboom = () => {
   k.loadSprite("spritesheet", "./spritesheet.png", {
@@ -54,10 +55,20 @@ export function calculateDistance(pos1: Vec2, pos2: Vec2) {
 
 export const truncateText = (message: string, distance: number) => {
   const words = message.split(" ");
+
+  let countOfRemainingWordsToTruncate = words.length;
+
+  words.forEach((word, index) => {
+    if (wordsToTruncate.includes(word)) {
+      words[index] = "...";
+      countOfRemainingWordsToTruncate--;
+    }
+  });
+
   let replacedCount = 0;
   const targetCount = Math.min(
     Math.floor(words.length * (distance / 100)),
-    words.length
+    countOfRemainingWordsToTruncate
   );
 
   while (replacedCount < targetCount) {
@@ -71,5 +82,13 @@ export const truncateText = (message: string, distance: number) => {
     }
   }
 
-  return words.join(" ");
+  const joinedWords = new Array<string>();
+
+  for (const word of words) {
+    if (word !== "..." || joinedWords[joinedWords.length - 1] !== "...") {
+      joinedWords.push(word);
+    }
+  }
+
+  return joinedWords.join(" ");
 };

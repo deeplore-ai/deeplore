@@ -27,13 +27,17 @@ export const createInitialScene = () => {
 
     let pressedEnter = false;
 
-    k.onKeyPress("enter", () => {
+    const next = () => {
       if (textHasBeenDisplayed) {
         quitScene();
       } else {
         pressedEnter = true;
       }
-    });
+    };
+
+    k.onKeyPress("enter", next);
+    k.onKeyPress("escape", next);
+    k.onKeyPress("space", next);
 
     for (let i = 0; i < INTRO_TEXT.length; i++) {
       if (!pressedEnter) {
