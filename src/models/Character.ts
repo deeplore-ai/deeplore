@@ -297,9 +297,9 @@ export default class Character {
 
 function distanceToString(distance: number) {
   if (distance < START_TRUNCATED_RANGE) {
-    return "small distance";
+    return "proche";
   } else if (distance < (START_TRUNCATED_RANGE + MAX_LISTEN_RANGE) / 2) {
-    return "medium distance";
+    return "pas très loin";
   }
-  return "large distance";
+  return "loin";
 }
