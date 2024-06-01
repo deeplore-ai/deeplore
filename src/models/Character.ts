@@ -3,6 +3,7 @@ import { PlayerDirection } from "../types";
 import { MAX_LISTEN_RANGE, scaleFactor, START_TRUNCATED_RANGE } from "../constants";
 import Game from "./Game";
 import { calculateDistance, truncateText } from "../utils";
+import EventBus from "../EventBus";
 
 export type PlayerMovement = {
   move: (character: Character) => void;
@@ -111,7 +112,8 @@ export default class Character {
 
   hear(text: string, speaker: Character) {
     this.startThinking();
-    fetch("https://app-fqj7trlqhq-od.a.run.app/hear", {
+    const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
+    fetch("https://app-fqj7trlqhq-od.a.run.app/hearLangchain", {
       method: "POST",
       // no cors
       headers: {
@@ -119,7 +121,7 @@ export default class Character {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        content: text,
+        content: obfuscatedText,
         npc: this.name,
         id: this.name,
         firstname: this.firstName,
@@ -132,7 +134,9 @@ export default class Character {
         return res.json();
       })
       .then((data) => {
-        this.speak(data.Speech);
+        if (data.Speech && data.Speech.length > 0) {
+          this.speak(data.Speech);
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -230,16 +234,19 @@ export default class Character {
     });
     lines.push(currentLine);
 
-    this.displayBubbles(lines);
+    this.displayBubbles(lines, () => {
+      this.forbidMoving = false;
+      EventBus.publish("character:speak", { speaker: this, text });
+    });
   }
 
-  private displayBubbles(lines: string[]) {
+  private displayBubbles(lines: string[], onFinished: () => void) {
     if (!lines.length) {
-      this.forbidMoving = false;
+      onFinished();
       return;
     }
     this.displayBubble([lines.shift() || "", lines.shift() || ""], () => {
-      this.displayBubbles(lines);
+      this.displayBubbles(lines, onFinished);
     });
   }
 

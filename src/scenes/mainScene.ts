@@ -11,8 +11,10 @@ import { listenSpeech } from "../speech-to-text/listenSpeech";
 
 type Map = typeof jsonMap;
 
+
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
+import EventBus from "../EventBus";
 const player = new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k, "Paul", "Martinez");
 
 const characters = [
@@ -39,6 +41,17 @@ const characters = [
   ),
 
 ];
+
+EventBus.subscribe("character:speak", onCharacterSpeak);
+
+function onCharacterSpeak({ speaker, text }: { speaker: Character; text: string }) {
+  for (const character of characters) {
+    if (character === speaker) continue;
+    if (character === player) continue;
+    if (calculateDistance(character.gameObject.pos, speaker.gameObject.pos) > MAX_LISTEN_RANGE) continue;
+    character.hear(text, speaker);
+  }
+}
 
 const askQuestion = () => {
   // listenSpeech();
@@ -208,18 +221,5 @@ const recalculatePath = (character: Character) => {
 };
 
 function onPlayerAskQuestion(textInput: string) {
-  const priestDistance = calculateDistance(
-    characters[0].gameObject.pos,
-    characters[2].gameObject.pos
-  );
-  const emmaDistance = calculateDistance(
-    characters[0].gameObject.pos,
-    characters[1].gameObject.pos
-  );
-  if (priestDistance < MAX_LISTEN_RANGE) {
-    characters[2].hear(textInput, player);
-  }
-  if (emmaDistance < MAX_LISTEN_RANGE) {
-    characters[1].hear(textInput, player);
-  }
+  EventBus.publish("character:speak", { speaker: player, text: textInput });
 }
