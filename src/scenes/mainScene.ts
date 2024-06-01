@@ -6,8 +6,8 @@ import Character from "../models/Character";
 import { openUI } from "../lib/UI";
 
 const characters = [
-  new Character("char1", k.vec2(100, 100), 250, scaleFactor, k),
-  new Character("char2", k.vec2(200, 200), 250, scaleFactor, k),
+  new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k),
+  new Character("char2", k.vec2(1343, 1100), 250, scaleFactor, k),
 ];
 
 export const createMainScene = () => {
@@ -78,6 +78,7 @@ export const createMainScene = () => {
         characters[0].gameObject.worldPos().x,
         characters[0].gameObject.worldPos().y - 100
       );
+
       characters[1].move(characters[1].direction);
     });
   });
