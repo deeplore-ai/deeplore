@@ -24,3 +24,10 @@ async def hear(speech: Speech):
     result = test_chat_priest(speech)
     return {"NPC": "Priest", "Speech": f"{result}"}
 
+@app.get("/hear")
+async def get_hear(speech: Speech):
+    print(speech)
+    with open("data/heard_conversation_"+Speech.firstname+'_'+Speech.lastname+'.txt', 'a') as file:
+        file.write("\n"+Speech.speaker+ ' ; ' + Speech.distance + ';' + Speech.content)
+
+
