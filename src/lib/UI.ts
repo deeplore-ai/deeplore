@@ -3,6 +3,7 @@ import Game from "../models/Game";
 const UIElement = document.getElementById("ui");
 const input = document.getElementById("question") as HTMLInputElement;
 export const canvas = document.getElementById("game") as HTMLCanvasElement;
+export const debug = document.getElementById("debug") as HTMLSpanElement;
 
 export const openUI = (onEnter: (textInput: string) => void) => {
   if (UIElement === null) return;

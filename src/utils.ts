@@ -1,3 +1,4 @@
+import { Vec2 } from "kaboom";
 import { DEFAULT_BACKGROUND_COLOR, scaleFactor } from "./constants";
 import { k } from "./lib/ctx";
 
@@ -45,3 +46,29 @@ export function fromXYToGrid(x: number, y: number, cellSize: number) {
     y: Math.floor(y / scaleFactor / cellSize),
   };
 }
+
+export function calculateDistance(pos1: Vec2, pos2: Vec2) {
+  return Math.sqrt(Math.pow(pos1.x - pos2.x, 2) + Math.pow(pos1.y - pos2.y, 2));
+}
+
+export const truncateText = (message: string, distance: number) => {
+  const words = message.split(" ");
+  let replacedCount = 0;
+  const targetCount = Math.min(
+    Math.floor(words.length * (distance / 100)),
+    words.length
+  );
+
+  while (replacedCount < targetCount) {
+    const index = Math.floor(Math.random() * words.length);
+
+    if (words[index] !== "...") {
+      words[index] = "...";
+      replacedCount++;
+    } else if (replacedCount === words.length) {
+      break; // Exit the loop if all words have been replaced
+    }
+  }
+
+  return words.join(" ");
+};

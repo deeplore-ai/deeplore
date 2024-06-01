@@ -105,7 +105,7 @@ export default class Character {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ content: text, npc: "priest", speaker: "policeman" }),
+      body: JSON.stringify({ content: text, npc: "priest", speaker: "Dietrich Hoffman" }),
     }).then((res) => {
       return res.json();
       })
