@@ -5,19 +5,28 @@ let socket = new WebSocket(
   ["token", "4cebb2572a5a31e8780f478ee7933df45c45a63d"]
 );
 
+setupSocket();
+
 console.log({ socket });
 
 socket.onopen = () => {
   console.log({ event: "onopen" });
 };
 
-socket.onclose = () => {
-  console.log({ event: "onclose" });
-};
-
 socket.onerror = (error) => {
   console.log({ event: "onerror", error });
 };
+
+function setupSocket() {
+  socket.onclose = () => {
+    console.log({ event: "onclose" });
+    socket = new WebSocket(
+      "wss://api.deepgram.com/v1/listen?language=fr&search=Emma%20Dubois&keywords=Emma&keywords=Dubois&keywords=Matthieu&keywords=Mancini&keywords=Manchini",
+      ["token", "4cebb2572a5a31e8780f478ee7933df45c45a63d"]
+    );
+    setupSocket();
+  };
+}
 
 let mediaRecorder: MediaRecorder | null = null;
 
@@ -25,7 +34,6 @@ function createWebSocket() {
   if (socket.readyState === WebSocket.OPEN) {
     return socket;
   }
-  socket.close();
   socket = new WebSocket(
     "wss://api.deepgram.com/v1/listen?language=fr&search=Emma%20Dubois&keywords=Emma&keywords=Dubois&keywords=Matthieu&keywords"
   );
