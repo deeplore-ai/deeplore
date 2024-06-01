@@ -128,7 +128,6 @@ export default class Character {
       }),
     })
       .then((res) => {
-        this.stopThinking();
         return res.json();
       })
       .then((data) => {
@@ -137,6 +136,9 @@ export default class Character {
       .catch((e) => {
         console.log(e);
         this.speak("Nolo comprendo");
+      })
+      .finally(() => {
+        this.stopThinking();
       });
   }
 
