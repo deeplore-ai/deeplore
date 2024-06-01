@@ -47,13 +47,17 @@ export default class Character {
   isMoving: boolean;
   target: { x: number; y: number };
   forbidMoving: boolean;
+  firstName: string;
+  lastName: string;
 
   constructor(
     name: string,
     initialPosition: Vec2,
     speed: number,
     scaleFactor: number,
-    k: KaboomCtx
+    k: KaboomCtx,
+    firstName: string,
+    lastName: string
   ) {
     this.name = name;
     this.initialPosition = initialPosition;
@@ -67,13 +71,15 @@ export default class Character {
       k.anchor("center"),
       k.pos(initialPosition),
       k.scale(scaleFactor),
-      "name",
+      name,
     ]);
 
     this.k = k;
     this.direction = "down";
     this.isMoving = false;
     this.forbidMoving = false;
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
 
   startMovement(direction: PlayerDirection) {
@@ -97,7 +103,18 @@ export default class Character {
     this.direction = direction;
   }
 
-  hear(text: string) {
+  hear(text: string, speaker: string) {
+    fetch("https://app-fqj7trlqhq-od.a.run.app", {
+      method: "GET",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+
     fetch("https://app-fqj7trlqhq-od.a.run.app/hear", {
       method: "POST",
       // no cors
@@ -107,8 +124,11 @@ export default class Character {
       },
       body: JSON.stringify({
         content: text,
-        npc: "priest",
-        speaker: "Dietrich Hoffman",
+        npc: this.name,
+        id: this.name,
+        firstname: this.firstName,
+        lastname: this.lastName,
+        speaker: speaker,
       }),
     })
       .then((res) => {

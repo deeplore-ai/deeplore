@@ -11,17 +11,29 @@ const easystar = new easystarjs.js();
 import Game from "../models/Game";
 
 const characters = [
-  new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k),
-  new Character("char2", k.vec2(1343, 1100), 250, scaleFactor, k),
-  new Character("priest", k.vec2(1250, 1100), 250, scaleFactor, k),
+  new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k, "Paul", "Martinez"),
+  new Character("Girl", k.vec2(1343, 1400), 250, scaleFactor, k, "Emma", "Dubois"),
+  new Character("Priest", k.vec2(1250, 900), 250, scaleFactor, k, "Dieter", "Hoffman"),
 ];
+
+characters[1].direction = "left";
+characters[2].stopMovement();
+
+const LISTEN_RANGE = 300;
 
 export const createMainScene = () => {
   canvas.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !isUIOpen()) {
       openUI((textInput) => {
+        const priestDistance = calculateDistance(characters[0].gameObject.pos, characters[2].gameObject.pos);
+        const emmaDistance = calculateDistance(characters[0].gameObject.pos, characters[1].gameObject.pos);
+        if (priestDistance < LISTEN_RANGE) {
+          characters[2].hear(textInput, "Paul Martinez");
+        }
+        if (emmaDistance < LISTEN_RANGE) {
+          characters[1].hear(textInput, "Paul Martinez");
+        }
         characters[0].speak(textInput);
-        characters[2].hear(textInput);
       });
     }
   });
@@ -82,31 +94,9 @@ export const createMainScene = () => {
       });
     }
 
-    setInterval(() => {
-      if (Game.getInstance().isGamePaused) return;
 
-      // Random between speak and move
-      if (Math.random() > 0.5) {
-        characters[2].startMovement(characters[2].direction);
-      } else {
-        characters[2].stopMovement();
-        // characters[1].speak("Hello les reufs");
-
-        /*const LISTEN_RANGE = 300;
-        if (playerDistance < LISTEN_RANGE) {
-          characters[1].speak("Hello les reufs");
-        } else {
-          const message = truncateText(
-            "Hello les reufs",
-            playerDistance - LISTEN_RANGE
-          );
-          characters[1].speak(message);
-        }*/
-      }
-    }, 1000);
-
-    characters[2].setTarget(characters[0].gameObject.pos);
-    recalculatePath(characters[2]);
+    // characters[2].setTarget(characters[0].gameObject.pos);
+    // recalculatePath(characters[2]);
     /*     openUI((textInput) => {
       characters[0].speak(textInput);
     }); */
