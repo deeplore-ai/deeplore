@@ -209,5 +209,4 @@ function onPlayerAskQuestion(textInput: string) {
   if (emmaDistance < MAX_LISTEN_RANGE) {
     characters[1].hear(textInput, "Paul Martinez");
   }
-  characters[0].speak(textInput);
 }
