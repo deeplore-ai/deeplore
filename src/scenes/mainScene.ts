@@ -5,7 +5,15 @@ import { PlayerDirection } from "../types";
 import Character from "../models/Character";
 import * as easystarjs from "easystarjs";
 import { calculateDistance, fromXYToGrid } from "../utils";
-import { canvas, chatButton, closeUI, isUIOpen, openUI } from "../lib/UI";
+import {
+  canvas,
+  chatButton,
+  closeUI,
+  displayChatButton,
+  hideChatButton,
+  isUIOpen,
+  openUI,
+} from "../lib/UI";
 import type jsonMap from "../../public/map.json";
 import { listenSpeech } from "../speech-to-text/listenSpeech";
 
@@ -50,11 +58,21 @@ const characters = [
 
 EventBus.subscribe("character:speak", onCharacterSpeak);
 
-function onCharacterSpeak({ speaker, text }: { speaker: Character; text: string }) {
+function onCharacterSpeak({
+  speaker,
+  text,
+}: {
+  speaker: Character;
+  text: string;
+}) {
   for (const character of characters) {
     if (character === speaker) continue;
     if (character === player) continue;
-    if (calculateDistance(character.gameObject.pos, speaker.gameObject.pos) > MAX_LISTEN_RANGE) continue;
+    if (
+      calculateDistance(character.gameObject.pos, speaker.gameObject.pos) >
+      MAX_LISTEN_RANGE
+    )
+      continue;
     character.hear(text, speaker);
   }
 }
@@ -68,29 +86,26 @@ export const createMainScene = () => {
   k.scene("main", async () => {
     canvas.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !isUIOpen()) {
-        askQuestion();
+        const neighbors = getNearestCharacters();
+
+        if (neighbors.length > 0) {
+          askQuestion();
+        }
       }
     });
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && isUIOpen()) {
-        askQuestion();
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && isUIOpen()) {
+        console.log("Escape");
         canvas.focus();
         closeUI();
+        Game.getInstance().isGamePaused = false;
       }
     });
 
     chatButton.addEventListener("click", askQuestion);
 
     canvas.focus();
-
-    // display chat icon
-    chatButton.style.display = "flex";
 
     const mapData: Map = await (await fetch("./map.json")).json();
     easystar.setGrid(convertCollisionLayerToGrid(mapData));
@@ -144,6 +159,16 @@ export const createMainScene = () => {
     // Camera
     k.onUpdate(() => {
       if (Game.getInstance().isGamePaused) return;
+
+      // Get neighbors before MAX_LISTEN_RANGE
+      const neighbors = getNearestCharacters();
+
+      if (neighbors.length > 0) {
+        displayChatButton();
+      } else {
+        hideChatButton();
+      }
+
       k.camPos(
         characters[0].gameObject.worldPos().x,
         characters[0].gameObject.worldPos().y - 100
@@ -177,6 +202,16 @@ function convertCollisionLayerToGrid(map: Map) {
   }
   return collisions;
 }
+
+const getNearestCharacters = () => {
+  return characters
+    .filter((character) => character !== player)
+    .filter(
+      (character) =>
+        calculateDistance(character.gameObject.pos, player.gameObject.pos) <
+        MAX_LISTEN_RANGE
+    );
+};
 
 function fromGridToDirection(
   nextPos: { x: number; y: number },

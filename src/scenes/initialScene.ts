@@ -110,7 +110,7 @@ export const createInitialScene = () => {
 
     nextButton.addEventListener("click", () => {
       hideNextButton();
-      k.go("main");
+      k.go("train");
     });
   });
 };

@@ -17,5 +17,3 @@ if (DEV_MODE) {
 } else {
   k.go("init");
 }
-
-/* k.go("train"); */
