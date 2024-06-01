@@ -3,6 +3,7 @@ import { scaleFactor } from "../constants";
 import { k } from "../lib/ctx";
 import { PlayerDirection } from "../types";
 import Character from "../models/Character";
+import { openUI } from "../lib/UI";
 
 const characters = [
   new Character("char1", k.vec2(100, 100), 250, scaleFactor, k),
@@ -66,6 +67,10 @@ export const createMainScene = () => {
         characters[1].speak("Hello les reufs");
       }
     }, 1000);
+
+    /*     openUI((textInput) => {
+      characters[0].speak(textInput);
+    }); */
 
     // Camera
     k.onUpdate(() => {
