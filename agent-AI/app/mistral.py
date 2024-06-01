@@ -32,8 +32,7 @@ def chat(speech: Speech):
     chat_response = client.chat(
         model=model,
         messages=[ChatMessage(role="user", content=f"""
-                           {getPrompt(speech)} \n
-                            Respond in french if needed.
+                           {getPrompt(speech)} 
                             """)]
         )
     if DEBUG :

@@ -24,8 +24,6 @@ model = genai.GenerativeModel(model_name='gemini-pro')
 def chat_gemini(speech: Speech):
     chat_response = model.generate_content(f"""
                            {getPrompt(speech)} \n
-                            {speech.speaker} is speaking and says : "{speech.content}" \n
-                            Respond in french if needed. I only want the answer.
                             """)  
     if DEBUG :
         print(chat_response)

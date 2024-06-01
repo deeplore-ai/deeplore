@@ -24,7 +24,8 @@ def getPrompt(speech: Speech):
 
         *Rules output:
         \t- If the person is not near to you, do not respond. 
-        \t-Respond in french. 
+        \t- Respond in french. 
+        \t- Only the answers
         
         """ 
 
