@@ -5,7 +5,7 @@ import { PlayerDirection } from "../types";
 import Character from "../models/Character";
 import * as easystarjs from "easystarjs";
 import { calculateDistance, fromXYToGrid, truncateText } from "../utils";
-import { canvas, debug, isUIOpen, openUI } from "../lib/UI";
+import { canvas, chatButton, isUIOpen, openUI } from "../lib/UI";
 
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
@@ -23,6 +23,12 @@ export const createMainScene = () => {
         characters[1].hear(textInput);
       });
     }
+  });
+
+  chatButton.addEventListener("click", () => {
+    openUI((textInput) => {
+      characters[0].speak(textInput);
+    });
   });
 
   k.scene("main", async () => {

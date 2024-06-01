@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Village & Lies</title>
   </head>
   <body>
     <style>
@@ -63,6 +63,7 @@
         color: white;
         font-family: monogram, monospace;
         font-size: 35px;
+        height: 80px;
       }
 
       input:focus {
@@ -80,13 +81,75 @@
         background: rgba(0, 0, 0, 0.5);
         padding: 5px;
       }
+
+      #pause-overlay {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        font-size: 8rem;
+        color: white;
+        z-index: 10;
+      }
+
+      #chat {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        bottom: 20px;
+        right: 20px;
+        width: 120px;
+        height: 120px;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 100;
+        background: transparent;
+        padding: 5px;
+        z-index: 10;
+        border: none;
+      }
+
+      #chat:hover {
+        background: #cd7f32;
+        border-radius: 8px;
+        color: white;
+      }
+
+      #chat p {
+        margin: 0;
+        color: white;
+        font-family: monogram, monospace;
+      }
+
+      #chat-image {
+        background-image: url("chat.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+      }
     </style>
     <div id="app">
       <span id="debug"></span>
+      <div id="pause-overlay">
+        <p>Posez votre question</p>
+      </div>
       <div id="ui">
         <h3>Votre question</h3>
         <input type="text" id="question" />
       </div>
+      <button id="chat">
+        <div id="chat-image"></div>
+      </button>
+
       <canvas id="game"></canvas>
     </div>
     <script type="module" src="/src/main.ts"></script>

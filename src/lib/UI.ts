@@ -4,11 +4,16 @@ const UIElement = document.getElementById("ui");
 const input = document.getElementById("question") as HTMLInputElement;
 export const canvas = document.getElementById("game") as HTMLCanvasElement;
 export const debug = document.getElementById("debug") as HTMLSpanElement;
+export const pauseScreen = document.getElementById(
+  "pause-overlay"
+) as HTMLDivElement;
+export const chatButton = document.getElementById("chat") as HTMLButtonElement;
 
 export const openUI = (onEnter: (textInput: string) => void) => {
   if (UIElement === null) return;
   Game.getInstance().isGamePaused = true;
   UIElement.style.display = "flex";
+  pauseScreen.style.display = "flex";
   input.focus();
 
   const exit = () => {
@@ -34,6 +39,7 @@ export const openUI = (onEnter: (textInput: string) => void) => {
 export const closeUI = () => {
   if (UIElement === null) return;
   UIElement.style.display = "none";
+  pauseScreen.style.display = "none";
 };
 
 export const isUIOpen = () => {
