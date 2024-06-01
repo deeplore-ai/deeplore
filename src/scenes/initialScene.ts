@@ -6,11 +6,13 @@ const INTRO_TEXT =
 
 export const createInitialScene = () => {
   k.scene("init", async () => {
-    //black background
+    // black background
     k.add([k.rect(k.width(), k.height()), k.color(0, 0, 0)]);
 
-    //write with write effect
+    // write with write effect
     let displayText = "";
+    let textHasBeenDisplayed = false;
+
     const text = k.add([
       k.text(displayText, {
         size: 24,
@@ -18,17 +20,32 @@ export const createInitialScene = () => {
       k.pos(100, 100),
     ]);
 
+    const quitScene = () => {
+      nextButton.style.display = "none";
+      k.go("main");
+    };
+
+    let pressedEnter = false;
+
+    k.onKeyPress("enter", () => {
+      if (textHasBeenDisplayed) {
+        quitScene();
+      } else {
+        pressedEnter = true;
+      }
+    });
+
     for (let i = 0; i < INTRO_TEXT.length; i++) {
-      await k.wait(0.01); // wait for 0.1 seconds
+      if (!pressedEnter) {
+        await k.wait(0.01); // wait for 0.1 seconds
+      }
       displayText += INTRO_TEXT[i];
       text.text = displayText;
     }
 
-    nextButton.addEventListener("click", () => {
-      nextButton.style.display = "none";
-      k.go("main");
-    });
+    nextButton.addEventListener("click", quitScene);
 
+    textHasBeenDisplayed = true;
     nextButton.style.display = "flex";
   });
 };

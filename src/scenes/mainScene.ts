@@ -6,6 +6,9 @@ import Character from "../models/Character";
 import * as easystarjs from "easystarjs";
 import { calculateDistance, fromXYToGrid } from "../utils";
 import { canvas, chatButton, isUIOpen, openUI } from "../lib/UI";
+import type jsonMap from "../../public/map.json";
+
+type Map = typeof jsonMap;
 
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
@@ -33,7 +36,7 @@ export const createMainScene = () => {
     // display chat icon
     chatButton.style.display = "flex";
 
-    const mapData = await (await fetch("./map.json")).json();
+    const mapData: Map = await (await fetch("./map.json")).json();
     easystar.setGrid(convertCollisionLayerToGrid(mapData));
     easystar.setAcceptableTiles([0]);
     const layers = mapData.layers;
@@ -104,7 +107,7 @@ export const createMainScene = () => {
   });
 };
 
-function convertCollisionLayerToGrid(map: unknown) {
+function convertCollisionLayerToGrid(map: Map) {
   const flatCollisions: number[] = [];
   for (const layer of map.layers) {
     if (
@@ -112,6 +115,7 @@ function convertCollisionLayerToGrid(map: unknown) {
       layer.name === "house" ||
       layer.name === "water"
     ) {
+      if (!layer.data) continue;
       for (let i = 0; i < layer.data.length; i++) {
         const value = layer.data[i];
         flatCollisions[i] = value > 0 ? 1 : flatCollisions[i] || 0;
@@ -142,6 +146,7 @@ function fromGridToDirection(
 }
 
 function recalculatePath(character: Character) {
+  if (!character.target) return;
   const charGridPos = fromXYToGrid(
     character.gameObject.pos.x,
     character.gameObject.pos.y,

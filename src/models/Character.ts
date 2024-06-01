@@ -46,7 +46,7 @@ export default class Character {
   direction: PlayerDirection;
   k: KaboomCtx;
   isMoving: boolean;
-  target: { x: number; y: number };
+  target?: { x: number; y: number };
   forbidMoving: boolean;
   firstName: string;
   lastName: string;
