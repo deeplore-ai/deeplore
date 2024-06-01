@@ -7,3 +7,13 @@ class Speech(BaseModel):
     speaker: str | None = None
     distance: str | None = None
     content: str | None = None
+    
+    
+class People(BaseModel):
+    firstname: str
+    lastname: str
+    role : str
+    
+        
+        
+        
