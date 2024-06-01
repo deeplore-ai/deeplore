@@ -38,5 +38,5 @@ Ton attitude et tes réponses évoluent également dans tes interactions avec le
 - Loose trust point:
   - Rude
 - Output response format:
-  - French conversation adapted with your trust level
+  - A french answer
   
