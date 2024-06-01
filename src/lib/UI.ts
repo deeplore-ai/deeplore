@@ -30,6 +30,10 @@ export const openUI = (onEnter: (textInput: string) => void) => {
       cleaned = " " + cleaned;
     }
     cleaned = cleaned
+      .replace(/(\W|^)mathieu manchini(\W|$)/gi, "$1Matthieu Mancini$2")
+      .replace(/(\W|^)matthieu manchini(\W|$)/gi, "$1Matthieu Mancini$2")
+      .replace(/(\W|^)manchini(\W|$)/gi, "$Mancini$2")
+      .replace(/(\W|^)emma du bois(\W|$)/gi, "$1Emma Dubois$2")
       .replace(/(\W|^)emma du bois(\W|$)/gi, "$1Emma Dubois$2")
       .replace(/(\W|^)emma du dubois(\W|$)/gi, "$1Emma Dubois$2")
       .replace(/(\W|^)emma(\W|$)/gi, "$1Emma$2");
