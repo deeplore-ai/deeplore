@@ -1,37 +1,20 @@
-import { GameObj, Key } from "kaboom";
+import { Key } from "kaboom";
 import { scaleFactor } from "../constants";
 import { k } from "../lib/ctx";
-import { PlayerDirection, PlayerMovement } from "../types";
+import { PlayerDirection } from "../types";
+import Character from "../models/Character";
 
-let playerDirectionStack: PlayerDirection[] = [];
+
+const characters = [
+    new Character("char1", k.vec2(100, 100), 250, scaleFactor, k),
+    new Character("char2", k.vec2(200, 200), 250, scaleFactor, k),
+];
 
 export const createMainScene = () => {
   k.scene("main", async () => {
     const mapData = await (await fetch("./map.json")).json();
     const layers = mapData.layers;
     const map = k.add([k.sprite("map"), k.pos(0), k.scale(scaleFactor)]);
-
-    const player = k.make([
-      k.sprite("spritesheet", { anim: "idle-down" }),
-      k.area({
-        shape: new k.Rect(k.vec2(0, 3), 10, 10),
-      }),
-      k.body(),
-      k.anchor("center"),
-      k.pos(),
-      k.scale(scaleFactor),
-      {
-        speed: 250,
-        direction: "down",
-        currentAnimation: "idle-down",
-      },
-      "player",
-    ]);
-
-    const playerPlayAnimation = (animation: string) => {
-      player.play(animation);
-      player.currentAnimation = animation;
-    };
 
     //Collision
     //The collision layer is named as : collisions
@@ -52,100 +35,35 @@ export const createMainScene = () => {
           ]);
         });
       }
-
-      if (layer.name === "spawn") {
-        for (const entity of layer.objects) {
-          if (entity.name === "player") {
-            player.pos = k.vec2(entity.x * scaleFactor, entity.y * scaleFactor);
-          }
-        }
-      }
     });
-    k.add(player);
-
-    const movement: {
-      [key in PlayerDirection]: PlayerMovement;
-    } = {
-      up: {
-        move: (player: GameObj) => {
-          player.move(0, -player.speed);
-        },
-        animToPlay: "walk-up",
-      },
-      down: {
-        move: (player: GameObj) => {
-          player.move(0, player.speed);
-        },
-        animToPlay: "walk-down",
-      },
-      left: {
-        move: (player: GameObj) => {
-          player.move(-player.speed, 0);
-        },
-        animToPlay: "walk-left",
-      },
-      right: {
-        move: (player: GameObj) => {
-          player.move(player.speed, 0);
-        },
-        animToPlay: "walk-right",
-      },
-    };
-
-    const playIDLEAnim = (direction: PlayerDirection) => {
-      const animationToPlay = `idle-${direction}`;
-      playerPlayAnimation(animationToPlay);
-    };
+    for (const character of characters) {
+      k.add(character.gameObject);
+    }
 
     //Player movement
-
-    Object.keys(movement).forEach((key) => {
-      const direction = key as PlayerDirection;
-      const currentMovement = movement[direction];
-      k.onKeyPress(key as Key, () => {
-        playerDirectionStack.push(direction);
-        player.play(currentMovement.animToPlay);
-        player.currentAnimation = currentMovement.animToPlay;
-        player.direction = key as PlayerDirection;
-      });
-      k.onKeyDown(key as Key, () => {
-        currentMovement.move(player);
+    const directionKeys = ["up", "down", "left", "right"];
+    for (const direction of directionKeys) {
+      k.onKeyPress(direction as Key, () => {
+          characters[0].startMovement(direction as PlayerDirection);
       });
 
-      k.onKeyRelease(key as Key, () => {
-        playerDirectionStack = playerDirectionStack.filter(
-          (dir) => dir !== direction
-        );
-
-        if (playerDirectionStack.length === 0) {
-          playIDLEAnim(direction);
-        }
+      k.onKeyDown(direction as Key, () => {
+        characters[0].move(direction as PlayerDirection);
       });
-    });
 
-    // PLayer spell
+      k.onKeyRelease(direction as Key, () => {
+        characters[0].stopMovement();
+      });
+    }
 
-    k.onKeyPress("a", () => {
-      const animToPlay = `attack-${player.direction}`;
-      playerPlayAnimation(animToPlay);
-
-      setTimeout(() => {
-        //Si la stack est vide, on joue l'animation idle
-        if (playerDirectionStack.length === 0) {
-          return playIDLEAnim(player.direction as PlayerDirection);
-        }
-
-        const currentPlayerDirection = playerDirectionStack.at(
-          -1
-        ) as PlayerDirection;
-        const newAnimToPlay = movement[currentPlayerDirection].animToPlay;
-        playerPlayAnimation(newAnimToPlay);
-      }, 200);
-    });
+    setInterval(() => {
+      characters[1].startMovement(directionKeys[Math.floor(Math.random() * 4)] as PlayerDirection);
+    }, 1000);
 
     // Camera
     k.onUpdate(() => {
-      k.camPos(player.worldPos().x, player.worldPos().y - 100);
+      k.camPos(characters[0].gameObject.worldPos().x, characters[0].gameObject.worldPos().y - 100);
+      characters[1].move(characters[1].direction);
     });
   });
 };
