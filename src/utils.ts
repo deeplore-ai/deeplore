@@ -80,7 +80,6 @@ export const truncateText = (message: string, distance: number) => {
     } else if (replacedCount === words.length) {
       break; // Exit the loop if all words have been replaced
     }
-    
   }
 
   const joinedWords = new Array<string>();
