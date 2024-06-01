@@ -1,5 +1,6 @@
 import Game from "../models/Game";
 import { speechObserver } from "../observables/speechObserver";
+import { stopMediaRecorder } from "../speech-to-text/listenSpeech";
 
 const UIElement = document.getElementById("ui");
 const input = document.getElementById("question") as HTMLInputElement;
@@ -40,6 +41,7 @@ export const openUI = (onEnter: (textInput: string) => void) => {
   const exit = () => {
     closeUI();
     speechObserver.off("speech", onTranscript);
+    stopMediaRecorder();
     input.removeEventListener("keydown", handleKeyDown);
     canvas.focus();
     Game.getInstance().isGamePaused = false;

@@ -21,6 +21,10 @@ socket.onerror = (error) => {
 
 let mediaRecorder: MediaRecorder | null = null;
 
+export function stopMediaRecorder() {
+  mediaRecorder?.stop();
+}
+
 // const connection = deepgram.listen.live({
 //   model: "nova-2",
 //   language: "fr-FR",
@@ -55,7 +59,7 @@ async function createMediaRecorder(onTranscript: (transcript: string) => void) {
   socket.onmessage = (message) => {
     const received = JSON.parse(message.data);
     const transcript = received.channel.alternatives[0].transcript as string;
-    if (transcript && received.is_final) {
+    if (transcript) {
       onTranscript(transcript);
       console.log(transcript);
     }
