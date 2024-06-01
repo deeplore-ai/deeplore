@@ -55,13 +55,13 @@ async function createMediaRecorder() {
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   mediaRecorder = new MediaRecorder(stream);
   mediaRecorder.ondataavailable = (e) => {
-    console.log(e.data);
+    console.log("Socket", socket.readyState);
     if (socket.readyState === WebSocket.OPEN) {
+      console.log("sending data", e.data);
       socket.send(e.data);
+    } else {
+      console.log("socket not open", socket.readyState);
     }
-    socket.onmessage = (message) => {
-      console.log({ event: "onmessage", message });
-    };
   };
   return mediaRecorder;
 }
