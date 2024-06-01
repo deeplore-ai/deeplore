@@ -7,9 +7,11 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 
+from .config import MISTRAL_API_KEY, DEBUG
+
 
 # Load data
-loader = DirectoryLoader(r'data', glob="**/*.txt")
+loader = DirectoryLoader('data', glob="**/*.txt")
 docs = loader.load()
 
 for document in docs:
@@ -24,16 +26,16 @@ for document in docs:
 text_splitter = RecursiveCharacterTextSplitter()
 documents = text_splitter.split_documents(docs)
 # Define the embedding model
-embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=api_key)
+embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY)
 # Create the vector store 
 vector = FAISS.from_documents(documents, embeddings)
 
 # Define a retriever interface
 retriever = vector.as_retriever()
 # Define LLM
-model = ChatMistralAI(mistral_api_key=api_key)
+model = ChatMistralAI(mistral_api_key=MISTRAL_API_KEY)
 # Define prompt template
-prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context:
+prompt = ChatPromptTemplate.from_template("""
 
 <context>
 {context}
@@ -44,5 +46,5 @@ Question: {input}""")
 # Create a retrieval chain to answer questions
 document_chain = create_stuff_documents_chain(model, prompt)
 retrieval_chain = create_retrieval_chain(retriever, document_chain)
-response = retrieval_chain.invoke({"input": "What were the two main things the author worked on before college?"})
+response = retrieval_chain.invoke({"input": "Qui est Emma Dubois ?"})
 print(response["answer"])
