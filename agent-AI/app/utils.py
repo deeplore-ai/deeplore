@@ -10,9 +10,9 @@ output = open(pathlib.Path("data/context.txt"), 'r').read()
 def getPrompt(speech: Speech):
     concat_id = speech.firstname+'_'+speech.lastname+'.txt'
     conversations = open("data/conversations_"+concat_id, 'r').read()
-    heard_conversations = open("data/heard_conversations_"+concat_id, 'r').read()
+    heard_conversations = open("data/heard_conversation_"+concat_id, 'r').read()
     npc = open("data/npc_"+concat_id, 'r').read()
-    relation = open("data/relation_"+concat_id, 'r').read()
+    relation = open("data/relations_"+concat_id, 'r').read()
 
     return f"""{context} \n\n
         {npc} \n\n

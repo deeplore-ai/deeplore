@@ -29,12 +29,6 @@ def test_chat_priest(speech: Speech):
     
 def chat(speech: Speech):
     
-    if speech.npc == "Priest" :
-        npc_context = f"""Tu es {mancini.read()}\n
-        """
-    elif speech.npc == "Girl" :
-        npc_context = f"""Tu es {dubois.read()}\n
-        """
     
     
     chat_response = client.chat(
