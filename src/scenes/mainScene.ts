@@ -63,6 +63,13 @@ export const createMainScene = () => {
       }
     });
 
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isUIOpen()) {
+        canvas.focus();
+        closeUI();
+      }
+    });
+
     chatButton.addEventListener("click", () => {
       openUI(onPlayerAskQuestion);
     });
@@ -180,7 +187,7 @@ function fromGridToDirection(
   }
 }
 
-function recalculatePath(character: Character) {
+const recalculatePath = (character: Character) => {
   if (!character.target) return;
   const charGridPos = fromXYToGrid(
     character.gameObject.pos.x,
@@ -208,7 +215,7 @@ function recalculatePath(character: Character) {
     }
   );
   easystar.calculate();
-}
+};
 
 function onPlayerAskQuestion(textInput: string) {
   const priestDistance = calculateDistance(

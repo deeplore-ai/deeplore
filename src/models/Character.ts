@@ -149,16 +149,21 @@ export default class Character {
     return x % mapWidth === 0 && y % mapHeight === 0;
   }
 
-  obfuscateBasedOnDistance(lines: string[], speakingCharacter: Character): string[] {
-    const distance = calculateDistance(this.gameObject.pos, speakingCharacter.gameObject.pos);
+  obfuscateBasedOnDistance(
+    lines: string[],
+    speakingCharacter: Character
+  ): string[] {
+    const distance = calculateDistance(
+      this.gameObject.pos,
+      speakingCharacter.gameObject.pos
+    );
     if (distance < LISTEN_RANGE) {
-      return lines.map(line => truncateText(line, distance - LISTEN_RANGE));
+      return lines.map((line) => truncateText(line, distance - LISTEN_RANGE));
     }
     return lines;
   }
 
   speak(text: string) {
-    const delayByWordsInMs = 350;
     const maxCharsPerLine = 30;
     const words = text.split(" ");
     let lines = [];
