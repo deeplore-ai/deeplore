@@ -9,16 +9,8 @@ client = MistralClient(api_key=MISTRAL_API_KEY)
 
 test_policeman_diag = "Hello, I am a policeman, I am investigating on a murder in the town. Did you see or hear something strange ?"
 
-# chat_response = client.chat(
-#     model=model,
-#     messages=[ChatMessage(role="user", content=f"""
-#                           Respond in french. 
-#                           You are a non playable character in a murder story game. 
-#                           You are the priest of the town and you saw at strange people last night running in the streets with a knife. 
-#                           You respond to the policeman who says : "{test_policeman_diag}" """)]
-# )
-
-# print(chat_response.choices[0].message.content)
+mancini = open('data/mancini.txt', 'r')
+dubois = open('data/dubois.txt', 'r')
 
 def test_chat_priest(speech: Speech):
     chat_response = client.chat(
@@ -37,18 +29,22 @@ def test_chat_priest(speech: Speech):
 def chat(speech: Speech):
     
     if speech.npc == "Priest" :
-        npc_context = """"""
+        npc_context = f"""Tu es {mancini.read()}\n
+        """
     elif speech.npc == "Girl" :
-        npc_context = """"""
+        npc_context = f"""Tu es {dubois.read()}\n
+        """
     
     
     chat_response = client.chat(
         model=model,
         messages=[ChatMessage(role="user", content=f"""
-                            Respond in french. 
-                            You are a non playable character in a murder story game. 
-                            You are {speech.npc} of the town and you saw at strange people last night running in the streets with a knife. 
-                            You respond to {speech.speaker} who says : "{speech.content}" """)]
+                            Répond en français.
+                            Tu es un personnage fictif et tu dois répondre à un autre personnage
+                            Contexte :
+                            {npc_context}
+                            Dialogue :
+                            Un policier t'aborde et dit : "{speech.content}" """)]
         )
     if DEBUG :
         print(chat_response)

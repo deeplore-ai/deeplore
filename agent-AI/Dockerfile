@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r  requirements.txt
 ENV APP_HOME /root
 WORKDIR $APP_HOME
 COPY /app $APP_HOME/app
-
+COPY /data $APP_HOME/data
 COPY .env.yaml /.env.yaml
 
 EXPOSE 8080
