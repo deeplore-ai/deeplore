@@ -136,7 +136,7 @@ export default class Character {
       })
       .catch((e) => {
         console.log(e);
-        this.speak("Nolo comprendo very long text to test obfuscation");
+        this.speak("Nolo comprendo");
       });
   }
 
