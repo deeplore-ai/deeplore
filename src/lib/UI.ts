@@ -25,6 +25,8 @@ export const openUI = (onEnter: (textInput: string) => void) => {
     let cleaned = transcript.trim();
     if (input.value === "") {
       cleaned = cleaned[0].toUpperCase() + cleaned.slice(1);
+    } else {
+      cleaned = " " + cleaned;
     }
     cleaned = cleaned
       .replace("(\\W|^)emma du bois(\\W|$)", "$1Emma Dubois$2")
