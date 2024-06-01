@@ -20,7 +20,7 @@ async def root():
     return {"Status" : "Alive"}
 
 @app.post("/hear")
-async def hear(speech: Speech):
-    result = test_chat_priest(speech)
-    return {"NPC": "Priest", "Speech": f"{result}"}
+async def hear(speech: Speech): # TODO move npc to listener
+    result = chat(speech)
+    return {"NPC": speech.speaker,"Speaker": speech.npc, "Speech": f"{result}"}
 
