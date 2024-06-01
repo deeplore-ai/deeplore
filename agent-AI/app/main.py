@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from concurrent.futures import ThreadPoolExecutor
+import asyncio
 from .mistral import *
 from .config import DEBUG
 from .classes import Speech
@@ -7,6 +9,7 @@ from .utils import getPrompt
 from .gemini import chat_gemini
 from .langchain_test import *
 from .gemini_flash import chat_gemini_flash
+
 
 origins = ["*"]
 app = FastAPI()
@@ -17,7 +20,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+executor = ThreadPoolExecutor(max_workers=8)
 
 @app.get("/", tags=["root"])
 async def root():
@@ -65,7 +68,8 @@ async def hearGemini(speech: Speech):
 async def hearLangchain(speech: Speech): 
     with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
-    result = chat_langchain(speech)
+    loop = asyncio.get_event_loop()
+    result = await loop.run_in_executor(executor, chat_langchain, speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ ' : ' + speech.content)
         f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
