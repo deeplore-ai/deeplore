@@ -109,7 +109,7 @@ export default class Character {
     this.direction = direction;
   }
 
-  hear(text: string, speaker: string) {
+  hear(text: string, speaker: Character) {
     this.startThinking();
     fetch("https://app-fqj7trlqhq-od.a.run.app/hear", {
       method: "POST",
@@ -124,7 +124,8 @@ export default class Character {
         id: this.name,
         firstname: this.firstName,
         lastname: this.lastName,
-        speaker: speaker,
+        speaker: speaker.firstName + " " + speaker.lastName,
+        distance: distanceToString(calculateDistance(this.gameObject.pos, speaker.gameObject.pos)),
       }),
     })
       .then((res) => {
@@ -292,4 +293,13 @@ export default class Character {
       closed();
     }, destroyDelay);
   }
+}
+
+function distanceToString(distance: number) {
+  if (distance < START_TRUNCATED_RANGE) {
+    return "small distance";
+  } else if (distance < (START_TRUNCATED_RANGE + MAX_LISTEN_RANGE) / 2) {
+    return "medium distance";
+  }
+  return "large distance";
 }

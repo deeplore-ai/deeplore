@@ -217,9 +217,9 @@ function onPlayerAskQuestion(textInput: string) {
     characters[1].gameObject.pos
   );
   if (priestDistance < MAX_LISTEN_RANGE) {
-    characters[2].hear(textInput, "Paul Martinez");
+    characters[2].hear(textInput, player);
   }
   if (emmaDistance < MAX_LISTEN_RANGE) {
-    characters[1].hear(textInput, "Paul Martinez");
+    characters[1].hear(textInput, player);
   }
 }
