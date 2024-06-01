@@ -1,6 +1,6 @@
-import { GameObj, KaboomCtx, Vec2 } from "kaboom";
+import { GameObj, KaboomCtx, PosComp, TextComp, Vec2 } from "kaboom";
 import { PlayerDirection } from "../types";
-import { LISTEN_RANGE, scaleFactor } from "../constants";
+import { MAX_LISTEN_RANGE, scaleFactor, START_TRUNCATED_RANGE } from "../constants";
 import Game from "./Game";
 import { calculateDistance, truncateText } from "../utils";
 
@@ -50,6 +50,9 @@ export default class Character {
   forbidMoving: boolean;
   firstName: string;
   lastName: string;
+  player: Character | null;
+  thinkingBubble: GameObj | null = null;
+  thinkingText: GameObj<PosComp | TextComp> | null = null;
 
   constructor(
     name: string,
@@ -58,7 +61,8 @@ export default class Character {
     scaleFactor: number,
     k: KaboomCtx,
     firstName: string,
-    lastName: string
+    lastName: string,
+    player: Character | null = null
   ) {
     this.name = name;
     this.initialPosition = initialPosition;
@@ -81,6 +85,7 @@ export default class Character {
     this.forbidMoving = false;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.player = player;
   }
 
   startMovement(direction: PlayerDirection) {
@@ -104,7 +109,8 @@ export default class Character {
     this.direction = direction;
   }
 
-  hear(text: string, speaker: string) {
+  hear(text: string, speaker: Character) {
+    this.startThinking();
     fetch("https://app-fqj7trlqhq-od.a.run.app/hear", {
       method: "POST",
       // no cors
@@ -118,19 +124,22 @@ export default class Character {
         id: this.name,
         firstname: this.firstName,
         lastname: this.lastName,
-        speaker: speaker,
+        speaker: speaker.firstName + " " + speaker.lastName,
+        distance: distanceToString(calculateDistance(this.gameObject.pos, speaker.gameObject.pos)),
       }),
     })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         this.speak(data.Speech);
       })
       .catch((e) => {
         console.log(e);
         this.speak("Nolo comprendo");
+      })
+      .finally(() => {
+        this.stopThinking();
       });
   }
 
@@ -149,18 +158,59 @@ export default class Character {
     return x % mapWidth === 0 && y % mapHeight === 0;
   }
 
-  obfuscateBasedOnDistance(
-    lines: string[],
-    speakingCharacter: Character
-  ): string[] {
-    const distance = calculateDistance(
-      this.gameObject.pos,
-      speakingCharacter.gameObject.pos
-    );
-    if (distance < LISTEN_RANGE) {
-      return lines.map((line) => truncateText(line, distance - LISTEN_RANGE));
+  obfuscateBasedOnDistance(line: string, speakingCharacter: Character | null): string {
+    if (!speakingCharacter) return line;
+    const distance = calculateDistance(this.gameObject.pos, speakingCharacter.gameObject.pos);
+    if (distance > START_TRUNCATED_RANGE && distance < MAX_LISTEN_RANGE) {
+      return truncateText(line, distance - START_TRUNCATED_RANGE);
     }
-    return lines;
+    return line;
+  }
+
+  async startThinking() {
+    this.thinkingBubble = this.k.add([
+      this.k.rect(50, 28, {
+        radius: 5,
+      }),
+      this.k.pos(
+        this.gameObject.pos.x - 50 / 2,
+        this.gameObject.pos.y - 80
+      ),
+      this.k.color(255, 255, 255),
+    ]);
+    let i = 0;
+    this.thinkingText = this.k.add([
+      this.k.text("", {
+        size: 24,
+        font: "monospace",
+        transform: {
+          color: this.k.rgb(0, 0, 0),
+        },
+      }),
+      this.k.pos(
+        this.gameObject.pos.x - 50 / 2,
+        this.gameObject.pos.y - 80
+      ),
+    ]);
+    while (this.thinkingBubble) {
+      i++;
+      await this.k.wait(0.1);
+      if (!this.thinkingText) {
+        continue;
+      }
+      this.thinkingText.text = ".".repeat(i);
+      if (i > 3) {
+        i = 0;
+        this.thinkingText.text = "";
+      }
+    }
+  }
+
+  stopThinking() {
+    this.thinkingBubble?.destroy();
+    this.thinkingText?.destroy();
+    this.thinkingBubble = null;
+    this.thinkingText = null;
   }
 
   speak(text: string) {
@@ -213,7 +263,7 @@ export default class Character {
 
     const texts = lines.map((line, index) =>
       this.k.add([
-        this.k.text(line.trim(), {
+        this.k.text(this.obfuscateBasedOnDistance(line.trim(), this.player), {
           size: 12,
           font: "monospace",
           transform: {
@@ -243,4 +293,13 @@ export default class Character {
       closed();
     }, destroyDelay);
   }
+}
+
+function distanceToString(distance: number) {
+  if (distance < START_TRUNCATED_RANGE) {
+    return "proche";
+  } else if (distance < (START_TRUNCATED_RANGE + MAX_LISTEN_RANGE) / 2) {
+    return "pas très loin";
+  }
+  return "loin";
 }

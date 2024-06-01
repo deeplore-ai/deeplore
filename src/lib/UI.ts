@@ -9,7 +9,9 @@ export const pauseScreen = document.getElementById(
 ) as HTMLDivElement;
 export const chatButton = document.getElementById("chat") as HTMLButtonElement;
 export const nextButton = document.getElementById("next") as HTMLButtonElement;
-
+export const nextDescription = document.getElementById(
+  "next-description"
+) as HTMLSpanElement;
 export const openUI = (onEnter: (textInput: string) => void) => {
   if (UIElement === null) return;
   Game.getInstance().isGamePaused = true;
@@ -46,4 +48,12 @@ export const closeUI = () => {
 export const isUIOpen = () => {
   if (UIElement === null) return false;
   return UIElement.style.display === "flex";
+};
+
+export const displayNextButton = () => {
+  nextButton.style.display = "flex";
+};
+
+export const hideNextButton = () => {
+  nextButton.style.display = "none";
 };

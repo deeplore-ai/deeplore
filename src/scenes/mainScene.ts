@@ -1,5 +1,5 @@
 import { Key } from "kaboom";
-import { LISTEN_RANGE, scaleFactor } from "../constants";
+import { MAX_LISTEN_RANGE, scaleFactor } from "../constants";
 import { k } from "../lib/ctx";
 import { PlayerDirection } from "../types";
 import Character from "../models/Character";
@@ -7,23 +7,16 @@ import * as easystarjs from "easystarjs";
 import { calculateDistance, fromXYToGrid } from "../utils";
 import { canvas, chatButton, closeUI, isUIOpen, openUI } from "../lib/UI";
 import type jsonMap from "../../public/map.json";
+import { listenSpeech } from "../speech-to-text/listenSpeech";
 
 type Map = typeof jsonMap;
 
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
-import { listenSpeech } from "../speech-to-text/listenSpeech";
+const player = new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k, "Paul", "Martinez");
 
 const characters = [
-  new Character(
-    "char1",
-    k.vec2(1343, 1052),
-    250,
-    scaleFactor,
-    k,
-    "Paul",
-    "Martinez"
-  ),
+  player,
   new Character(
     "Girl",
     k.vec2(1343, 1400),
@@ -31,7 +24,8 @@ const characters = [
     scaleFactor,
     k,
     "Emma",
-    "Dubois"
+    "Dubois",
+    player
   ),
   new Character(
     "Priest",
@@ -40,12 +34,14 @@ const characters = [
     scaleFactor,
     k,
     "Matthieu",
-    "Mancini"
+    "Mancini",
+    player
   ),
+
 ];
 
 const askQuestion = () => {
-  listenSpeech();
+  // listenSpeech();
   openUI(onPlayerAskQuestion);
 };
 
@@ -127,12 +123,6 @@ export const createMainScene = () => {
         characters[0].stopMovement();
       });
     }
-
-    // characters[2].setTarget(characters[0].gameObject.pos);
-    // recalculatePath(characters[2]);
-    /*     openUI((textInput) => {
-      characters[0].speak(textInput);
-    }); */
 
     // Camera
     k.onUpdate(() => {
@@ -226,11 +216,10 @@ function onPlayerAskQuestion(textInput: string) {
     characters[0].gameObject.pos,
     characters[1].gameObject.pos
   );
-  if (priestDistance < LISTEN_RANGE) {
-    characters[2].hear(textInput, "Paul Martinez");
+  if (priestDistance < MAX_LISTEN_RANGE) {
+    characters[2].hear(textInput, player);
   }
-  if (emmaDistance < LISTEN_RANGE) {
-    characters[1].hear(textInput, "Paul Martinez");
+  if (emmaDistance < MAX_LISTEN_RANGE) {
+    characters[1].hear(textInput, player);
   }
-  characters[0].speak(textInput);
 }
