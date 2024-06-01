@@ -4,7 +4,8 @@ from .mistral import *
 from .config import DEBUG
 from .classes import Speech
 from .utils import getPrompt
-from .gemini import chat_gemini
+#from .gemini import chat_gemini
+from .langchain_test import *
 
 origins = ["*"]
 app = FastAPI()
