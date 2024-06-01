@@ -13,6 +13,7 @@ import Game from "../models/Game";
 const characters = [
   new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k),
   new Character("char2", k.vec2(1343, 1100), 250, scaleFactor, k),
+  new Character("priest", k.vec2(1250, 1100), 250, scaleFactor, k),
 ];
 
 export const createMainScene = () => {
@@ -20,7 +21,7 @@ export const createMainScene = () => {
     if (e.key === "Enter" && !isUIOpen()) {
       openUI((textInput) => {
         characters[0].speak(textInput);
-        characters[1].hear(textInput);
+        characters[2].hear(textInput);
       });
     }
   });
@@ -83,17 +84,12 @@ export const createMainScene = () => {
 
     setInterval(() => {
       if (Game.getInstance().isGamePaused) return;
-      const player = characters[0];
-      const playerDistance = calculateDistance(
-        player.gameObject.pos,
-        characters[1].gameObject.pos
-      );
 
       // Random between speak and move
       if (Math.random() > 0.5) {
-        characters[1].startMovement(characters[1].direction);
+        characters[2].startMovement(characters[2].direction);
       } else {
-        characters[1].stopMovement();
+        characters[2].stopMovement();
         // characters[1].speak("Hello les reufs");
 
         /*const LISTEN_RANGE = 300;
@@ -109,8 +105,8 @@ export const createMainScene = () => {
       }
     }, 1000);
 
-    characters[1].setTarget(characters[0].gameObject.pos);
-    recalculatePath(characters[1]);
+    characters[2].setTarget(characters[0].gameObject.pos);
+    recalculatePath(characters[2]);
     /*     openUI((textInput) => {
       characters[0].speak(textInput);
     }); */
@@ -122,9 +118,9 @@ export const createMainScene = () => {
         characters[0].gameObject.worldPos().x,
         characters[0].gameObject.worldPos().y - 100
       );
-      if (characters[1].isMoving) {
-        characters[1].move(characters[1].direction);
-        characters[1].setTarget(characters[0].gameObject.pos);
+      if (characters[2].isMoving) {
+        characters[2].move(characters[2].direction);
+        characters[2].setTarget(characters[0].gameObject.pos);
       }
     });
   });

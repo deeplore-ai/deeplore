@@ -15,10 +15,6 @@ export const setupKaboom = () => {
       "char1-walk-right": { from: 975, to: 978, loop: true, speed: 8 },
       "char1-idle-up": 1014,
       "char1-walk-up": { from: 1014, to: 1017, loop: true, speed: 8 },
-      "char1-attack-up": 1094,
-      "char1-attack-down": 1092,
-      "char1-attack-left": 1095,
-      "char1-attack-right": 1093,
 
       "char2-idle-down": 940,
       "char2-walk-down": { from: 940, to: 943, loop: true, speed: 8 },
@@ -28,10 +24,15 @@ export const setupKaboom = () => {
       "char2-walk-right": { from: 979, to: 982, loop: true, speed: 8 },
       "char2-idle-up": 1018,
       "char2-walk-up": { from: 1018, to: 1021, loop: true, speed: 8 },
-      "char2-attack-up": 1098,
-      "char2-attack-down": 1092,
-      "char2-attack-left": 1095,
-      "char2-attack-right": 1093,
+
+      "priest-idle-down": 866,
+      "priest-walk-down": { from: 866, to: 867, loop: true, speed: 8 },
+      "priest-walk-left": { from: 907, to: 908, loop: true, speed: 8 },
+      "priest-idle-left": 907,
+      "priest-idle-right": 868,
+      "priest-walk-right": { from: 868, to: 869, loop: true, speed: 8 },
+      "priest-idle-up": 905,
+      "priest-walk-up": { from: 905, to: 906, loop: true, speed: 8 },
     },
   });
 

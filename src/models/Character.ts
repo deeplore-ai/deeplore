@@ -105,9 +105,14 @@ export default class Character {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ content: text, npc: "priest", speaker: "Dietrich Hoffman" }),
-    }).then((res) => {
-      return res.json();
+      body: JSON.stringify({
+        content: text,
+        npc: "priest",
+        speaker: "Dietrich Hoffman",
+      }),
+    })
+      .then((res) => {
+        return res.json();
       })
       .then((data) => {
         console.log(data);
@@ -199,9 +204,12 @@ export default class Character {
         this.k.color(0, 0, 0),
       ])
     );
-    
+
     const delayByWordsInMs = 350;
-    const wordCount = lines.reduce((acc, line) => acc + line.split(" ").length, 0);
+    const wordCount = lines.reduce(
+      (acc, line) => acc + line.split(" ").length,
+      0
+    );
     const destroyDelay = delayByWordsInMs * wordCount + 400;
 
     const bubbleInterval = setInterval(() => {
