@@ -1,19 +1,13 @@
 import google.generativeai as genai
 import os
+from .utils import getPrompt
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel(name='gemini-pro')
-response = model.generate_content('Please summarise this document: ...')
 
-print(response.text)
-
-
-def chat(speech: Speech):
-     
-
-    
-    chat_response = model.generate_content()  
+def chat_gemini(speech: Speech):
+    chat_response = model.generate_content(getPrompt(speech))  
     if DEBUG :
         print(chat_response)
-    return chat_response.choices[0].message.content
+    return chat_response.text

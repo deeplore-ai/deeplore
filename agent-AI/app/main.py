@@ -4,6 +4,7 @@ from .mistral import *
 from .config import DEBUG
 from .classes import Speech
 from .utils import getPrompt
+from .gemini import chat_gemini
 
 origins = ["*"]
 app = FastAPI()
@@ -23,6 +24,12 @@ async def root():
 @app.post("/hear")
 async def hear(speech: Speech): # TODO move npc to listener
     result = chat(speech)
+    return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+
+
+@app.post("/hearGemini")
+async def hear(speech: Speech): # TODO move npc to listener
+    result = chat_gemini(speech)
     return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
 
 # @app.get("/hear")
