@@ -19,7 +19,7 @@ def to_markdown(text):
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
-model = genai.GenerativeModel(model_name='gemini-flash')
+model = genai.GenerativeModel(model_name='gemini-1.5-flash')
 
 def chat_gemini_flash(speech: Speech):
     chat_response = model.generate_content(f"""
