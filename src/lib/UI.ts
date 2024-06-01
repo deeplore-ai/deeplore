@@ -68,6 +68,7 @@ export const closeUI = () => {
   if (UIElement === null) return;
   UIElement.style.display = "none";
   pauseScreen.style.display = "none";
+  stopMediaRecorder();
 };
 
 export const isUIOpen = () => {
@@ -81,4 +82,12 @@ export const displayNextButton = () => {
 
 export const hideNextButton = () => {
   nextButton.style.display = "none";
+};
+
+export const displayChatButton = () => {
+  chatButton.style.display = "flex";
+};
+
+export const hideChatButton = () => {
+  chatButton.style.display = "none";
 };
