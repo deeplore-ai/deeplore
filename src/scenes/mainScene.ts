@@ -7,12 +7,14 @@ import * as easystarjs from "easystarjs";
 import { calculateDistance, fromXYToGrid } from "../utils";
 import { canvas, chatButton, closeUI, isUIOpen, openUI } from "../lib/UI";
 import type jsonMap from "../../public/map.json";
+import { listenSpeech } from "../speech-to-text/listenSpeech";
 
 type Map = typeof jsonMap;
 
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
 const player = new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k, "Paul", "Martinez");
+
 const characters = [
   player,
   new Character(
@@ -38,11 +40,22 @@ const characters = [
 
 ];
 
+const askQuestion = () => {
+  listenSpeech();
+  openUI(onPlayerAskQuestion);
+};
+
 export const createMainScene = () => {
   k.scene("main", async () => {
     canvas.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !isUIOpen()) {
-        openUI(onPlayerAskQuestion);
+        askQuestion();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isUIOpen()) {
+        askQuestion();
       }
     });
 
@@ -164,7 +177,7 @@ function fromGridToDirection(
   }
 }
 
-function recalculatePath(character: Character) {
+const recalculatePath = (character: Character) => {
   if (!character.target) return;
   const charGridPos = fromXYToGrid(
     character.gameObject.pos.x,
@@ -192,7 +205,7 @@ function recalculatePath(character: Character) {
     }
   );
   easystar.calculate();
-}
+};
 
 function onPlayerAskQuestion(textInput: string) {
   const priestDistance = calculateDistance(
