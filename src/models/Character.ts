@@ -8,6 +8,7 @@ import {
 import Game from "./Game";
 import { calculateDistance, truncateText } from "../utils";
 import EventBus from "../EventBus";
+import settings from "../settings";
 
 export type PlayerMovement = {
   move: (character: Character) => void;
@@ -117,7 +118,7 @@ export default class Character {
   hear(text: string, speaker: Character) {
     this.startThinking();
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
-    fetch("https://app-fqj7trlqhq-od.a.run.app/hearLangchain", {
+    fetch(`https://app-fqj7trlqhq-od.a.run.app/${settings.endpoint}`, {
       method: "POST",
       // no cors
       headers: {
