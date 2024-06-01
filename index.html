@@ -25,55 +25,55 @@
         position: relative;
       }
 
-      #textbox {
-        position: absolute;
-        left: 10%;
-        right: 10%;
-        bottom: 2vh;
-        min-height: 10vh;
-        background: white;
-        border-radius: 3px;
-        outline-style: solid;
-        padding: 1rem;
-        display: flex;
+      #ui {
+        display: none;
         flex-direction: column;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items: flex-start;
-        word-spacing: 0.2rem;
-        filter: drop-shadow(0 0 0.75rem rgb(112, 112, 112));
-        /* overflow: auto; */
+        gap: 20px;
+
+        position: absolute;
+        left: 5px;
+        bottom: 20px;
+
+        padding: 7px;
+
+        width: calc(100% - 24px);
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+
+        z-index: 100;
+
+        color: white;
+
+        border: 1px solid white;
+        border-radius: 5px;
       }
 
-      .ui-text {
-        margin: 0;
-        user-select: none;
+      #ui h3 {
+        padding: 0px;
+        margin: 0px;
       }
 
-      .ui-close-btn {
+      input {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        background-color: transparent;
+        border: none;
+        color: white;
         font-family: monogram, monospace;
-        border-style: none;
-        border-radius: 3px;
-        padding: 1rem;
-        font-size: inherit;
+        font-size: 35px;
       }
 
-      .btn-container {
-        align-self: flex-end;
-        margin-top: 1rem;
-      }
-
-      .note {
-        position: absolute;
-        left: 5%;
-        top: 1vh;
-        display: flex;
-        flex-direction: column;
-        color: rgb(238, 238, 238);
+      input:focus {
+        outline: none;
       }
     </style>
     <div id="app">
-      <div id="ui"></div>
+      <div id="ui">
+        <h3>Votre question</h3>
+        <input type="text" id="question" />
+      </div>
       <canvas id="game"></canvas>
     </div>
     <script type="module" src="/src/main.ts"></script>

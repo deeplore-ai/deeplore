@@ -164,6 +164,6 @@ export default class Character {
     setTimeout(() => {
       bubble.destroy();
       texts.map((t) => t.destroy());
-    }, delayByWordsInMs * words.length);
+    }, delayByWordsInMs * words.length + 400);
   }
 }

@@ -5,13 +5,13 @@ import { PlayerDirection } from "../types";
 import Character from "../models/Character";
 import * as easystarjs from "easystarjs";
 import { fromXYToGrid } from "../utils";
-
+import { openUI } from "../lib/UI";
 
 const easystar = new easystarjs.js();
 
 const characters = [
-  new Character("char1", k.vec2(100, 100), 250, scaleFactor, k),
-  new Character("char2", k.vec2(200, 200), 250, scaleFactor, k),
+  new Character("char1", k.vec2(1343, 1052), 250, scaleFactor, k),
+  new Character("char2", k.vec2(1343, 1100), 250, scaleFactor, k),
 ];
 
 export const createMainScene = () => {
@@ -76,6 +76,9 @@ export const createMainScene = () => {
 
     characters[1].setTarget(characters[0].gameObject.pos);
     recalculatePath(characters[1]);
+    /*     openUI((textInput) => {
+      characters[0].speak(textInput);
+    }); */
 
     // Camera
     k.onUpdate(() => {
