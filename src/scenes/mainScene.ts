@@ -3,6 +3,11 @@ import { scaleFactor } from "../constants";
 import { k } from "../lib/ctx";
 import { PlayerDirection } from "../types";
 import Character from "../models/Character";
+import * as easystarjs from "easystarjs";
+import { fromXYToGrid } from "../utils";
+
+
+const easystar = new easystarjs.js();
 
 const characters = [
   new Character("char1", k.vec2(100, 100), 250, scaleFactor, k),
@@ -12,6 +17,8 @@ const characters = [
 export const createMainScene = () => {
   k.scene("main", async () => {
     const mapData = await (await fetch("./map.json")).json();
+    easystar.setGrid(convertCollisionLayerToGrid(mapData));
+    easystar.setAcceptableTiles([0]);
     const layers = mapData.layers;
     const map = k.add([k.sprite("map"), k.pos(0), k.scale(scaleFactor)]);
 
@@ -59,7 +66,7 @@ export const createMainScene = () => {
       // Random between speak and move
       if (Math.random() > 0.5) {
         characters[1].startMovement(
-          directionKeys[Math.floor(Math.random() * 4)] as PlayerDirection
+          characters[1].direction
         );
       } else {
         characters[1].stopMovement();
@@ -67,13 +74,75 @@ export const createMainScene = () => {
       }
     }, 1000);
 
+    characters[1].setTarget(characters[0].gameObject.pos);
+    recalculatePath(characters[1]);
+
     // Camera
     k.onUpdate(() => {
       k.camPos(
         characters[0].gameObject.worldPos().x,
         characters[0].gameObject.worldPos().y - 100
       );
-      characters[1].move(characters[1].direction);
+      if (characters[1].isMoving) {
+        characters[1].move(characters[1].direction);
+        characters[1].setTarget(characters[0].gameObject.pos);
+      }
     });
   });
 };
+
+
+function convertCollisionLayerToGrid(map: unknown) {
+  const flatCollisions: number[] = [];
+  for (const layer of map.layers) {
+    if (layer.name === "tree" || layer.name === "house" || layer.name === "house-outside") {
+      for (let i = 0; i < layer.data.length; i++) {
+        const value = layer.data[i];
+        flatCollisions[i] = value > 0 ? 1 : (flatCollisions[i] || 0);
+      }
+    }
+  }
+  const collisions: number[][] = [];
+  for (let i = 0; i < flatCollisions.length; i += map.width) {
+    collisions.push(flatCollisions.slice(i, i + map.width));
+  }
+  return collisions;
+}
+
+function fromGridToDirection(nextPos: { x: number; y: number }, charGridPos: { x: number; y: number }) {
+  console.log(nextPos, charGridPos);
+  if (nextPos.x < charGridPos.x) {
+    return "left";
+  } else if (nextPos.x > charGridPos.x) {
+    return "right";
+  }
+  if (nextPos.y < charGridPos.y) {
+    return "up";
+  } else if (nextPos.y > charGridPos.y) {
+    return "down";
+  }
+}
+
+function recalculatePath(character: Character) {
+  const charGridPos = fromXYToGrid(
+    character.gameObject.pos.x,
+    character.gameObject.pos.y,
+    16
+  );
+  const targetGridPos = fromXYToGrid(
+    character.target.x,
+    character.target.y,
+    16
+  );
+  easystar.findPath(
+    charGridPos.x, charGridPos.y,
+    targetGridPos.x, targetGridPos.y,
+    (path: { x: number; y: number }[]) => {
+      if (path && path.length > 1) {
+        character.direction = fromGridToDirection(path[1], charGridPos) as PlayerDirection;
+      }
+      recalculatePath(character);
+    }
+  );
+  easystar.calculate();
+}

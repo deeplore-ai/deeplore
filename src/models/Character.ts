@@ -1,5 +1,6 @@
 import { GameObj, KaboomCtx, Vec2 } from "kaboom";
 import { PlayerDirection } from "../types";
+import { scaleFactor } from "../constants";
 
 export type PlayerMovement = {
   move: (character: Character) => void;
@@ -42,6 +43,8 @@ export default class Character {
   gameObject: GameObj;
   direction: PlayerDirection;
   k: KaboomCtx;
+  isMoving: boolean;
+  target: { x: number; y: number };
 
   constructor(
     name: string,
@@ -67,15 +70,22 @@ export default class Character {
 
     this.k = k;
     this.direction = "down";
+    this.isMoving = false;
   }
 
   startMovement(direction: PlayerDirection) {
     this.direction = direction;
     this.gameObject.play(this.name + "-" + movement[direction].animToPlay);
+    this.isMoving = true;
   }
 
   stopMovement() {
     this.playIdleAnimation();
+    this.isMoving = false;
+  }
+
+  setTarget(target: { x: number; y: number }) {
+    this.target = target;
   }
 
   move(direction: PlayerDirection) {
@@ -89,6 +99,13 @@ export default class Character {
 
   playIdleAnimation() {
     this.gameObject.play(`${this.name}-idle-${this.direction}`);
+  }
+
+  movementNeeded(mapWidth: number, mapHeight: number) {
+    const x = this.gameObject.pos.x / scaleFactor;
+    const y = this.gameObject.pos.y / scaleFactor;
+    console.log(x, y, mapWidth, mapHeight);
+    return x % mapWidth === 0 && y % mapHeight === 0;
   }
 
   speak(text: string) {
