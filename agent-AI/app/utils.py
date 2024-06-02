@@ -9,11 +9,11 @@ instructions = open(pathlib.Path("data/instructions.txt"), 'r').read()
 
 
 def getPrompt(speech: Speech):
-    concat_id = speech.firstname+'_'+speech.lastname+ '_' + speech.id+'.txt'
-    conversations = open("data/provisoire/conversations_"+concat_id, 'r').read()
-    heard_conversations = open("data/provisoire/heard_conversation_"+concat_id, 'r').read()
-    npc = open(pathlib.Path("data/npc_"+concat_id), 'r').read()
-    relation = open(pathlib.Path("data/relations_"+concat_id), 'r').read()
+    concat_id = speech.firstname+'_'+speech.lastname+ '_'
+    conversations = open("data/provisoire/conversations_"+concat_id  + speech.id+'.txt', 'r').read()
+    heard_conversations = open("data/provisoire/heard_conversation_"+concat_id + speech.id+'.txt', 'r').read()
+    npc = open(pathlib.Path("data/npc_"+concat_id + '.txt'), 'r').read()
+    relation = open(pathlib.Path("data/relations_"+concat_id + '.txt'), 'r').read()
 
     return f"""{context} \n\n
         {npc} \n\n
