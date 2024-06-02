@@ -33,8 +33,7 @@ async def hear(speech: Speech): # TODO move npc to listener
     with open("data/provisoire/heard_conversation_"+files, 'a') as f:
         f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     if not speech.noAnswerExpected:
-        with open("data/provisoire/conversations_"+files, 'a') as f:
-            pass
+        open("data/provisoire/conversations_"+files, 'a').close()
         result = chat(speech)
         with open("data/provisoire/conversations_"+files, 'a') as f:
             f.write("\n"+speech.speaker+ ' : ' + speech.content)
@@ -56,15 +55,12 @@ async def hearGemini(speech: Speech):
     with open("data/provisoire/heard_conversation_"+files, 'a') as f:
         f.write("\n" + speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     if not speech.noAnswerExpected:
-        with open("data/provisoire/conversations_"+files, 'a') as f:
-            pass
-        print("here")
+        open("data/provisoire/conversations_"+files, 'a').close()
         result = await loop.run_in_executor(executor,chat_gemini,speech)
-        print(result)
         with open("data/provisoire/conversations_"+files, 'a') as f:
             f.write("\n" + speech.speaker+ ' : ' + speech.content)
             f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-            return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
     else:
         return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
@@ -73,14 +69,13 @@ async def hearGemini(speech: Speech):
     files = speech.firstname+'_'+speech.lastname + '_' + speech.id + '.txt'
     with open("data/provisoire/heard_conversation_"+files, 'a') as f:
         f.write("\n" + speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
-    if not speech.noAnswerExpected:
-        with open("data/provisoire/conversations_"+files, 'a') as f:
-            pass
+    if not speech.noAnswerExpected:        
+        open("data/provisoire/conversations_"+files, 'a').close()
         result = await loop.run_in_executor(executor,chat_gemini_flash,speech)
         with open("data/provisoire/conversations_"+files, 'a') as f:
             f.write("\n" + speech.speaker+ ' : ' + speech.content)
             f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-            return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
     else:
         return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
@@ -91,13 +86,12 @@ async def hearLangchain(speech: Speech):
     with open("data/provisoire/heard_conversation_"+files, 'a') as f:
         f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     if not speech.noAnswerExpected:
-        with open("data/provisoire/conversations_"+files, 'a') as f:
-            pass
+        open("data/provisoire/conversations_"+files, 'a').close()
         result = await loop.run_in_executor(executor, chat_langchain, speech)
         with open("data/provisoire/conversations_"+files, 'a') as f:
             f.write("\n"+speech.speaker+ ' : ' + speech.content)
             f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-            return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
     else:
         return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
