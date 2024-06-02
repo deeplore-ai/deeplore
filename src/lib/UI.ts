@@ -9,6 +9,9 @@ export const debug = document.getElementById("debug") as HTMLSpanElement;
 export const pauseScreen = document.getElementById(
   "pause-overlay"
 ) as HTMLDivElement;
+export const microButton = document.getElementById(
+  "micro"
+) as HTMLButtonElement;
 export const chatButton = document.getElementById("chat") as HTMLButtonElement;
 export const nextButton = document.getElementById("next") as HTMLButtonElement;
 export const nextDescription = document.getElementById(
@@ -86,8 +89,10 @@ export const hideNextButton = () => {
 
 export const displayChatButton = () => {
   chatButton.style.display = "flex";
+  microButton.style.display = "flex";
 };
 
 export const hideChatButton = () => {
   chatButton.style.display = "none";
+  microButton.style.display = "none";
 };

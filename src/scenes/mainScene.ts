@@ -12,6 +12,7 @@ import {
   displayChatButton,
   hideChatButton,
   isUIOpen,
+  microButton,
   openUI,
 } from "../lib/UI";
 import type jsonMap from "../../public/map.json";
@@ -23,6 +24,7 @@ type Map = typeof jsonMap;
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
 import EventBus from "../EventBus";
+import { listenSpeech } from "../speech-to-text/listenSpeech";
 
 const TWO_PNJ_MODE = true;
 const player = pnj.paul_martinez;
@@ -65,33 +67,35 @@ function onCharacterSpeak({
   }
 }
 
-const askQuestion = () => {
-  // listenSpeech();
+const askQuestion = (startListenSpeech = false) => {
+  if (startListenSpeech) {
+    listenSpeech();
+  }
   openUI(onPlayerAskQuestion);
 };
 
 export const createMainScene = () => {
   k.scene("main", async () => {
     canvas.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !isUIOpen()) {
+      if ((e.key === "Enter" || e.code === "Space") && !isUIOpen()) {
         const neighbors = getNearestCharacters();
 
         if (neighbors.length > 0) {
-          askQuestion();
+          askQuestion(e.code === "Space");
         }
       }
     });
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && isUIOpen()) {
-        console.log("Escape");
         canvas.focus();
         closeUI();
         Game.getInstance().isGamePaused = false;
       }
     });
 
-    chatButton.addEventListener("click", askQuestion);
+    chatButton.addEventListener("click", () => askQuestion());
+    microButton.addEventListener("click", () => askQuestion(true));
 
     canvas.focus();
 
