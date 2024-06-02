@@ -1,4 +1,4 @@
-import { AreaComp, GameObj, Key } from "kaboom";
+import { Key } from "kaboom";
 import { MAX_LISTEN_RANGE, scaleFactor } from "../constants";
 import { k } from "../lib/ctx";
 import { PlayerDirection } from "../types";

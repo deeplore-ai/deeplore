@@ -78,7 +78,7 @@ export const jonathan_chassang = new Character(
   250,
   scaleFactor,
   k,
-  "Jonathan",
+  "Johnatan",
   "Chassang"
 );
 
