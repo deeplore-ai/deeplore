@@ -254,50 +254,74 @@ export default class Character {
   }
 
   private async displayDynamicBubble(lines: string[], onFinished: () => void) {
-    const lineHeight = 12;
-    const bubblePadding = 8;
-    const bubbleWidth = 250;
+    // Text setup
+    const lineHeight = 30;
+    const fontSize = 16;
+
+    //Bubble setup
+    const bubblePadding = 20;
+    const bubbleWidth = 350;
+    const bubbleRadius = 3;
     const bubbleHeight = 2 * lineHeight + bubblePadding * 2;
-    const offsetY = 100;
-    // Create a bubble
-    const bubble = this.k.add([
-      this.k.rect(bubbleWidth, bubbleHeight, {
-        radius: 5,
+    const offsetY = 150;
+
+    const contentBubbleX = this.gameObject.pos.x - bubbleWidth / 2;
+    const contentBubbleY = this.gameObject.pos.y - offsetY;
+
+    // Border bubble setup
+    const bubbleBorderWidth = 6;
+    const borderBubbleWidth = bubbleWidth + bubbleBorderWidth;
+    const borderBubbleHeight = bubbleHeight + bubbleBorderWidth;
+    const borderBubbleX =
+      this.gameObject.pos.x - bubbleWidth / 2 - bubbleBorderWidth / 2;
+    const borderBubbleY =
+      this.gameObject.pos.y - offsetY - bubbleBorderWidth / 2;
+
+    // Text setup
+    const textX = this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding;
+    const firstTextY = this.gameObject.pos.y - offsetY + bubblePadding;
+    const secondTextY =
+      this.gameObject.pos.y - offsetY + bubblePadding + lineHeight;
+
+    // Border bubble
+    const bubbleBorder = this.k.add([
+      this.k.rect(borderBubbleWidth, borderBubbleHeight, {
+        radius: bubbleRadius,
       }),
-      this.k.pos(
-        this.gameObject.pos.x - bubbleWidth / 2,
-        this.gameObject.pos.y - offsetY
-      ),
+      this.k.pos(borderBubbleX, borderBubbleY),
+      this.k.color(0, 0, 0),
+    ]);
+
+    // Border content bubble
+    const bubbleContent = this.k.add([
+      this.k.rect(bubbleWidth, bubbleHeight, {
+        radius: bubbleRadius,
+      }),
+      this.k.pos(contentBubbleX, contentBubbleY),
       this.k.color(255, 255, 255),
     ]);
 
     const textFirstLine = this.k.add([
       this.k.text("", {
-        size: 12,
+        size: fontSize,
         font: "monospace",
         transform: {
           color: this.k.rgb(0, 0, 0),
         },
       }),
-      this.k.pos(
-        this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding, // Adjust the x position
-        this.gameObject.pos.y - offsetY + bubblePadding // Adjust the y position for each line
-      ),
+      this.k.pos(textX, firstTextY),
       this.k.color(0, 0, 0),
     ]);
 
     const textSecondLine = this.k.add([
       this.k.text("", {
-        size: 12,
+        size: fontSize,
         font: "monospace",
         transform: {
           color: this.k.rgb(0, 0, 0),
         },
       }),
-      this.k.pos(
-        this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding, // Adjust the x position
-        this.gameObject.pos.y - offsetY + bubblePadding + lineHeight // Adjust the y position for each line
-      ),
+      this.k.pos(textX, secondTextY),
       this.k.color(0, 0, 0),
     ]);
 
@@ -306,77 +330,19 @@ export default class Character {
       const obfuscatedLine = this.obfuscateBasedOnDistance(line, this.player);
       for (let char of obfuscatedLine) {
         textSecondLine.text += char;
-        await this.k.wait(0.05);
+        await this.k.wait(0.03);
       }
       textFirstLine.text = textSecondLine.text;
       textSecondLine.text = "";
     }
     await this.k.wait(1);
-    bubble.destroy();
+
+    bubbleBorder.destroy();
+    bubbleContent.destroy();
+
     textFirstLine.destroy();
     textSecondLine.destroy();
     onFinished();
-  }
-
-  private displayBubbles(lines: string[], onFinished: () => void) {
-    if (!lines.length) {
-      onFinished();
-      return;
-    }
-    this.displayBubble([lines.shift() || "", lines.shift() || ""], () => {
-      this.displayBubbles(lines, onFinished);
-    });
-  }
-
-  private displayBubble(lines: string[], closed: () => void) {
-    const lineHeight = 12;
-    const bubblePadding = 8;
-    const bubbleWidth = 250;
-    const bubbleHeight = lines.length * lineHeight + bubblePadding * 2;
-    const offsetY = 100;
-    // Create a bubble
-    const bubble = this.k.add([
-      this.k.rect(bubbleWidth, bubbleHeight, {
-        radius: 5,
-      }),
-      this.k.pos(
-        this.gameObject.pos.x - bubbleWidth / 2,
-        this.gameObject.pos.y - offsetY
-      ),
-      this.k.color(255, 255, 255),
-    ]);
-
-    const texts = lines.map((line, index) =>
-      this.k.add([
-        this.k.text(this.obfuscateBasedOnDistance(line.trim(), this.player), {
-          size: 12,
-          font: "monospace",
-          transform: {
-            color: this.k.rgb(0, 0, 0),
-          },
-        }),
-        this.k.pos(
-          this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding, // Adjust the x position
-          this.gameObject.pos.y - offsetY + bubblePadding + index * lineHeight // Adjust the y position for each line
-        ),
-        this.k.color(0, 0, 0),
-      ])
-    );
-
-    const delayByWordsInMs = 350;
-    const wordCount = lines.reduce(
-      (acc, line) => acc + line.split(" ").length,
-      0
-    );
-    const destroyDelay = delayByWordsInMs * wordCount + 400;
-
-    const bubbleInterval = setInterval(() => {
-      if (Game.getInstance().isGamePaused) return;
-      bubble.destroy();
-      texts.map((t) => t.destroy());
-      clearInterval(bubbleInterval);
-      closed();
-    }, destroyDelay);
   }
 }
 
