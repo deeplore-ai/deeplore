@@ -39,7 +39,7 @@ def chat_langchain(speech: Speech):
     # Split text into chunks 
     documents = text_splitter.split_documents(docs)
     # Define the embedding model
-    embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY)
+    embeddings = MistralAIEmbeddings(model="mistral-pro", mistral_api_key=MISTRAL_API_KEY)
     # Create the vector store 
     vector = FAISS.from_documents(documents, embeddings)
 
@@ -50,7 +50,7 @@ def chat_langchain(speech: Speech):
     # Define prompt template
     prompt = ChatPromptTemplate.from_template("""
         <context> {context} </context> \n
-        Contexte :  {input} \n
+        Precisions :  {input} \n
         Question : {question}"""
     )
 

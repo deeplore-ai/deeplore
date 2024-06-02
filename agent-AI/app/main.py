@@ -48,7 +48,7 @@ async def get_file(file: str):
 async def hearGemini(speech: Speech):
     with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n" + speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
-    rresult = await loop.run_in_executor(executor,chat_gemini,speech)
+    result = await loop.run_in_executor(executor,chat_gemini,speech)
     with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n" + speech.speaker+ ' : ' + speech.content)
         f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)

@@ -5,15 +5,15 @@ from .classes import Speech
 
 context = open(pathlib.Path("data/context.txt"), 'r').read()
 output = open(pathlib.Path("data/context.txt"), 'r').read()
+instructions = open(pathlib.Path("data/instructions"), 'r').read()
 
 
 def getPrompt(speech: Speech):
     concat_id = speech.firstname+'_'+speech.lastname+'.txt'
-    conversations = open("data/conversations_"+concat_id, 'r').read()
-    heard_conversations = open("data/heard_conversation_"+concat_id, 'r').read()
-    npc = open("data/npc_"+concat_id, 'r').read()
-    relation = open("data/relations_"+concat_id, 'r').read()
-    instructions = open("data/instructions", 'r').read()
+    conversations = open(pathlib.Path("data/conversations_"+concat_id), 'r').read()
+    heard_conversations = open(pathlib.Path("data/heard_conversation_"+concat_id), 'r').read()
+    npc = open(pathlib.Path("data/npc_"+concat_id), 'r').read()
+    relation = open(pathlib.Path("data/relations_"+concat_id), 'r').read()
 
     return f"""{context} \n\n
         {npc} \n\n
