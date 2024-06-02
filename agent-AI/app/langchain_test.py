@@ -27,24 +27,24 @@ retriever = vector.as_retriever()
 
 
 def chat_langchain(speech: Speech):
-    # Load data
-    loader = DirectoryLoader('data', glob="**/*.txt")
-    docs = loader.load()
+    # # Load data
+    # loader = DirectoryLoader('data', glob="**/*.txt")
+    # docs = loader.load()
 
-    # for document in docs:
-    #     print("Document source:", document.metadata.get('source', 'Unknown'))
-    #     # print("Page content:", document.page_content)
-    #     print()  # Add a new line between documents
+    # # for document in docs:
+    # #     print("Document source:", document.metadata.get('source', 'Unknown'))
+    # #     # print("Page content:", document.page_content)
+    # #     print()  # Add a new line between documents
 
-    # Split text into chunks 
-    documents = text_splitter.split_documents(docs)
-    # Define the embedding model
-    embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY)
-    # Create the vector store 
-    vector = FAISS.from_documents(documents, embeddings)
+    # # Split text into chunks 
+    # documents = text_splitter.split_documents(docs)
+    # # Define the embedding model
+    # embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY)
+    # # Create the vector store 
+    # vector = FAISS.from_documents(documents, embeddings)
 
-    # Define a retriever interface
-    retriever = vector.as_retriever()
+    # # Define a retriever interface
+    # retriever = vector.as_retriever()
     # Define LLM
     model = ChatMistralAI(mistral_api_key=MISTRAL_API_KEY)
     # Define prompt template
