@@ -13,6 +13,7 @@ export const microButton = document.getElementById(
   "micro"
 ) as HTMLButtonElement;
 export const chatButton = document.getElementById("chat") as HTMLButtonElement;
+
 export const nextButton = document.getElementById("next") as HTMLButtonElement;
 export const nextDescription = document.getElementById(
   "next-description"
@@ -90,6 +91,16 @@ export const hideNextButton = () => {
 export const displayChatButton = () => {
   chatButton.style.display = "flex";
   microButton.style.display = "flex";
+};
+
+export const displayEnableChatButton = () => {
+  chatButton.disabled = false;
+  microButton.disabled = false;
+};
+
+export const displayDisableChatButton = () => {
+  chatButton.disabled = true;
+  microButton.disabled = true;
 };
 
 export const hideChatButton = () => {
