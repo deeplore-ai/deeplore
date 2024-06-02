@@ -14,7 +14,7 @@ from .config import MISTRAL_API_KEY, DEBUG
 from .classes import Speech, test_speech
 
 
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
+text_splitter = RecursiveCharacterTextSplitter()
 
 # Load first time to avoid NLTK delay
 loader = DirectoryLoader('data', glob="**/*.txt")
