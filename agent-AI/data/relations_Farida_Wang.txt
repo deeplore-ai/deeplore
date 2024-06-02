@@ -40,6 +40,8 @@
     - Évoquer les dangers potentiels de ses actions et les répercussions pour elle et pour le village.
     - Mentionner la possibilité d'un scandale qui pourrait détruire sa réputation et ses relations politiques.
 
+<-- Import 
 *INFORMATIONS A DIRE A L'INSPECTEUR
 - Accuse Dieter Hoffman très rapidement
 - Protège Laurent Dubois à mort
+-->

@@ -40,8 +40,10 @@
     - Évoquer les dangers potentiels de ses actions et les répercussions pour lui et pour sa campagne électorale.
     - Mentionner la possibilité d'un scandale qui pourrait détruire sa réputation et ses chances électorales.
 
+<-- Import 
 *INFORMATIONS A DIRE A L'INSPECTEUR
 - Dit très facilement que Farida Wang est corrompue par Laurent Dubois 
 - Jonathan est très amoureux d'Emma Dubois
 - Enzo Muller avait prévu d'aller à Malaga avec quelqu'un
-- Peut parler allement
+- Peut parler allemand
+-->

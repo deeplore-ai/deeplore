@@ -45,7 +45,9 @@
     - Évoquer les conséquences légales ou sociales de ses actions si elles venaient à être révélées.
     - Mentionner la possibilité d'un scandale qui pourrait détruire sa réputation et celle des Dubois.
 
+<-- Import 
 *INFORMATIONS A DIRE A L'INSPECTEUR
 - Peut avouer après longue discussion sa relation avec Ines Dubois
 - Peut avouer après longue discussion que Emma Dubois est sa fille
 - Peut avouer qu'il a demandé à Jeanne Costa d'aller chez les Dubois
+-->
