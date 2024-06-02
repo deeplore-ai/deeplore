@@ -7,13 +7,14 @@ import * as easystarjs from "easystarjs";
 import { calculateDistance, fromXYToGrid } from "../utils";
 import {
   canvas,
-  chatButton,
   closeUI,
-  displayChatButton,
-  hideChatButton,
+  displayDisableChatButton,
+  displayEnableChatButton,
   isUIOpen,
   microButton,
   openUI,
+  displayChatButton,
+  chatButton,
 } from "../lib/UI";
 import type jsonMap from "../../public/map.json";
 import * as pnj from "../character_const";
@@ -76,6 +77,8 @@ const askQuestion = (startListenSpeech = false) => {
 
 export const createMainScene = () => {
   k.scene("main", async () => {
+    displayChatButton();
+
     canvas.addEventListener("keydown", (e) => {
       if ((e.key === "Enter" || e.code === "Space") && !isUIOpen()) {
         const neighbors = getNearestCharacters();
@@ -156,9 +159,9 @@ export const createMainScene = () => {
       const neighbors = getNearestCharacters();
 
       if (neighbors.length > 0) {
-        displayChatButton();
+        displayEnableChatButton();
       } else {
-        hideChatButton();
+        displayDisableChatButton();
       }
 
       k.camPos(

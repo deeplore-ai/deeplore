@@ -28,15 +28,15 @@
       #ui {
         display: none;
         flex-direction: column;
-        gap: 20px;
+        gap: 5px;
 
         position: absolute;
-        left: 5px;
+        left: 28px;
         bottom: 20px;
 
-        padding: 7px;
+        padding: 10px 25px;
 
-        width: calc(100% - 24px);
+        width: calc(100% - 120px);
         background: rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(5px);
 
@@ -132,7 +132,6 @@
         height: 120px;
         color: white;
         font-size: 2rem;
-        cursor: pointer;
         z-index: 100;
         background: transparent;
         padding: 5px;
@@ -140,19 +139,6 @@
         border: none;
         transition: all 110ms;
         transform: scale(1);
-      }
-
-      #chat:hover {
-        /* background: #cd7f32; */
-        /* border-radius: 8px;
-        color: white; */
-        transform: scale(1.15);
-      }
-
-      #chat p {
-        margin: 0;
-        color: white;
-        font-family: monogram, monospace;
       }
 
       #chat-image {
@@ -174,7 +160,6 @@
         height: 120px;
         color: white;
         font-size: 2rem;
-        cursor: pointer;
         z-index: 100;
         background: transparent;
         padding: 5px;
@@ -184,11 +169,16 @@
         transform: scale(1);
       }
 
-      #micro:hover {
-        /* background: #cd7f32; */
-        /* border-radius: 8px;
-        color: white; */
+      #micro:enabled:hover,
+      #chat:enabled:hover {
         transform: scale(1.15);
+        cursor: pointer;
+      }
+
+      #micro:disabled,
+      #chat:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
       }
 
       #micro p {
@@ -230,6 +220,7 @@
       <button id="micro">
         <div id="micro-image"></div>
       </button>
+
       <button id="next">
         <span id="next-description"></span>
         <div id="next-image"></div>
