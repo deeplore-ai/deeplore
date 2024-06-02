@@ -23,39 +23,26 @@ type Map = typeof jsonMap;
 const easystar = new easystarjs.js();
 import Game from "../models/Game";
 import EventBus from "../EventBus";
-const player = new Character(
-  "char1",
-  k.vec2(1343, 1052),
-  250,
-  scaleFactor,
-  k,
-  "Paul",
-  "Martinez"
-);
 
-const characters = [
-  player,
-  new Character(
-    "Girl",
-    k.vec2(1343, 1400),
-    250,
-    scaleFactor,
-    k,
-    "Emma",
-    "Dubois",
-    player
-  ),
-  new Character(
-    "Priest",
-    k.vec2(1250, 900),
-    250,
-    scaleFactor,
-    k,
-    "Matthieu",
-    "Mancini",
-    player
-  ),
-];
+const TWO_PNJ_MODE = true;
+const player = pnj.paul_martinez;
+
+var characters: Character[] = [];
+if (TWO_PNJ_MODE) {
+  characters = [player, pnj.emma_dubois, pnj.matthieu_mancini];
+} else {
+  characters = [
+    player,
+    pnj.emma_dubois,
+    pnj.matthieu_mancini,
+    pnj.dieter_hoffman,
+    pnj.enzo_muller,
+    pnj.farida_wang,
+    pnj.ines_dubois,
+    pnj.jonathan_chassang,
+    pnj.laurent_dubois,
+  ];
+}
 
 EventBus.subscribe("character:speak", onCharacterSpeak);
 
