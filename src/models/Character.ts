@@ -7,6 +7,8 @@ import {
 } from "../constants";
 import Game from "./Game";
 import { calculateDistance, truncateText } from "../utils";
+import EventBus from "../EventBus";
+import settings from "../settings";
 
 export type PlayerMovement = {
   move: (character: Character) => void;
@@ -115,7 +117,8 @@ export default class Character {
 
   hear(text: string, speaker: Character) {
     this.startThinking();
-    fetch("https://app-fqj7trlqhq-od.a.run.app/hearGemini", {
+    const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
+    fetch(`https://app-fqj7trlqhq-od.a.run.app/${settings.endpoint}`, {
       method: "POST",
       // no cors
       headers: {
@@ -123,7 +126,7 @@ export default class Character {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        content: text,
+        content: obfuscatedText,
         npc: this.name,
         id: this.name,
         firstname: this.firstName,
@@ -138,7 +141,9 @@ export default class Character {
         return res.json();
       })
       .then((data) => {
-        this.speak(data.Speech);
+        if (data.Speech && data.Speech.length > 0) {
+          this.speak(data.Speech);
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -236,16 +241,84 @@ export default class Character {
     });
     lines.push(currentLine);
 
-    this.displayBubbles(lines);
+    this.displayDynamicBubble(lines, () => {
+      this.forbidMoving = false;
+      EventBus.publish("character:speak", { speaker: this, text });
+    });
   }
 
-  private displayBubbles(lines: string[]) {
+  private async displayDynamicBubble(lines: string[], onFinished: () => void) {
+    const lineHeight = 12;
+    const bubblePadding = 8;
+    const bubbleWidth = 250;
+    const bubbleHeight = 2 * lineHeight + bubblePadding * 2;
+    const offsetY = 100;
+    // Create a bubble
+    const bubble = this.k.add([
+      this.k.rect(bubbleWidth, bubbleHeight, {
+        radius: 5,
+      }),
+      this.k.pos(
+        this.gameObject.pos.x - bubbleWidth / 2,
+        this.gameObject.pos.y - offsetY
+      ),
+      this.k.color(255, 255, 255),
+    ]);
+
+    const textFirstLine = this.k.add([
+      this.k.text("", {
+        size: 12,
+        font: "monospace",
+        transform: {
+          color: this.k.rgb(0, 0, 0),
+        },
+      }),
+      this.k.pos(
+        this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding, // Adjust the x position
+        this.gameObject.pos.y - offsetY + bubblePadding // Adjust the y position for each line
+      ),
+      this.k.color(0, 0, 0),
+    ]);
+
+    const textSecondLine = this.k.add([
+      this.k.text("", {
+        size: 12,
+          font: "monospace",
+          transform: {
+          color: this.k.rgb(0, 0, 0),
+        },
+      }),
+      this.k.pos(
+        this.gameObject.pos.x - bubbleWidth / 2 + bubblePadding, // Adjust the x position
+        this.gameObject.pos.y - offsetY + bubblePadding + lineHeight // Adjust the y position for each line
+      ),
+      this.k.color(0, 0, 0),
+    ]);
+
+    let line;
+    while (line = lines.shift()) {
+      const obfuscatedLine = this.obfuscateBasedOnDistance(line, this.player);
+      for (let char of obfuscatedLine) {
+        textSecondLine.text += char;
+        await this.k.wait(0.05);
+      }
+      textFirstLine.text = textSecondLine.text;
+      textSecondLine.text = "";
+    }
+    await this.k.wait(1);
+    bubble.destroy();
+    textFirstLine.destroy();
+    textSecondLine.destroy();
+    onFinished();
+  }
+
+  private displayBubbles(lines: string[], onFinished: () => void) {
     if (!lines.length) {
-      this.forbidMoving = false;
+      onFinished();
       return;
     }
     this.displayBubble([lines.shift() || "", lines.shift() || ""], () => {
-      this.displayBubbles(lines);
+      this.displayBubbles(lines, onFinished);
     });
   }
 
