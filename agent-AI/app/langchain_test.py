@@ -6,10 +6,18 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
+
 
 from .utils import getPrompt
 from .config import MISTRAL_API_KEY, DEBUG
 from .classes import Speech, test_speech
+
+# The RecursiveCharacterTextSplitter takes a large text and splits it based on a specified chunk size.
+def get_chunks(text):
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
+    chunks = text_splitter.split_text(text)
+    return chunks
 
 text_splitter = RecursiveCharacterTextSplitter()
 
@@ -19,7 +27,9 @@ docs = loader.load()
 # Split text into chunks 
 documents = text_splitter.split_documents(docs)
 # Define the embedding model
-embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY,)
+#embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY,)
+embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+
 # Create the vector store 
 vector = FAISS.from_documents(documents, embeddings)
 # Define a retriever interface
@@ -46,7 +56,9 @@ def chat_langchain(speech: Speech):
     # # Define a retriever interface
     # retriever = vector.as_retriever()
     # Define LLM
-    model = ChatMistralAI(mistral_api_key=MISTRAL_API_KEY)
+    #model = ChatMistralAI(mistral_api_key=MISTRAL_API_KEY)
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.3)
+
     # Define prompt template
     prompt = ChatPromptTemplate.from_template("""
         <context> {context} </context> \n
