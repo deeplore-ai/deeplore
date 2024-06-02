@@ -56,9 +56,7 @@ async def hearGemini(speech: Speech):
         f.write("\n" + speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     if not speech.noAnswerExpected:
         open("data/provisoire/conversations_"+files, 'a').close()
-        print("here")
         result = await loop.run_in_executor(executor,chat_gemini,speech)
-        print(result)
         with open("data/provisoire/conversations_"+files, 'a') as f:
             f.write("\n" + speech.speaker+ ' : ' + speech.content)
             f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
