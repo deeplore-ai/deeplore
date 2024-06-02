@@ -116,9 +116,14 @@ export default class Character {
   }
 
   hear(text: string, speaker: Character) {
-    if (!this.forbidMoving) this.startThinking();
+    const shouldAnswer = !this.forbidMoving && !this.thinkingBubble;
+    console.log(shouldAnswer);
+    if (shouldAnswer) {
+      console.log("here");
+      this.startThinking();
+    }
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
-    fetch(`https://app-fqj7trlqhq-od.a.run.app/${settings.endpoint}?noAnswerExpected=${this.forbidMoving}`, {
+    fetch(`https://app-fqj7trlqhq-od.a.run.app/${settings.endpoint}`, {
       method: "POST",
       // no cors
       headers: {
@@ -128,13 +133,14 @@ export default class Character {
       body: JSON.stringify({
         content: obfuscatedText,
         npc: this.name,
-        id: this.name,
+        id: settings.gameId,
         firstname: this.firstName,
         lastname: this.lastName,
         speaker: speaker.firstName + " " + speaker.lastName,
         distance: distanceToString(
           calculateDistance(this.gameObject.pos, speaker.gameObject.pos)
         ),
+        noAnswerExpected: !shouldAnswer,
       }),
     })
       .then((res) => {
