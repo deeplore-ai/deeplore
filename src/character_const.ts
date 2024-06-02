@@ -38,8 +38,8 @@ export const dieter_hoffman = new Character(
   250,
   scaleFactor,
   k,
-  "dieter",
-  "hoffman"
+  "Dieter",
+  "Hoffman"
 );
 
 export const enzo_muller = new Character(
@@ -48,8 +48,8 @@ export const enzo_muller = new Character(
   250,
   scaleFactor,
   k,
-  "enzo",
-  "muller"
+  "Enzo",
+  "Muller"
 );
 
 export const farida_wang = new Character(
@@ -58,8 +58,8 @@ export const farida_wang = new Character(
   250,
   scaleFactor,
   k,
-  "farida",
-  "wang"
+  "Farida",
+  "Wang"
 );
 
 export const ines_dubois = new Character(
