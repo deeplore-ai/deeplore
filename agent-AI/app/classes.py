@@ -7,6 +7,7 @@ class Speech(BaseModel):
     speaker: str | None = None
     distance: str | None = None
     content: str | None = None
+    noAnswerExpected: bool = False  
     
     
 class People(BaseModel):

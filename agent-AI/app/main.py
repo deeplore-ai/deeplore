@@ -31,11 +31,14 @@ async def root():
 async def hear(speech: Speech): # TODO move npc to listener
     with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
-    result = chat(speech)
-    with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
-        f.write("\n"+speech.speaker+ ' : ' + speech.content)
-        f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-    return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+    if speech.noAnswerExpected:
+        result = chat(speech)
+        with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+            f.write("\n"+speech.speaker+ ' : ' + speech.content)
+            f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+    else:
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
 @app.get("/files/{file}")
 async def get_file(file: str):
@@ -49,32 +52,41 @@ async def hearGemini(speech: Speech):
     with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n" + speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     result = await loop.run_in_executor(executor,chat_gemini,speech)
-    with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
-        f.write("\n" + speech.speaker+ ' : ' + speech.content)
-        f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-    return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+
+    if speech.noAnswerExpected:
+        with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+            f.write("\n" + speech.speaker+ ' : ' + speech.content)
+            f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
+            return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+    else:
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
 @app.post("/hearGeminiFlash")
 async def hearGemini(speech: Speech):
     with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n" + speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
     result = await loop.run_in_executor(executor,chat_gemini_flash,speech)
-    with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
-        f.write("\n" + speech.speaker+ ' : ' + speech.content)
-        f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-    return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+    if speech.noAnswerExpected:
+        with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+            f.write("\n" + speech.speaker+ ' : ' + speech.content)
+            f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
+            return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+    else:
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
 
 @app.post("/hearLangchain")
 async def hearLangchain(speech: Speech): 
     with open("data/heard_conversation_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
         f.write("\n"+speech.speaker+ " ; " + speech.distance + ' ; ' + speech.content)
-    
     result = await loop.run_in_executor(executor, chat_langchain, speech)
-    with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
-        f.write("\n"+speech.speaker+ ' : ' + speech.content)
-        f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-    return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+    if speech.noAnswerExpected:
+        with open("data/conversations_"+speech.firstname+'_'+speech.lastname+'.txt', 'a') as f:
+            f.write("\n"+speech.speaker+ ' : ' + speech.content)
+            f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
+            return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+    else:
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
 
 # print(chat_langchain(test_speech()))
