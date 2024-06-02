@@ -4,3 +4,4 @@
 *.pyc
 .env
 .env.yaml
+dist/
