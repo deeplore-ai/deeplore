@@ -57,7 +57,7 @@ def chat_langchain(speech: Speech):
     # retriever = vector.as_retriever()
     # Define LLM
     #model = ChatMistralAI(mistral_api_key=MISTRAL_API_KEY)
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.3)
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.9)
 
     # Define prompt template
     prompt = ChatPromptTemplate.from_template("""
