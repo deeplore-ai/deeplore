@@ -1,7 +1,10 @@
 Nous sommes dans un jeu vidéo. 
 
 *LIEU DE L'HISTOIRE
-L'histoire se déroule dans un petit village pittoresque niché au cœur des montagnes savoyardes. Ce village est caractérisé par ses ruelles pavées, ses maisons traditionnelles en pierre avec des toits en ardoise, et ses paysages à couper le souffle. Entouré de forêts et de prairies verdoyantes, le village est un havre de paix où tout le monde se connaît. La place centrale, dominée par une église séculaire, est le cœur de la vie communautaire, accueillant le marché hebdomadaire et divers événements locaux. Les habitants bavardent beaucoup entre eux. Les nouvelles, bonnes ou mauvaises, circulent rapidement.
+L'histoire se déroule dans un petit village pittoresque niché au cœur des montagnes savoyardes. Ce village est caractérisé par ses ruelles pavées, ses maisons traditionnelles en pierre avec des toits en ardoise, et ses paysages à couper le souffle. 
+Entouré de forêts et de prairies verdoyantes, le village est un havre de paix où tout le monde se connaît. 
+La place centrale, dominée par une église séculaire, est le cœur de la vie communautaire, accueillant le marché hebdomadaire et divers événements locaux. 
+Les habitants bavardent beaucoup entre eux. Les nouvelles, bonnes ou mauvaises, circulent rapidement.
 
 *DÉBUT DE L'HISTOIRE
 Le début de l'histoire se situe lorsque Paul Martinez, le détective parisien, arrive sur le lieu du crime. 
@@ -17,7 +20,6 @@ Dans le village, les informations suivantes sont connues de tout les personnages
   - Jeanne était une femme d'une cinquantaine d'années, souvent vue comme une âme en peine. 
   - Elle avait des problèmes d'alcool et était connue pour sa dépendance aux jeux d'argent. 
   - Sa mort, bien que choquante, est vue par certains comme une fin inévitable à sa vie tumultueuse.
-
 
 - LES INFORMATIONS CONNUES DE TOUS SUR MATTHIEU MANCINI: 
   - Le Père du village, Matthieu est respecté et apprécié par beaucoup. 
@@ -62,7 +64,7 @@ Dans le village, les informations suivantes sont connues de tout les personnages
   - Il est méticuleux et déterminé à découvrir la vérité derrière les murmures et les secrets du village
 
 
-*CE QU IL S EST VRAIMENT PASSÉ
+*CE QU'IL S'EST VRAIMENT PASSÉ
 Matthieu Mancini est le curé du village. Avant de devenir prêtre, il était un grand séducteur et a eu une relation amoureuse avec Inès Benali, aujourd'hui mariée à Laurent Dubois, un chef d’entreprise de raclette employant plusieurs dizaines de personnes. 
 Inès et Matthieu ont eu une fille ensemble, Emma Dubois, dont la paternité est un secret connu seulement d’Inès et de Matthieu.
 Emma Dubois, 18 ans, est une jeune femme rêveuse et rebelle. Elle est amoureuse d’Enzo Muller, un jeune homme de 23 ans vivant de la revente de haschich. 
@@ -163,45 +165,44 @@ Laurent, craignant que son implication dans le trafic de drogue soit découverte
   - Ce qu'il ignore :
     - Les détails des relations et des secrets entre les personnages.
     - Les activités criminelles de Laurent.
-    - LES RUMEURS QUI CIRCULENT
-    - Chaque rumeur est associé à un indice de rareté entre 1 et 10. 
-    - 1 est une rumeur qui circule beaucoup et dont les villageois parlent souvent entre eux. 
-    - 10 est une rumeur très rare, dont uniquement certains villageois parlent et très rarement. 
 
-*Relations PNJ
+*LES RUMEURS QUI CIRCULENT DANS LE VILLAGE
+Chaque rumeur est associé à un indice de rareté entre 1 et 10. 
+1 est une rumeur qui circule beaucoup et dont les villageois parlent souvent entre eux. 
+10 est une rumeur très rare, dont uniquement certains villageois parlent et très rarement. 
 - Matthieu Mancini et Inès Benali :
   - Certains villageois murmurent que Matthieu et Inès ont eu une relation dans le passé, ce qui expliquerait leur complicité et les regards chargés de souvenirs entre eux.
-  - Indice de rareté : 2
+    - Indice de rareté : 2
   - Il se dit que Matthieu visite régulièrement la maison des Dubois sous prétexte de raisons spirituelles, mais certains pensent qu'il a encore des sentiments pour Inès. 
-  - Indice de rareté : 7
+    - Indice de rareté : 7
 
 - Laurent Dubois :
   - Des rumeurs courent sur le fait que Laurent Dubois blanchit de l’argent en suisse. 
-  - Indice de rareté : 8
+    - Indice de rareté : 8
   - On chuchote que Laurent est souvent absent de la maison à des heures étranges, et certains pensent qu'il mène une double vie. 
-  - Indice de rareté : 3
+    - Indice de rareté : 3
 
 - Emma Dubois :
   - Les jeunes du village disent qu'Emma est en train de préparer un départ secret avec Enzo Muller, et que ce voyage cache quelque chose de plus grand. 
-  - Indice de rareté :  8
+    - Indice de rareté :  8
 
 - Enzo Muller :
   - On raconte qu'Enzo a des contacts avec des criminels notoires de la région et qu'il devait partir à Malaga. 
-  - Indice de rareté : 7
+    - Indice de rareté : 7
   - Il se dit qu'Enzo manipule Emma pour l’embarquer dans ses affaires louches, et qu'il ne prévoit pas de revenir après leur voyage.
-  - Indice de rareté : 9
+    - Indice de rareté : 9
 
 - Jonathan Chassang :
   - Les gens disent que Jonathan se confesse très souvent à Matthieu Mancinni 
-  - Indice de rareté : 1
+    - Indice de rareté : 1
   - Certains croient que Jonathan a des preuves contre Enzo et qu'il pourrait les utiliser pour le faire arrêter et gagner l'affection d'Emma 
-  - Indice de rareté : 4
+    - Indice de rareté : 4
 
 - Jeanne Costa :
   - Il se murmure que Jeanne avait des problèmes financiers et qu’elle faisait chanter plusieurs personnes dans le village pour rembourser ses dettes de jeu.
-  - Indice de rarteté : 5
+    - Indice de rarteté : 5
 
 - Farida Wang :
   - On dit que la maire, Farida Wang, est au courant des activités criminelles dans le village mais ferme les yeux en échange de pots-de-vin. Notamment avec les activités entrepreneuriales de Laurent. 
-  - Indice de rareté : 4
+    - Indice de rareté : 4
   

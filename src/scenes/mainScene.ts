@@ -7,7 +7,8 @@ import * as easystarjs from "easystarjs";
 import { calculateDistance, fromXYToGrid } from "../utils";
 import { canvas, chatButton, closeUI, isUIOpen, openUI } from "../lib/UI";
 import type jsonMap from "../../public/map.json";
-import { listenSpeech } from "../speech-to-text/listenSpeech";
+import * as pnj from "../character_const";
+// import { listenSpeech } from "../speech-to-text/listenSpeech";
 
 type Map = typeof jsonMap;
 
