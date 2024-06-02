@@ -116,7 +116,12 @@ export default class Character {
   }
 
   hear(text: string, speaker: Character) {
-    this.startThinking();
+    const shouldAnswer = !this.forbidMoving && !this.thinkingBubble;
+    console.log(shouldAnswer);
+    if (shouldAnswer) {
+      console.log("here");
+      this.startThinking();
+    }
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
     fetch(`https://app-fqj7trlqhq-od.a.run.app/${settings.endpoint}`, {
       method: "POST",
@@ -128,13 +133,14 @@ export default class Character {
       body: JSON.stringify({
         content: obfuscatedText,
         npc: this.name,
-        id: this.name,
+        id: settings.gameId,
         firstname: this.firstName,
         lastname: this.lastName,
         speaker: speaker.firstName + " " + speaker.lastName,
         distance: distanceToString(
           calculateDistance(this.gameObject.pos, speaker.gameObject.pos)
         ),
+        noAnswerExpected: !shouldAnswer,
       }),
     })
       .then((res) => {
@@ -283,8 +289,8 @@ export default class Character {
     const textSecondLine = this.k.add([
       this.k.text("", {
         size: 12,
-          font: "monospace",
-          transform: {
+        font: "monospace",
+        transform: {
           color: this.k.rgb(0, 0, 0),
         },
       }),
@@ -296,7 +302,7 @@ export default class Character {
     ]);
 
     let line;
-    while (line = lines.shift()) {
+    while ((line = lines.shift())) {
       const obfuscatedLine = this.obfuscateBasedOnDistance(line, this.player);
       for (let char of obfuscatedLine) {
         textSecondLine.text += char;

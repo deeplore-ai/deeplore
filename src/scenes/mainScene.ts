@@ -26,7 +26,7 @@ import Game from "../models/Game";
 import EventBus from "../EventBus";
 import { listenSpeech } from "../speech-to-text/listenSpeech";
 
-const TWO_PNJ_MODE = true;
+const TWO_PNJ_MODE = false;
 const player = pnj.paul_martinez;
 
 var characters: Character[] = [];
