@@ -5,7 +5,7 @@ import { createMainScene } from "./scenes/mainScene";
 import { createInitialScene } from "./scenes/initialScene";
 import { createTrainScene } from "./scenes/trainScene";
 
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 setupKaboom();
 createMainScene();
