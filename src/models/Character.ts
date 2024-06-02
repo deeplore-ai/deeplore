@@ -289,8 +289,8 @@ export default class Character {
     const textSecondLine = this.k.add([
       this.k.text("", {
         size: 12,
-          font: "monospace",
-          transform: {
+        font: "monospace",
+        transform: {
           color: this.k.rgb(0, 0, 0),
         },
       }),
@@ -302,7 +302,7 @@ export default class Character {
     ]);
 
     let line;
-    while (line = lines.shift()) {
+    while ((line = lines.shift())) {
       const obfuscatedLine = this.obfuscateBasedOnDistance(line, this.player);
       for (let char of obfuscatedLine) {
         textSecondLine.text += char;
