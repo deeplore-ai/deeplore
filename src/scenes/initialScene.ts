@@ -43,9 +43,17 @@ export const createInitialScene = () => {
     const bubblePadding = 80;
     const bubbleHeight = 500;
     const bubbleY = (screenHeight - bubbleHeight) / 2;
+    // k.add([
+    //   k.rect(screenWith - bubblePadding * 2 + 4, bubbleHeight + 4, {
+    //     radius: 0,
+    //   }),
+    //   k.pos(bubblePadding, bubbleY),
+    //   k.color(255, 255, 255),
+    // ]);
+
     k.add([
       k.rect(screenWith - bubblePadding * 2, bubbleHeight, {
-        radius: 5,
+        radius: 0,
       }),
       k.pos(bubblePadding, bubbleY),
       k.color(255, 255, 255),
