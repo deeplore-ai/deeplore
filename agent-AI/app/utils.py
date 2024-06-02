@@ -5,7 +5,7 @@ from .classes import Speech
 
 context = open(pathlib.Path("data/context.txt"), 'r').read()
 output = open(pathlib.Path("data/context.txt"), 'r').read()
-instructions = open(pathlib.Path("data/instructions"), 'r').read()
+instructions = open(pathlib.Path("data/instructions.txt"), 'r').read()
 
 
 def getPrompt(speech: Speech):
