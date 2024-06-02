@@ -19,7 +19,7 @@ docs = loader.load()
 # Split text into chunks 
 documents = text_splitter.split_documents(docs)
 # Define the embedding model
-embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY)
+embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY,)
 # Create the vector store 
 vector = FAISS.from_documents(documents, embeddings)
 # Define a retriever interface
