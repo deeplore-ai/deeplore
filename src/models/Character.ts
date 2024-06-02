@@ -330,7 +330,8 @@ export default class Character {
       const obfuscatedLine = this.obfuscateBasedOnDistance(line, this.player);
       for (let char of obfuscatedLine) {
         textSecondLine.text += char;
-        await this.k.wait(0.03);
+        const waitingTime = char === "." ? 0.1 : 0.03;
+        await this.k.wait(waitingTime);
       }
       textFirstLine.text = textSecondLine.text;
       textSecondLine.text = "";

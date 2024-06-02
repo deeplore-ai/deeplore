@@ -47,6 +47,11 @@ if (TWO_PNJ_MODE) {
   ];
 }
 
+characters.forEach((character) => {
+  character.player = player;
+});
+player.player = null;
+
 EventBus.subscribe("character:speak", onCharacterSpeak);
 
 function onCharacterSpeak({
