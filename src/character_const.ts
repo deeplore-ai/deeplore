@@ -4,7 +4,7 @@ import { scaleFactor } from "./constants";
 
 export const paul_martinez = new Character(
   "Player",
-  k.vec2(1343, 1052),
+  k.vec2(990, 990),
   250,
   scaleFactor,
   k,
@@ -14,7 +14,7 @@ export const paul_martinez = new Character(
 
 export const emma_dubois = new Character(
   "Fille",
-  k.vec2(1343, 1400),
+  k.vec2(500, 1440),
   250,
   scaleFactor,
   k,
@@ -24,7 +24,7 @@ export const emma_dubois = new Character(
 
 export const matthieu_mancini = new Character(
   "Priest",
-  k.vec2(1250, 900),
+  k.vec2(900, 1800),
   250,
   scaleFactor,
   k,
@@ -34,7 +34,7 @@ export const matthieu_mancini = new Character(
 
 export const dieter_hoffman = new Character(
   "Prof",
-  k.vec2(1250, 900),
+  k.vec2(1899, 1800),
   250,
   scaleFactor,
   k,
@@ -44,7 +44,7 @@ export const dieter_hoffman = new Character(
 
 export const enzo_muller = new Character(
   "PetitAmi",
-  k.vec2(1250, 900),
+  k.vec2(1350, 1530),
   250,
   scaleFactor,
   k,
@@ -54,7 +54,7 @@ export const enzo_muller = new Character(
 
 export const farida_wang = new Character(
   "Maire",
-  k.vec2(1250, 900),
+  k.vec2(1620, 1080),
   250,
   scaleFactor,
   k,
@@ -64,7 +64,7 @@ export const farida_wang = new Character(
 
 export const ines_dubois = new Character(
   "Mere",
-  k.vec2(1343, 1052),
+  k.vec2(2100, 1310),
   250,
   scaleFactor,
   k,
@@ -74,7 +74,7 @@ export const ines_dubois = new Character(
 
 export const jonathan_chassang = new Character(
   "Jaloux",
-  k.vec2(1343, 1052),
+  k.vec2(720, 2070),
   250,
   scaleFactor,
   k,
@@ -84,7 +84,7 @@ export const jonathan_chassang = new Character(
 
 export const laurent_dubois = new Character(
   "Pere",
-  k.vec2(1343, 1052),
+  k.vec2(1260, 455),
   250,
   scaleFactor,
   k,

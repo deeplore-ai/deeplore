@@ -24,7 +24,7 @@ const easystar = new easystarjs.js();
 import Game from "../models/Game";
 import EventBus from "../EventBus";
 
-const TWO_PNJ_MODE = true;
+const TWO_PNJ_MODE = false;
 const player = pnj.paul_martinez;
 
 var characters: Character[] = [];
