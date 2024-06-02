@@ -13,13 +13,8 @@ from .utils import getPrompt
 from .config import MISTRAL_API_KEY, DEBUG
 from .classes import Speech, test_speech
 
-# The RecursiveCharacterTextSplitter takes a large text and splits it based on a specified chunk size.
-def get_chunks(text):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
-    chunks = text_splitter.split_text(text)
-    return chunks
 
-text_splitter = RecursiveCharacterTextSplitter()
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
 
 # Load first time to avoid NLTK delay
 loader = DirectoryLoader('data', glob="**/*.txt")
