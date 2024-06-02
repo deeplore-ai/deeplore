@@ -23,7 +23,7 @@ docs = loader.load()
 documents = text_splitter.split_documents(docs)
 # Define the embedding model
 #embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY,)
-embeddings = GoogleGenerativeAIEmbeddings(model="text-multilingual-embedding-002")
+embeddings = GoogleGenerativeAIEmbeddings(model="models/text-multilingual-embedding-002")
 
 # Create the vector store 
 vector = FAISS.from_documents(documents, embeddings)
