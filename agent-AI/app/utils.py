@@ -21,15 +21,14 @@ def getPrompt(speech: Speech):
         {relation}  \n\n
         {output}   \n\n
         {conversations} \n\n
-        *Rules output:
-        \t- If the person is not near to you, do not respond. 
-        \t- Respond in french. 
-        \t- Only the answers
-        {instructions} \n\n
-
+        
         {speech.speaker} is speaking and says : "{speech.content}" \n\n
-
         
+        {instructions} \n\n
         
+        *Rules output:
+        \t- If the person is far to you, do not respond. 
+        \t- Respond in french. 
+        \t- Print only the answer        
         """ 
 

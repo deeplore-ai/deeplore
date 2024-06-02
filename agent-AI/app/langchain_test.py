@@ -58,5 +58,4 @@ def chat_langchain(speech: Speech):
     document_chain = create_stuff_documents_chain(model, prompt)
     retrieval_chain = create_retrieval_chain(retriever, document_chain)
     response = retrieval_chain.invoke({"input": getPrompt(speech), "question":speech.content})
-    print(response)
     return response["answer"]
