@@ -1,4 +1,4 @@
-import { Key } from "kaboom";
+import { AreaComp, GameObj, Key } from "kaboom";
 import { MAX_LISTEN_RANGE, scaleFactor } from "../constants";
 import { k } from "../lib/ctx";
 import { PlayerDirection } from "../types";
@@ -30,7 +30,16 @@ import { listenSpeech } from "../speech-to-text/listenSpeech";
 const TWO_PNJ_MODE = false;
 const player = pnj.paul_martinez;
 
+type InteractionType = "tombe" | "porte" | "vase";
+
+var INTERACTION: Record<InteractionType, string> = {
+  tombe: "'Ci-gît Jeanne Costa. Ça devait arriver...'",
+  porte: "La porte est fermée",
+  vase: "Il y a 1kg de coco dans le vase",
+};
+
 var characters: Character[] = [];
+
 if (TWO_PNJ_MODE) {
   characters = [player, pnj.emma_dubois, pnj.matthieu_mancini];
 } else {
@@ -125,6 +134,89 @@ export const createMainScene = () => {
             k.pos(collisionArea.x, collisionArea.y),
             collisionArea.name,
           ]);
+        });
+      } else if (layer.name === "interaction") {
+        //create collision with onCollisionEvent
+        layer.objects.forEach((collisionArea: any) => {
+          const area = k.area({
+            shape: new k.Rect(
+              k.vec2(0),
+              collisionArea.width,
+              collisionArea.height
+            ),
+          });
+          const element = map.add([
+            area,
+            k.body({ isStatic: true }),
+            k.pos(collisionArea.x, collisionArea.y),
+            collisionArea.name,
+          ]);
+          const text = INTERACTION[collisionArea.name as InteractionType];
+
+          area.onCollide("Player", () => {
+            const textSize = 16;
+
+            const message = k.add([
+              k.text(text, {
+                size: textSize,
+                font: "monospace",
+                transform: {
+                  color: k.rgb(0, 0, 0),
+                },
+              }),
+              k.pos(0, 0), // initial position
+              k.z(1),
+            ]);
+
+            const backgroundPadding = 12;
+            const borderBorderWidth = 4;
+            const messageWidth = message.width;
+            const messageHeight = message.height;
+
+            const messageX =
+              element.worldPos().x +
+              borderBorderWidth +
+              backgroundPadding +
+              32 -
+              messageWidth / 2;
+            const messageY = element.worldPos().y - 24;
+
+            message.pos.x = messageX;
+            message.pos.y = messageY;
+
+            const backgroundBorder = k.add([
+              k.rect(
+                messageWidth + backgroundPadding * 2 + borderBorderWidth * 2,
+                messageHeight + backgroundPadding * 2 + borderBorderWidth * 2,
+                { radius: 5 }
+              ),
+
+              k.color(0, 0, 0),
+              k.pos(
+                messageX - backgroundPadding - borderBorderWidth,
+                messageY - backgroundPadding - borderBorderWidth
+              ),
+              k.z(0),
+            ]);
+
+            const background = k.add([
+              k.rect(
+                messageWidth + backgroundPadding * 2,
+                messageHeight + backgroundPadding * 2,
+                { radius: 5 }
+              ),
+
+              k.color(255, 255, 255),
+              k.pos(messageX - backgroundPadding, messageY - backgroundPadding),
+              k.z(0),
+            ]);
+
+            setTimeout(() => {
+              k.destroy(background);
+              k.destroy(backgroundBorder);
+              k.destroy(message);
+            }, 2500);
+          });
         });
       }
     });
