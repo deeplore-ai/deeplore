@@ -64,7 +64,7 @@ async def hearGemini(speech: Speech):
         with open("data/provisoire/conversations_"+files, 'a') as f:
             f.write("\n" + speech.speaker+ ' : ' + speech.content)
             f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-            return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
     else:
         return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
@@ -80,7 +80,7 @@ async def hearGemini(speech: Speech):
         with open("data/provisoire/conversations_"+files, 'a') as f:
             f.write("\n" + speech.speaker+ ' : ' + speech.content)
             f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-            return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
     else:
         return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
@@ -97,7 +97,7 @@ async def hearLangchain(speech: Speech):
         with open("data/provisoire/conversations_"+files, 'a') as f:
             f.write("\n"+speech.speaker+ ' : ' + speech.content)
             f.write("\n" + speech.firstname+ ' ' + speech.lastname + ':' + result)
-            return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+        return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
     else:
         return {"NPC": speech.speaker,"Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
 
