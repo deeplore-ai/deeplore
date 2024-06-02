@@ -1,4 +1,6 @@
-const socket = new WebSocket("wss://api.deepgram.com/v1/listen", [
+import { speechObserver } from "../observables/speechObserver";
+
+const socket = new WebSocket("wss://api.deepgram.com/v1/listen?language=fr", [
   "token",
   "4cebb2572a5a31e8780f478ee7933df45c45a63d",
 ]);
@@ -7,10 +9,6 @@ console.log({ socket });
 
 socket.onopen = () => {
   console.log({ event: "onopen" });
-};
-
-socket.onmessage = (message) => {
-  console.log({ event: "onmessage", message });
 };
 
 socket.onclose = () => {
@@ -48,12 +46,21 @@ let mediaRecorder: MediaRecorder | null = null;
 // });
 
 // STEP 4: Fetch the audio stream and send it to the live transcription connection
-async function createMediaRecorder() {
-  if (mediaRecorder) {
-    return mediaRecorder;
-  }
+
+async function createMediaRecorder(onTranscript: (transcript: string) => void) {
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  mediaRecorder = new MediaRecorder(stream);
+
+  mediaRecorder ??= new MediaRecorder(stream);
+
+  socket.onmessage = (message) => {
+    const received = JSON.parse(message.data);
+    const transcript = received.channel.alternatives[0].transcript as string;
+    if (transcript && received.is_final) {
+      onTranscript(transcript);
+      console.log(transcript);
+    }
+  };
+
   mediaRecorder.ondataavailable = (e) => {
     console.log("Socket", socket.readyState);
     if (socket.readyState === WebSocket.OPEN) {
@@ -67,10 +74,15 @@ async function createMediaRecorder() {
 }
 
 export async function listenSpeech() {
-  console.log("LISTENING");
+  if (window.location.host.startsWith("localhost")) {
+    console.log("Speech to text not working on localhost.");
+    return;
+  }
 
   try {
-    const mediaRecorder = await createMediaRecorder();
+    const mediaRecorder = await createMediaRecorder((transcript) =>
+      speechObserver.emit("speech", transcript)
+    );
 
     mediaRecorder.start(100);
     console.log(mediaRecorder.state);

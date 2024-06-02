@@ -1,4 +1,5 @@
 import Game from "../models/Game";
+import { speechObserver } from "../observables/speechObserver";
 
 const UIElement = document.getElementById("ui");
 const input = document.getElementById("question") as HTMLInputElement;
@@ -9,6 +10,9 @@ export const pauseScreen = document.getElementById(
 ) as HTMLDivElement;
 export const chatButton = document.getElementById("chat") as HTMLButtonElement;
 export const nextButton = document.getElementById("next") as HTMLButtonElement;
+export const nextDescription = document.getElementById(
+  "next-description"
+) as HTMLSpanElement;
 
 export const openUI = (onEnter: (textInput: string) => void) => {
   if (UIElement === null) return;
@@ -17,8 +21,15 @@ export const openUI = (onEnter: (textInput: string) => void) => {
   pauseScreen.style.display = "flex";
   input.focus();
 
+  const onTranscript = (transcript: string) => {
+    input.value += transcript;
+  };
+
+  speechObserver.on("speech", onTranscript);
+
   const exit = () => {
     closeUI();
+    speechObserver.off("speech", onTranscript);
     input.removeEventListener("keydown", handleKeyDown);
     canvas.focus();
     Game.getInstance().isGamePaused = false;
@@ -46,4 +57,12 @@ export const closeUI = () => {
 export const isUIOpen = () => {
   if (UIElement === null) return false;
   return UIElement.style.display === "flex";
+};
+
+export const displayNextButton = () => {
+  nextButton.style.display = "flex";
+};
+
+export const hideNextButton = () => {
+  nextButton.style.display = "none";
 };

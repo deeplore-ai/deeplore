@@ -1,6 +1,10 @@
 import { GameObj, KaboomCtx, PosComp, TextComp, Vec2 } from "kaboom";
 import { PlayerDirection } from "../types";
-import { MAX_LISTEN_RANGE, scaleFactor, START_TRUNCATED_RANGE } from "../constants";
+import {
+  MAX_LISTEN_RANGE,
+  scaleFactor,
+  START_TRUNCATED_RANGE,
+} from "../constants";
 import Game from "./Game";
 import { calculateDistance, truncateText } from "../utils";
 
@@ -70,7 +74,7 @@ export default class Character {
     this.gameObject = k.make([
       k.sprite("spritesheet", { anim: `${name}-idle-down` }),
       k.area({
-        shape: new k.Rect(k.vec2(0, 3), 10, 10),
+        shape: new k.Rect(k.vec2(0, 2), 12, 16),
       }),
       k.body(),
       k.anchor("center"),
@@ -109,7 +113,7 @@ export default class Character {
     this.direction = direction;
   }
 
-  hear(text: string, speaker: string) {
+  hear(text: string, speaker: Character) {
     this.startThinking();
     fetch("https://app-fqj7trlqhq-od.a.run.app/hearGemini", {
       method: "POST",
@@ -124,11 +128,13 @@ export default class Character {
         id: this.name,
         firstname: this.firstName,
         lastname: this.lastName,
-        speaker: speaker,
+        speaker: speaker.firstName + " " + speaker.lastName,
+        distance: distanceToString(
+          calculateDistance(this.gameObject.pos, speaker.gameObject.pos)
+        ),
       }),
     })
       .then((res) => {
-        this.stopThinking();
         return res.json();
       })
       .then((data) => {
@@ -137,6 +143,9 @@ export default class Character {
       .catch((e) => {
         console.log(e);
         this.speak("Nolo comprendo");
+      })
+      .finally(() => {
+        this.stopThinking();
       });
   }
 
@@ -155,9 +164,15 @@ export default class Character {
     return x % mapWidth === 0 && y % mapHeight === 0;
   }
 
-  obfuscateBasedOnDistance(line: string, speakingCharacter: Character | null): string {
+  obfuscateBasedOnDistance(
+    line: string,
+    speakingCharacter: Character | null
+  ): string {
     if (!speakingCharacter) return line;
-    const distance = calculateDistance(this.gameObject.pos, speakingCharacter.gameObject.pos);
+    const distance = calculateDistance(
+      this.gameObject.pos,
+      speakingCharacter.gameObject.pos
+    );
     if (distance > START_TRUNCATED_RANGE && distance < MAX_LISTEN_RANGE) {
       return truncateText(line, distance - START_TRUNCATED_RANGE);
     }
@@ -169,10 +184,7 @@ export default class Character {
       this.k.rect(50, 28, {
         radius: 5,
       }),
-      this.k.pos(
-        this.gameObject.pos.x - 50 / 2,
-        this.gameObject.pos.y - 80
-      ),
+      this.k.pos(this.gameObject.pos.x - 50 / 2, this.gameObject.pos.y - 80),
       this.k.color(255, 255, 255),
     ]);
     let i = 0;
@@ -184,10 +196,7 @@ export default class Character {
           color: this.k.rgb(0, 0, 0),
         },
       }),
-      this.k.pos(
-        this.gameObject.pos.x - 50 / 2,
-        this.gameObject.pos.y - 80
-      ),
+      this.k.pos(this.gameObject.pos.x - 50 / 2, this.gameObject.pos.y - 80),
     ]);
     while (this.thinkingBubble) {
       i++;
@@ -290,4 +299,13 @@ export default class Character {
       closed();
     }, destroyDelay);
   }
+}
+
+function distanceToString(distance: number) {
+  if (distance < START_TRUNCATED_RANGE) {
+    return "proche";
+  } else if (distance < (START_TRUNCATED_RANGE + MAX_LISTEN_RANGE) / 2) {
+    return "pas très loin";
+  }
+  return "loin";
 }

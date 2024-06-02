@@ -1,55 +1,116 @@
+import { GameObj } from "kaboom";
 import { k } from "../lib/ctx";
-import { nextButton } from "../lib/UI";
+import { displayNextButton, hideNextButton, nextButton } from "../lib/UI";
 
-const INTRO_TEXT =
-  "Vous êtes Paul Martinez, un jeune enquêteur parisien\nà peine sorti de l’école de police.\nÀ 5h58 du matin, votre commissaire vous appelle. \nUn meurtre a eu lieu dans un petit village : Rezé-en-Savoie.\nVous prenez le train de 6h30 pour vous rendre dans les Alpes\net mener la première enquête de votre carrière.\nUne fois là-bas, le paysage est sublime, le fromage alléchant \nmais les autochtones ne semblent pas tous prêts à collaborer en toute transparence.\nQui pouvez-vous vraiment croire ?";
+const INTRO_TEXT: string[] = [
+  "Paul Martinez, je sais que vous venez de sortie de l'école de police ...",
+  "Un meurtre a eu lieu dans un petit village : Rezé-en-Savoie ...",
+  "Vous prenez le train de 6h30 pour vous rendre dans les Alpes ...",
+  "Une fois là-bas, le paysage est sublime ! ...",
+  "Le fromage alléchant mais les autochtones\nne semblent pas tous prêts à collaborer en toute transparence ...",
+  "Qui pouvez-vous vraiment croire ?",
+];
+
+k.loadSprite("city", "/city.png");
+var enterHasBeenPressed = false;
+var isWriting = false;
+var currentIndexOfText = 0;
+
+const writeText = async (textToDisplay: string, textGameObj: GameObj) => {
+  isWriting = true;
+  let displayText = "";
+  for (let i = 0; i < textToDisplay.length; i++) {
+    if (!enterHasBeenPressed) {
+      await k.wait(0.02);
+    }
+    displayText += textToDisplay[i];
+    textGameObj.text = displayText;
+  }
+
+  isWriting = false;
+};
 
 export const createInitialScene = () => {
   k.scene("init", async () => {
-    // black background
-    k.add([k.rect(k.width(), k.height()), k.color(0, 0, 0)]);
+    // City background
+    k.add([k.sprite("city"), k.pos(-50, -200), k.scale(1.2)]);
 
-    // write with write effect
-    let displayText = "";
-    let textHasBeenDisplayed = false;
+    const screenWith = k.width();
+    const screenHeight = k.height();
 
-    const text = k.add([
-      k.text(displayText, {
-        size: 24,
+    // Create a bubble for the text
+
+    const bubblePadding = 80;
+    const bubbleHeight = 500;
+    const bubbleY = (screenHeight - bubbleHeight) / 2;
+    k.add([
+      k.rect(screenWith - bubblePadding * 2, bubbleHeight, {
+        radius: 5,
       }),
-      k.pos(100, 100),
+      k.pos(bubblePadding, bubbleY),
+      k.color(255, 255, 255),
     ]);
 
-    const quitScene = () => {
-      nextButton.style.display = "none";
-      k.go("main");
-    };
+    // Nom du commissaire
+    k.add([
+      k.text("Conor, commissaire à 5h58 du matin:", {
+        size: 30,
+        transform: {
+          color: k.rgb(0, 0, 0),
+        },
+      }),
+      k.pos(100, bubbleY + 25),
+    ]);
 
-    let pressedEnter = false;
+    // Le texte
+    const text = k.add([
+      k.text("", {
+        size: 24,
+        transform: {
+          color: k.rgb(0, 0, 0),
+        },
+      }),
+      k.pos(100, bubbleY + 100),
+    ]);
+    const pressEnterText = "Appuyer sur 'Entrer' pour passer";
+    const pressEnterTextText = k.add([
+      k.text(pressEnterText, {
+        size: 12,
+        transform: {
+          color: k.rgb(0, 0, 0),
+        },
+      }),
+      k.pos(screenWith / 2 - 150, bubbleHeight + 200),
+    ]);
 
-    const next = () => {
-      if (textHasBeenDisplayed) {
-        quitScene();
+    k.onKeyPress("enter", () => {
+      // Si on repress enter alors qu'on est à la fin on sort
+      if (currentIndexOfText === INTRO_TEXT.length - 1) return;
+
+      // Si writeText est en cours on set enterHasBeenPressed à true, pour que la boucle
+      // se coupe toute seule
+      if (isWriting) {
+        enterHasBeenPressed = true;
       } else {
-        pressedEnter = true;
+        // Sinon on incrémente l'index du texte et on lance l'écriture
+        enterHasBeenPressed = false;
+        currentIndexOfText++;
+        writeText(INTRO_TEXT[currentIndexOfText], text);
       }
-    };
 
-    k.onKeyPress("enter", next);
-    k.onKeyPress("escape", next);
-    k.onKeyPress("space", next);
-
-    for (let i = 0; i < INTRO_TEXT.length; i++) {
-      if (!pressedEnter) {
-        await k.wait(0.01); // wait for 0.1 seconds
+      // Si on est à la fin on affiche le bouton next
+      if (currentIndexOfText === INTRO_TEXT.length - 1) {
+        k.destroy(pressEnterTextText);
+        displayNextButton();
       }
-      displayText += INTRO_TEXT[i];
-      text.text = displayText;
-    }
+    });
 
-    nextButton.addEventListener("click", quitScene);
+    // On lance l'écriture du premier texte
+    writeText(INTRO_TEXT[currentIndexOfText], text);
 
-    textHasBeenDisplayed = true;
-    nextButton.style.display = "flex";
+    nextButton.addEventListener("click", () => {
+      hideNextButton();
+      k.go("main");
+    });
   });
 };
