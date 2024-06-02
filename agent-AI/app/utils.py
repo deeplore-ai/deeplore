@@ -13,6 +13,7 @@ def getPrompt(speech: Speech):
     heard_conversations = open("data/heard_conversation_"+concat_id, 'r').read()
     npc = open("data/npc_"+concat_id, 'r').read()
     relation = open("data/relations_"+concat_id, 'r').read()
+    instructions = open("data/instructions", 'r').read()
 
     return f"""{context} \n\n
         {npc} \n\n
@@ -20,12 +21,15 @@ def getPrompt(speech: Speech):
         {relation}  \n\n
         {output}   \n\n
         {conversations} \n\n
-        {speech.speaker} is speaking and says : "{speech.content}" \n\n
-
         *Rules output:
         \t- If the person is not near to you, do not respond. 
         \t- Respond in french. 
         \t- Only the answers
+        {instructions} \n\n
+
+        {speech.speaker} is speaking and says : "{speech.content}" \n\n
+
+        
         
         """ 
 
