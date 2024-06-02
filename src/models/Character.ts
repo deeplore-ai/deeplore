@@ -116,7 +116,7 @@ export default class Character {
   }
 
   hear(text: string, speaker: Character) {
-    const shouldAnswer = !this.forbidMoving && !this.thinkingBubble;
+    const shouldAnswer = !this.forbidMoving && !this.thinkingBubble && calculateDistance(this.gameObject.pos, speaker.gameObject.pos) < START_TRUNCATED_RANGE;
     console.log(shouldAnswer);
     if (shouldAnswer) {
       console.log("here");
