@@ -29,19 +29,11 @@ def test_chat_priest(speech: Speech):
     
 def chat(speech: Speech):
     
-    if speech.npc == "Priest" :
-        npc_context = f"""Tu es {mancini.read()}\n
-        """
-    elif speech.npc == "Girl" :
-        npc_context = f"""Tu es {dubois.read()}\n
-        """
-    
-    
     chat_response = client.chat(
         model=model,
         messages=[ChatMessage(role="user", content=f"""
-                           {getPrompt(Speech)} \n
-                            You respond to {speech.speaker} who says : "{speech.content}" """)]
+                           {getPrompt(speech)} 
+                            """)]
         )
     if DEBUG :
         print(chat_response)

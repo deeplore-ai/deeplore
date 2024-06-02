@@ -31,7 +31,7 @@ uvicorn app/main:app --reload
 To deploy the app, use
 
 ```bash
-docker build -t fastapi-app . --env-file .env.yaml
+docker build -t fastapi-app .
 docker run -p 8000:8000 fastapi-app 
 ```
 
@@ -40,7 +40,7 @@ docker run -p 8000:8000 fastapi-app
 To deploy the app online, setup gcloud CLI and use
 
 ```bash
-gcloud run deploy app --port 8080 --source . --env-vars-file .env.yaml
+gcloud run deploy app --port 8080 --source . --env-vars-file .env.yaml --region europe-west9
 ```
 
 
