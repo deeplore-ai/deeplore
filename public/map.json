@@ -803,6 +803,72 @@
         }, 
         {
          "draworder":"topdown",
+         "id":10,
+         "name":"interaction",
+         "objects":[
+                {
+                 "height":16,
+                 "id":57,
+                 "name":"tombe",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":96,
+                 "y":256
+                }, 
+                {
+                 "height":16,
+                 "id":58,
+                 "name":"porte",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":240,
+                 "y":144
+                }, 
+                {
+                 "height":16,
+                 "id":59,
+                 "name":"porte",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":320,
+                 "y":256
+                }, 
+                {
+                 "height":16,
+                 "id":60,
+                 "name":"porte",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":352
+                }, 
+                {
+                 "height":16,
+                 "id":61,
+                 "name":"vase",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":208,
+                 "y":368
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":false,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":2,
          "name":"spawn",
          "objects":[
@@ -824,8 +890,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":10,
- "nextobjectid":57,
+ "nextlayerid":11,
+ "nextobjectid":62,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

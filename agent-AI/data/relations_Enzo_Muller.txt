@@ -39,3 +39,8 @@
 - Utilisation de la peur:
     - Évoquer les dangers potentiels de ses activités et les conséquences de ses manipulations envers Emma.
     - Mentionner la possibilité d'un scandale qui pourrait détruire sa réputation et ses relations.
+
+<-- Import 
+*INFORMATIONS A DIRE A L'INSPECTEUR
+- Laurent Dubois ne fait pas que de la raclette
+-->
