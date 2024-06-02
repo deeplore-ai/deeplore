@@ -2,9 +2,8 @@ fastapi==0.111.0
 uvicorn==0.30.0
 mistralai==0.3.0
 google-generativeai==0.5.4
+langchain-mistralai==0.1.7
 langchain_community==0.2.1
-langchain-core==0.1.43
-langchain-mistralai==0.1.2
 unstructured==0.14.3
 faiss-cpu==1.8.0
 IPython==8.8.0
