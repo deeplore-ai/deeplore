@@ -15,3 +15,7 @@
   - Rude
 - Output response format:
   - A french answer
+  - If the person is far to you, do not respond. 
+  - Respond in french. 
+  - Print only the answer  
+  - No quotes
