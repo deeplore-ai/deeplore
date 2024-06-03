@@ -70,6 +70,8 @@ async def hear(speech: Speech, model: str): # TODO move npc to listener
             result = await loop.run_in_executor(executor,chat_gemini,speech, model)
         elif model == "LangChain":
             result = await loop.run_in_executor(executor,chat_langchain,speech)
+        else:
+            result = chat(speech)
 
         # Store the NPC's response to the speech in a file 
         with open("data/provisoire/conversations_" + var, 'a') as f:
