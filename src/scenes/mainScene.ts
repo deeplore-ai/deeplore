@@ -17,15 +17,14 @@ import {
   chatButton,
 } from "../lib/UI";
 import type jsonMap from "../../public/map.json";
-import * as pnj from "../character_const";
-// import { listenSpeech } from "../speech-to-text/listenSpeech";
+import * as pnj from "../characters";
+import Game from "../models/Game";
+import EventBus from "../models/EventBus";
+import { listenSpeech } from "../speech-to-text/listenSpeech";
 
 type Map = typeof jsonMap;
 
 const easystar = new easystarjs.js();
-import Game from "../models/Game";
-import EventBus from "../EventBus";
-import { listenSpeech } from "../speech-to-text/listenSpeech";
 
 const TWO_PNJ_MODE = false;
 const player = pnj.paul_martinez;
@@ -61,8 +60,6 @@ characters.forEach((character) => {
 });
 player.player = null;
 
-EventBus.subscribe("character:speak", onCharacterSpeak);
-
 function onCharacterSpeak({
   speaker,
   text,
@@ -91,6 +88,8 @@ const askQuestion = (startListenSpeech = false) => {
 
 export const createMainScene = () => {
   k.scene("main", async () => {
+    EventBus.subscribe("character:speak", onCharacterSpeak);
+
     displayChatButton();
 
     canvas.addEventListener("keydown", (e) => {

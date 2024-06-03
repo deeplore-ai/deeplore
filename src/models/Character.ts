@@ -7,8 +7,9 @@ import {
 } from "../constants";
 import Game from "./Game";
 import { calculateDistance, truncateText } from "../utils";
-import EventBus from "../EventBus";
+import EventBus from "./EventBus";
 import settings from "../settings";
+import { Color } from "../color";
 
 export type PlayerMovement = {
   move: (character: Character) => void;
@@ -116,7 +117,11 @@ export default class Character {
   }
 
   hear(text: string, speaker: Character) {
-    const shouldAnswer = !this.forbidMoving && !this.thinkingBubble && calculateDistance(this.gameObject.pos, speaker.gameObject.pos) < START_TRUNCATED_RANGE;
+    const shouldAnswer =
+      !this.forbidMoving &&
+      !this.thinkingBubble &&
+      calculateDistance(this.gameObject.pos, speaker.gameObject.pos) <
+        START_TRUNCATED_RANGE;
     console.log(shouldAnswer);
     if (shouldAnswer) {
       console.log("here");
@@ -306,11 +311,10 @@ export default class Character {
         size: fontSize,
         font: "monospace",
         transform: {
-          color: this.k.rgb(0, 0, 0),
+          color: Color.black,
         },
       }),
       this.k.pos(textX, firstTextY),
-      this.k.color(0, 0, 0),
     ]);
 
     const textSecondLine = this.k.add([
@@ -318,11 +322,10 @@ export default class Character {
         size: fontSize,
         font: "monospace",
         transform: {
-          color: this.k.rgb(0, 0, 0),
+          color: Color.white,
         },
       }),
       this.k.pos(textX, secondTextY),
-      this.k.color(0, 0, 0),
     ]);
 
     let line;

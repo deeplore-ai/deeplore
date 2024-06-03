@@ -1,7 +1,8 @@
 import { Vec2 } from "kaboom";
-import { DEFAULT_BACKGROUND_COLOR, scaleFactor } from "./constants";
+import { scaleFactor } from "./constants";
 import { k } from "./lib/ctx";
 import { wordsToTruncate } from "./data/wordsToTruncate";
+import { Color } from "./color";
 
 export const setupKaboom = () => {
   k.loadSprite("spritesheet", "./spritesheet.png", {
@@ -93,7 +94,7 @@ export const setupKaboom = () => {
 
   k.loadSprite("map", "./map.png");
 
-  k.setBackground(k.Color.fromHex(DEFAULT_BACKGROUND_COLOR));
+  k.setBackground(Color.black);
 };
 
 export function fromXYToGrid(x: number, y: number, cellSize: number) {
@@ -145,4 +146,11 @@ export const truncateText = (message: string, distance: number) => {
   }
 
   return joinedWords.join(" ");
+};
+
+export const generateShortGuid = () => {
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
 };
