@@ -4,6 +4,6 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
 export default {
-  endpoint: urlParams.get("endpoint") || "hear",
-  gameId: generateShortGuid(),
+  endpoint: urlParams.get("endpoint") || "LangChain",
+  gameId: generateShortGuid()
 };

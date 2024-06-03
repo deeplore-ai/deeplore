@@ -128,7 +128,7 @@ export default class Character {
       this.startThinking();
     }
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
-    fetch(`https://app-fqj7trlqhq-od.a.run.app/${settings.endpoint}`, {
+    fetch(`https://app-fqj7trlqhq-od.a.run.app/hear/${settings.endpoint}`, {
       method: "POST",
       // no cors
       headers: {
