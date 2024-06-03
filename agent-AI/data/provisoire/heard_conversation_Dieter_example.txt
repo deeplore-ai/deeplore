@@ -1,0 +1,12 @@
+*CONVERSATION ENTENDUE
+Jeanne Costa ; LOIN ; bla ... ... bla
+Ines Dubois ; A DISTANCE ; bla ... bla
+Ines Dubois ; A DISTANCE ; bla ... bla
+Jeanne Costa ; LOIN ; bla ... ... bla
+Jeanne Costa ; LOIN ; bla ... ... bla
+Ines Dubois ; PROCHE ; blabla
+Jeanne Costa ; LOIN ; bla ... ... bla
+Ines Dubois ; A DISTANCE ; bla ... bla
+Ines Dubois ; A DISTANCE ; bla ... bla
+Jeanne Costa ; PROCHE ; blabla
+Jeanne Costa ; A DISTANCE ; bla ... bla

@@ -77,6 +77,10 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
+.vscode
+
+# Python
+*.pyc
 .env
 .env.development.local
 .env.test.local
