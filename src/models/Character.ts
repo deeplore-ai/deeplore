@@ -8,8 +8,8 @@ import {
 import Game from "./Game";
 import { calculateDistance, truncateText } from "../utils";
 import EventBus from "./EventBus";
-import settings from "../settings";
 import { Color } from "../color";
+import { NPC } from "../../gpt-sdk/npc";
 
 export type PlayerMovement = {
   move: (character: Character) => void;
@@ -46,7 +46,7 @@ const movement: {
 };
 
 export default class Character {
-  name: string;
+  name: NPC.Name;
   initialPosition: Vec2;
   speed: number;
   gameObject: GameObj;
@@ -60,9 +60,12 @@ export default class Character {
   player: Character | null;
   thinkingBubble: GameObj | null = null;
   thinkingText: GameObj<PosComp | TextComp> | null = null;
+  speakingLines = new Array<string>();
+  isSpeaking = false;
+  speakingCharacter = 0;
 
   constructor(
-    name: string,
+    name: NPC.Name,
     initialPosition: Vec2,
     speed: number,
     scaleFactor: number,
@@ -116,7 +119,7 @@ export default class Character {
     this.direction = direction;
   }
 
-  hear(text: string, speaker: Character) {
+  async hear(text: string, speaker: Character) {
     const shouldAnswer =
       !this.forbidMoving &&
       !this.thinkingBubble &&
@@ -128,41 +131,64 @@ export default class Character {
       this.startThinking();
     }
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
-    fetch(`https://app-fqj7trlqhq-od.a.run.app/hear/${settings.endpoint}`, {
-      method: "POST",
-      // no cors
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        content: obfuscatedText,
-        npc: this.name,
-        id: settings.gameId,
-        firstname: this.firstName,
-        lastname: this.lastName,
-        speaker: speaker.firstName + " " + speaker.lastName,
-        distance: distanceToString(
-          calculateDistance(this.gameObject.pos, speaker.gameObject.pos)
-        ),
-        noAnswerExpected: !shouldAnswer,
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        if (data.Speech && data.Speech.length > 0) {
-          this.speak(data.Speech);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        this.speak("Nolo comprendo");
-      })
-      .finally(() => {
-        this.stopThinking();
+
+    try {
+      const responseStream = NPC.talk({
+        from: speaker.name,
+        to: this.name,
+        text: obfuscatedText,
+        shouldAnswer,
       });
+
+      this.speakingCharacter = 0;
+
+      for await (const response of responseStream) {
+        this.isSpeaking = true;
+        console.log("Speaking:", response);
+        this.speak(response);
+      }
+      this.isSpeaking = false;
+    } catch (e) {
+      this.speak("Nolo comprendo, mi amigo!");
+    } finally {
+      this.stopThinking();
+    }
+
+    // fetch(`https://app-fqj7trlqhq-od.a.run.app/hear/${settings.endpoint}`, {
+    //   method: "POST",
+    //   // no cors
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     content: obfuscatedText,
+    //     npc: this.name,
+    //     id: settings.gameId,
+    //     firstname: this.firstName,
+    //     lastname: this.lastName,
+    //     speaker: speaker.firstName + " " + speaker.lastName,
+    //     distance: distanceToString(
+    //       calculateDistance(this.gameObject.pos, speaker.gameObject.pos)
+    //     ),
+    //     noAnswerExpected: !shouldAnswer,
+    //   }),
+    // })
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     if (data.Speech && data.Speech.length > 0) {
+    //       this.speak(data.Speech);
+    //     }
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //     this.speak("Nolo comprendo");
+    //   })
+    //   .finally(() => {
+    //     this.stopThinking();
+    //   });
   }
 
   playAnimation(animation: string) {
@@ -238,27 +264,33 @@ export default class Character {
   speak(text: string) {
     const maxCharsPerLine = 30;
     const words = text.split(" ");
-    let lines = [];
-    let currentLine = "";
+    let currentLine = this.speakingLines[this.speakingLines.length - 1] ?? "";
     this.forbidMoving = true;
 
     words.forEach((word) => {
-      if ((currentLine + word).length <= maxCharsPerLine) {
-        currentLine += " " + word;
+      const newCurrentLine = currentLine + " " + word;
+      if (newCurrentLine.length <= maxCharsPerLine) {
+        currentLine = newCurrentLine;
+        this.speakingLines[this.speakingLines.length - 1] = newCurrentLine;
       } else {
-        lines.push(currentLine);
+        this.speakingLines.push(currentLine);
         currentLine = word;
       }
     });
-    lines.push(currentLine);
 
-    this.displayDynamicBubble(lines, () => {
+    console.log("this.speakingLines", [...this.speakingLines]);
+
+    this.displayDynamicBubble(() => {
       this.forbidMoving = false;
       EventBus.publish("character:speak", { speaker: this, text });
     });
   }
 
-  private async displayDynamicBubble(lines: string[], onFinished: () => void) {
+  private async displayDynamicBubble(onFinished: () => void) {
+    if (this.isSpeaking) {
+      return; // the character is already speaking
+    }
+
     // Text setup
     const lineHeight = 30;
     const fontSize = 16;
@@ -328,21 +360,34 @@ export default class Character {
       this.k.pos(textX, secondTextY),
     ]);
 
-    let line;
-    while ((line = lines.shift())) {
-      const obfuscatedLine = this.obfuscateBasedOnDistance(line, this.player);
-      for (let char of obfuscatedLine) {
-        textSecondLine.text += char;
-        const waitingTime = char === "." ? 0.1 : 0.03;
-        await this.k.wait(waitingTime);
+    {
+      let currentLine = 0;
+      let currentLineCharacter = 0;
+      let obfuscatedLine: string;
+
+      while (this.isSpeaking) {
+        do {
+          obfuscatedLine = this.obfuscateBasedOnDistance(
+            this.speakingLines[currentLine],
+            this.player
+          );
+          const character = obfuscatedLine[currentLineCharacter];
+          textSecondLine.text += character;
+          await this.k.wait(character === "." ? 0.1 : 0.03);
+          currentLineCharacter++;
+        } while (currentLineCharacter < obfuscatedLine.length);
+        textFirstLine.text = textSecondLine.text;
+        textSecondLine.text = "";
+        currentLine++;
       }
-      textFirstLine.text = textSecondLine.text;
-      textSecondLine.text = "";
     }
+
     await this.k.wait(1);
 
     bubbleBorder.destroy();
     bubbleContent.destroy();
+
+    this.speakingLines = [];
 
     textFirstLine.destroy();
     textSecondLine.destroy();

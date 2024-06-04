@@ -3,7 +3,7 @@ import { k } from "./lib/ctx";
 import { scaleFactor } from "./constants";
 
 export const paul_martinez = new Character(
-  "Player",
+  "Paul_Martinez",
   k.vec2(990, 990),
   250,
   scaleFactor,
@@ -13,7 +13,7 @@ export const paul_martinez = new Character(
 );
 
 export const emma_dubois = new Character(
-  "Fille",
+  "Emma_Dubois",
   k.vec2(500, 1440),
   250,
   scaleFactor,
@@ -23,7 +23,7 @@ export const emma_dubois = new Character(
 );
 
 export const matthieu_mancini = new Character(
-  "Priest",
+  "Matthieu_Mancini",
   k.vec2(900, 1800),
   250,
   scaleFactor,
@@ -33,7 +33,7 @@ export const matthieu_mancini = new Character(
 );
 
 export const dieter_hoffman = new Character(
-  "Prof",
+  "Dieter_Hoffman",
   k.vec2(1899, 1800),
   250,
   scaleFactor,
@@ -43,7 +43,7 @@ export const dieter_hoffman = new Character(
 );
 
 export const enzo_muller = new Character(
-  "PetitAmi",
+  "Enzo_Muller",
   k.vec2(1350, 1530),
   250,
   scaleFactor,
@@ -53,7 +53,7 @@ export const enzo_muller = new Character(
 );
 
 export const farida_wang = new Character(
-  "Maire",
+  "Farida_Wang",
   k.vec2(1620, 1080),
   250,
   scaleFactor,
@@ -63,7 +63,7 @@ export const farida_wang = new Character(
 );
 
 export const ines_dubois = new Character(
-  "Mere",
+  "Ines_Dubois",
   k.vec2(2100, 1310),
   250,
   scaleFactor,
@@ -73,7 +73,7 @@ export const ines_dubois = new Character(
 );
 
 export const jonathan_chassang = new Character(
-  "Jaloux",
+  "Jonathan_Chassang",
   k.vec2(720, 2070),
   250,
   scaleFactor,
@@ -83,7 +83,7 @@ export const jonathan_chassang = new Character(
 );
 
 export const laurent_dubois = new Character(
-  "Pere",
+  "Laurent_Dubois",
   k.vec2(1260, 455),
   250,
   scaleFactor,
@@ -91,3 +91,15 @@ export const laurent_dubois = new Character(
   "Laurent",
   "Dubois"
 );
+
+export const characters = [
+  paul_martinez,
+  emma_dubois,
+  matthieu_mancini,
+  dieter_hoffman,
+  enzo_muller,
+  farida_wang,
+  ines_dubois,
+  jonathan_chassang,
+  laurent_dubois,
+];
