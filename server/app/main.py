@@ -7,6 +7,7 @@ from .config import DEBUG
 from .classes import Speech
 from .gemini import chat_gemini
 from .langchain import *
+from .langchain_hugging_face import chat_langchain_hugging_face
 
 ##### API #################################
 origins = ["*"]
@@ -66,12 +67,14 @@ async def hear(speech: Speech, model: str): # TODO move npc to listener
         open("data/provisoire/conversations_" + var, 'a').close() # create the file if it doesn't exist
 
         # Get the NPC's response to the speech using the specified NLP model
-        if "Gemini" in model:
+        if "gemini" in model:
             result = await loop.run_in_executor(executor,chat_gemini,speech, model)
         elif model == "LangChain":
             result = await loop.run_in_executor(executor,chat_langchain,speech)
+        elif "mistral" in model:
+            result = await loop.run_in_executor(executor,chat,speech, model)
         else:
-            result = await loop.run_in_executor(executor,chat, speech)
+            result = await loop.run_in_executor(executor,chat_langchain_hugging_face, speech)
 
         # Store the NPC's response to the speech in a file 
         with open("data/provisoire/conversations_" + var, 'a') as f:

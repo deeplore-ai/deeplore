@@ -1,16 +1,12 @@
 from langchain_community.document_loaders import DirectoryLoader
-# from langchain_mistralai.chat_models import ChatMistralAI
-# from langchain_mistralai.embeddings import MistralAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain_core.prompts import ChatPromptTemplate
-from langchain.chains import create_retrieval_chain
-from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from transformers import pipeline
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from .utils import getPrompt
-# from .config import MISTRAL_API_KEY, DEBUG
 from .classes import Speech
 
 ##### CREATE THE VECTOR STORE (RAG) ###################
@@ -24,15 +20,22 @@ docs = loader.load()
 documents = text_splitter.split_documents(docs)
 # Define the embedding model
 #embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY,)
-embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+EMBEDDING_MODEL_NAME = "openbmb/MiniCPM-Llama3-V-2_5"
+tokenizer = AutoTokenizer.from_pretrained(EMBEDDING_MODEL_NAME)
+embedding = HuggingFaceEmbeddings(
+    model_name=EMBEDDING_MODEL_NAME,
+    multi_process=True,
+    model_kwargs={"device": "cuda"},
+    encode_kwargs={"normalize_embeddings": True},  # Set `True` for cosine similarity
+)
 
 # Create the vector store 
-vector = FAISS.from_documents(documents, embeddings)
+vector = FAISS.from_documents(documents, embedding)
 # Define a retriever interface
 retriever = vector.as_retriever()
 
 
-def chat_langchain(speech: Speech) -> str:
+def chat_langchain_hugging_face(speech: Speech) -> str:
     """
     This function is responsible for creating a chain of LangChain components to answer questions.
     It uses a retrieval-augmented generation (RAG) approach, where a vector store (FAISS) is used to 
@@ -47,30 +50,36 @@ def chat_langchain(speech: Speech) -> str:
     """
 
     # Define LLM
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.9)
+    
+    model = AutoModelForCausalLM.from_pretrained(EMBEDDING_MODEL_NAME)
+
+    READER_LLM = pipeline(
+        model=model,
+        tokenizer=tokenizer,
+        task="text-generation",
+        do_sample=True,
+        temperature=0.9,
+        repetition_penalty=1.1,
+        return_full_text=False,
+        max_new_tokens=300,
+    )
 
     # Define prompt template
-    prompt = ChatPromptTemplate.from_template("""
+    RAG_PROMPT_TEMPLATE = tokenizer.apply_chat_template([{"""
         <context> {context} </context> \n
         Precisions :  {input} \n
-        Question : {question}"""
+        Question : {question}"""}], tokenize=False, #add_generation_prompt=True
     )
 
     # Create a retrieval chain to answer questions
     # The create_stuff_documents_chain function combines a language model and a prompt template
     # to generate a response based on a set of documents.
-    document_chain = create_stuff_documents_chain(model, prompt)
-
-    # Create a retrieval-augmented chain
-    # The create_retrieval_chain function combines a retriever and a document chain to generate
-    # a response based on a set of documents retrieved from the retriever.
-    retrieval_chain = create_retrieval_chain(retriever, document_chain)
-
-    # Invoke the retrieval-augmented chain
-    # The invoke method of the retrieval_chain is used to generate a response based on the input
-    # parameters. In this case, the input parameters are the user's question and the prompt for the
-    # language model.
-    response = retrieval_chain.invoke({"input": getPrompt(speech), "question":speech.content})
+    
+    retrieved = vector.similarity_search(query=speech.content)
+    retrieved_docs_text = [doc.page_content for doc in retrieved]  # We only need the text of the documents
+    context = "\nExtracted documents:\n"
+    context += "".join([f"Document {str(i)}:::\n" + doc for i, doc in enumerate(retrieved_docs_text)])
+    final_prompt = RAG_PROMPT_TEMPLATE.format(question=speech.content, input=getPrompt(speech), context=context)
 
     # Return the answer from the response
-    return response["answer"]
+    return READER_LLM(final_prompt)[0]["generated_text"]

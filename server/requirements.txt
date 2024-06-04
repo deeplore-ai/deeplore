@@ -8,3 +8,5 @@ langchain_community==0.2.1
 unstructured==0.14.3
 faiss-cpu==1.8.0
 IPython==8.8.0
+transformers==4.41.2
+torch==2.3.0
