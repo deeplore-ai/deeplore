@@ -1,32 +1,32 @@
-import { GameObj } from "kaboom";
+import { Key } from "kaboom";
 import { k } from "../lib/ctx";
-import { Position } from "../types";
-import { scaleFactor } from "../constants";
+import { PlayerDirection } from "../types";
 
-export class Player {
-  public gameObj: GameObj;
-  public id: string;
-  public lastAnimationDone: string;
+import Character, { CharacterConstructor } from "./Character";
+import Game from "./Game";
 
-  constructor(id: string, position: Position) {
-    this.gameObj = k.add([
-      k.anchor("center"),
-      k.sprite("spritesheet", { anim: "idle-down" }),
-      k.pos(position.x, position.y),
-      k.body(),
-      k.scale(scaleFactor),
-      k.area({
-        shape: new k.Rect(k.vec2(0, 3), 10, 10),
-      }),
-    ]);
-    this.id = id;
-    this.lastAnimationDone = "idle-down";
+export class Player extends Character {
+  constructor(args: CharacterConstructor) {
+    super(args);
   }
 
-  playAnimation(nextAnimation: string) {
-    // Prevents the same animation from being played again
-    if (this.lastAnimationDone === nextAnimation) return;
-    this.lastAnimationDone = nextAnimation;
-    this.gameObj.play(nextAnimation);
+  public setupControls() {
+    const directionKeys = ["up", "down", "left", "right"];
+    for (const direction of directionKeys) {
+      k.onKeyPress(direction as Key, () => {
+        if (Game.getInstance().isGamePaused) return;
+        this.startMovement(direction as PlayerDirection);
+      });
+
+      k.onKeyDown(direction as Key, () => {
+        if (Game.getInstance().isGamePaused) return;
+        this.move(direction as PlayerDirection);
+      });
+
+      k.onKeyRelease(direction as Key, () => {
+        if (Game.getInstance().isGamePaused) return;
+        this.stopMovement();
+      });
+    }
   }
 }

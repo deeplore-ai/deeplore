@@ -6,11 +6,16 @@ import {
   START_TRUNCATED_RANGE,
 } from "../constants";
 import Game from "./Game";
-import { calculateDistance, truncateText } from "../utils";
+import {
+  calculateDistance,
+  fromGridToDirection,
+  fromXYToGrid,
+  truncateText,
+} from "../utils";
 import EventBus from "./EventBus";
 import settings from "../settings";
 import { Color } from "../color";
-
+import { js as Easystar } from "easystarjs";
 export type PlayerMovement = {
   move: (character: Character) => void;
   animToPlay: string;
@@ -45,6 +50,17 @@ const movement: {
   },
 };
 
+export type CharacterConstructor = {
+  name: string;
+  initialPosition: Vec2;
+  speed: number;
+  scaleFactor: number;
+  k: KaboomCtx;
+  firstName: string;
+  lastName: string;
+  player: Character | null;
+};
+
 export default class Character {
   name: string;
   initialPosition: Vec2;
@@ -61,16 +77,16 @@ export default class Character {
   thinkingBubble: GameObj | null = null;
   thinkingText: GameObj<PosComp | TextComp> | null = null;
 
-  constructor(
-    name: string,
-    initialPosition: Vec2,
-    speed: number,
-    scaleFactor: number,
-    k: KaboomCtx,
-    firstName: string,
-    lastName: string,
-    player: Character | null = null
-  ) {
+  constructor({
+    name,
+    initialPosition,
+    speed,
+    scaleFactor,
+    k,
+    firstName,
+    lastName,
+    player,
+  }: CharacterConstructor) {
     this.name = name;
     this.initialPosition = initialPosition;
     this.speed = speed;
@@ -347,6 +363,32 @@ export default class Character {
     textFirstLine.destroy();
     textSecondLine.destroy();
     onFinished();
+  }
+
+  recalculatePath(easystar: Easystar) {
+    if (!this.target) return;
+    const charGridPos = fromXYToGrid(
+      this.gameObject.pos.x,
+      this.gameObject.pos.y,
+      16
+    );
+    const targetGridPos = fromXYToGrid(this.target.x, this.target.y, 16);
+    easystar.findPath(
+      charGridPos.x,
+      charGridPos.y,
+      targetGridPos.x,
+      targetGridPos.y,
+      (path: { x: number; y: number }[]) => {
+        if (path && path.length > 1) {
+          this.direction = fromGridToDirection(
+            path[1],
+            charGridPos
+          ) as PlayerDirection;
+        }
+        this.recalculatePath(easystar);
+      }
+    );
+    easystar.calculate();
   }
 }
 

@@ -1,7 +1,7 @@
 import { k } from "./lib/ctx";
 
 import { setupKaboom } from "./utils";
-import { createMainScene } from "./scenes/mainScene";
+import { createMainScene } from "./scenes/main/mainScene";
 import { createInitialScene } from "./scenes/initialScene";
 import { createTrainScene } from "./scenes/trainScene";
 

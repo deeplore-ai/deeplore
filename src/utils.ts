@@ -3,6 +3,7 @@ import { scaleFactor } from "./constants";
 import { k } from "./lib/ctx";
 import { wordsToTruncate } from "./data/wordsToTruncate";
 import { Color } from "./color";
+import { PlayerDirection } from "./types";
 
 export const setupKaboom = () => {
   k.loadSprite("spritesheet", "./spritesheet.png", {
@@ -153,4 +154,22 @@ export const generateShortGuid = () => {
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
   );
+};
+
+export const fromGridToDirection = (
+  nextPos: { x: number; y: number },
+  charGridPos: { x: number; y: number }
+): PlayerDirection => {
+  if (nextPos.x < charGridPos.x) {
+    return "left";
+  } else if (nextPos.x > charGridPos.x) {
+    return "right";
+  }
+  if (nextPos.y < charGridPos.y) {
+    return "up";
+  } else if (nextPos.y > charGridPos.y) {
+    return "down";
+  }
+
+  return "down";
 };
