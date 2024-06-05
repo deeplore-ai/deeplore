@@ -5,7 +5,7 @@ from .classes import Speech
 
 # Load static files corresponding to the current game state
 context = open(pathlib.Path("data/static/context.txt"), 'r').read()
-instructions = open(pathlib.Path("data/instructions.txt"), 'r').read()
+instructions = open(pathlib.Path("data/static/instructions.txt"), 'r').read()
 
 
 def getPrompt(speech: Speech):
