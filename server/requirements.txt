@@ -10,3 +10,6 @@ faiss-cpu==1.8.0
 IPython==8.8.0
 transformers==4.41.2
 torch==2.3.0
+torchvision==0.18.0
+pillow==10.3.0
+sentence_transformers==3.0.0

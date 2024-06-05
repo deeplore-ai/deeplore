@@ -5,8 +5,8 @@ import asyncio
 from .mistral import *
 from .config import DEBUG
 from .classes import Speech
-from .gemini import chat_gemini
-from .langchain import *
+#from .gemini import chat_gemini
+#from .langchain import *
 from .langchain_hugging_face import chat_langchain_hugging_face
 
 ##### API #################################
@@ -68,9 +68,11 @@ async def hear(speech: Speech, model: str): # TODO move npc to listener
 
         # Get the NPC's response to the speech using the specified NLP model
         if "gemini" in model:
-            result = await loop.run_in_executor(executor,chat_gemini,speech, model)
+            pass
+            #result = await loop.run_in_executor(executor,chat_gemini,speech, model)
         elif model == "LangChain":
-            result = await loop.run_in_executor(executor,chat_langchain,speech)
+            pass
+            #result = await loop.run_in_executor(executor,chat_langchain,speech)
         elif "mistral" in model:
             result = await loop.run_in_executor(executor,chat,speech, model)
         else:

@@ -10,29 +10,32 @@ from .utils import getPrompt
 from .classes import Speech
 
 ##### CREATE THE VECTOR STORE (RAG) ###################
-text_splitter = RecursiveCharacterTextSplitter()
+text_splitter = RecursiveCharacterTextSplitter(separators=["\n\n"], 
+                                               add_start_index=True, strip_whitespace=True)
 
 # Load first time to avoid NLTK delay
-loader = DirectoryLoader('data', glob="**/static/*.txt")
+loader = DirectoryLoader('data', glob="**/static/*.txt",)
 docs = loader.load()
 
 # Split text into chunks 
 documents = text_splitter.split_documents(docs)
 # Define the embedding model
 #embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY,)
-EMBEDDING_MODEL_NAME = "openbmb/MiniCPM-Llama3-V-2_5"
-tokenizer = AutoTokenizer.from_pretrained(EMBEDDING_MODEL_NAME)
-embedding = HuggingFaceEmbeddings(
+EMBEDDING_MODEL_NAME = "thenlper/gte-small"
+tokenizer = AutoTokenizer.from_pretrained(EMBEDDING_MODEL_NAME, trust_remote_code=True)
+embedding_model = HuggingFaceEmbeddings(
     model_name=EMBEDDING_MODEL_NAME,
     multi_process=True,
-    model_kwargs={"device": "cuda"},
+    model_kwargs={
+        "device": "cpu", 
+        "trust_remote_code":True},
     encode_kwargs={"normalize_embeddings": True},  # Set `True` for cosine similarity
 )
 
 # Create the vector store 
-vector = FAISS.from_documents(documents, embedding)
+KNOWLEDGE_VECTOR_DATABASE = FAISS.from_documents(documents, embedding_model)
 # Define a retriever interface
-retriever = vector.as_retriever()
+retriever = KNOWLEDGE_VECTOR_DATABASE .as_retriever()
 
 
 def chat_langchain_hugging_face(speech: Speech) -> str:
@@ -51,12 +54,13 @@ def chat_langchain_hugging_face(speech: Speech) -> str:
 
     # Define LLM
     
-    model = AutoModelForCausalLM.from_pretrained(EMBEDDING_MODEL_NAME)
+    model = AutoModelForCausalLM.from_pretrained(EMBEDDING_MODEL_NAME, trust_remote_code=True)
 
     READER_LLM = pipeline(
         model=model,
         tokenizer=tokenizer,
         task="text-generation",
+        trust_remote_code=True,
         do_sample=True,
         temperature=0.9,
         repetition_penalty=1.1,

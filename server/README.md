@@ -23,7 +23,7 @@ cp .env.yaml.example .env.yaml
 To run the app locally, use
 
 ```bash
-uvicorn app/main:app --reload
+fastapi dev app/main.py
 ```
 
 ## Deployment
