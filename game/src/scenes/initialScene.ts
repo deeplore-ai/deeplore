@@ -44,11 +44,13 @@ export const createInitialScene = () => {
     const screenWidth = k.width();
     const screenHeight = k.height();
     const bubbleHeight = 500;
+    const bubbleWidth = screenWidth - 160;
     const bubbleY = (screenHeight - bubbleHeight) / 2;
+    const bubbleX = 80;
 
     k.add([
-      k.rect(screenWidth - 160, bubbleHeight, { radius: 0 }),
-      k.pos(80, bubbleY),
+      k.rect(bubbleWidth, bubbleHeight, { radius: 0 }),
+      k.pos(bubbleX, bubbleY),
       k.color(255, 255, 255),
     ]);
 
@@ -80,9 +82,13 @@ export const createInitialScene = () => {
           color: Color.black,
         },
       }),
+      k.pos(0, 0), // initial position
     ]);
 
-    pressEnterText;
+    pressEnterTextGameObj.pos.x =
+      bubbleX + (bubbleWidth - pressEnterTextGameObj.width) / 2;
+    pressEnterTextGameObj.pos.y =
+      bubbleY + bubbleHeight - pressEnterTextGameObj.height - 30;
 
     const handleEnterPress = () => {
       if (currentIndexOfText === INTRO_TEXT.length - 1) return;
