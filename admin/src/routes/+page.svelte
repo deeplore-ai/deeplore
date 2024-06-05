@@ -1,4 +1,3 @@
-
 <script lang="ts">
     import CharacterSheet from '$lib/components/CharacterSheet.svelte';
 	import Character from '$lib/models/Character';
@@ -32,4 +31,3 @@
         overflow: hidden;
     }
 </style>
-
