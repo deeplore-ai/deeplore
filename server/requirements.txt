@@ -4,6 +4,7 @@ mistralai==0.3.0
 google-generativeai==0.5.4
 langchain-mistralai==0.1.7
 langchain_google_genai==1.0.5
+langchain_openai==0.1.8
 langchain_community==0.2.1
 unstructured==0.14.3
 faiss-cpu==1.8.0
