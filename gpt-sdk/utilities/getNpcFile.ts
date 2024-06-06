@@ -40,8 +40,6 @@ export async function getNpcFile(npc: NPC.Name): Promise<FileObject> {
   const npcFileResponse = await fetch(`/npc/npc_${npc}.txt`);
   const npcData = await npcFileResponse.text();
 
-  console.log("npcData", npcData);
-
   const file = new File([npcData], fileName, { type: "text/plain" });
 
   const formData = new FormData();
@@ -57,8 +55,6 @@ export async function getNpcFile(npc: NPC.Name): Promise<FileObject> {
   ).json()) as FileObject;
 
   files.push(fileUpload);
-
-  console.log({ fileUpload });
 
   return fileUpload;
 }

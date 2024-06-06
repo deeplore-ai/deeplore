@@ -47,8 +47,6 @@ export async function getNpcVectorStore(npc: NPC.Name): Promise<VectorStore> {
     })
   ).json()) as VectorStore;
 
-  console.log("Vector store", vectorStore);
-
   const npcFile = await getNpcFile(npc);
 
   await openai.post(`vector_stores/${vectorStore.id}/files`, {
@@ -56,8 +54,6 @@ export async function getNpcVectorStore(npc: NPC.Name): Promise<VectorStore> {
   });
 
   vectorStores.push(vectorStore);
-
-  console.log("Created vector store", vectorStore);
 
   return vectorStore;
 }

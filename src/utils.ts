@@ -205,7 +205,7 @@ export const truncateText = (message: string, distance: number) => {
 
   words.forEach((word, index) => {
     if (wordsToTruncate.includes(word)) {
-      words[index] = `...`;
+      words[index] = ".".repeat(word.length);
       countOfRemainingWordsToTruncate--;
     }
   });
@@ -219,23 +219,15 @@ export const truncateText = (message: string, distance: number) => {
   while (replacedCount < targetCount) {
     const index = Math.floor(Math.random() * words.length);
 
-    if (words[index] !== `...`) {
-      words[index] = `...`;
+    if (words[index].split("").some((value) => value != ".")) {
+      words[index] = ".".repeat(words[index].length);
       replacedCount++;
     } else if (replacedCount === words.length) {
       break; // Exit the loop if all words have been replaced
     }
   }
 
-  const joinedWords = new Array<string>();
-
-  for (const word of words) {
-    if (word !== `...` || joinedWords[joinedWords.length - 1] !== `...`) {
-      joinedWords.push(word);
-    }
-  }
-
-  return joinedWords.join(` `);
+  return words.join(` `);
 };
 
 export const generateShortGuid = () => {

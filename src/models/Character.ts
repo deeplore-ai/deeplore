@@ -60,7 +60,53 @@ export default class Character {
   player: Character | null;
   thinkingBubble: GameObj | null = null;
   thinkingText: GameObj<PosComp | TextComp> | null = null;
+
+  /**
+   * The full text that the character is speaking.
+   * It can grow over time as the character speaks.
+   */
+  #speaking = "";
+
+  get speaking() {
+    return this.#speaking;
+  }
+
+  set speaking(text: string) {
+    this.#speaking = text;
+    const words = text.split(" ");
+    const speakingLines = new Array<Array<string>>();
+    this.speakingLines = [];
+
+    let lineIndex = 0;
+
+    words.forEach((word) => {
+      const newLineWords = [...(speakingLines[lineIndex] ?? []), word];
+      const newLineText = newLineWords.join(" ");
+
+      if (newLineText.length > 30) {
+        lineIndex++;
+        speakingLines[lineIndex] = [word];
+        this.speakingLines[lineIndex] = word;
+      } else {
+        speakingLines[lineIndex] = newLineWords;
+        this.speakingLines[lineIndex] = newLineText;
+      }
+    });
+  }
+
+  /**
+   * A derived value from this.speaking.
+   */
   speakingLines = new Array<string>();
+
+  /**
+   * The last character line/word/character.
+   */
+  speakingOffset = {
+    line: 0,
+    character: 0,
+  };
+
   isSpeaking = false;
   speakingCharacter = 0;
 
@@ -140,16 +186,17 @@ export default class Character {
         shouldAnswer,
       });
 
-      this.speakingCharacter = 0;
+      this.speaking = "";
 
       for await (const response of responseStream) {
-        this.isSpeaking = true;
         console.log("Speaking:", response);
-        this.speak(response);
+        this.speaking += response;
+        this.startSpeaking();
       }
       this.isSpeaking = false;
     } catch (e) {
-      this.speak("Nolo comprendo, mi amigo!");
+      this.speaking = "Nolo comprendo, mi amigo!";
+      this.startSpeaking();
     } finally {
       this.stopThinking();
     }
@@ -261,35 +308,18 @@ export default class Character {
     this.thinkingText = null;
   }
 
-  speak(text: string) {
-    const maxCharsPerLine = 30;
-    const words = text.split(" ");
-    let currentLine = this.speakingLines[this.speakingLines.length - 1] ?? "";
-    this.forbidMoving = true;
-
-    words.forEach((word) => {
-      const newCurrentLine = currentLine + " " + word;
-      if (newCurrentLine.length <= maxCharsPerLine) {
-        currentLine = newCurrentLine;
-        this.speakingLines[this.speakingLines.length - 1] = newCurrentLine;
-      } else {
-        this.speakingLines.push(currentLine);
-        currentLine = word;
-      }
-    });
-
-    console.log("this.speakingLines", [...this.speakingLines]);
-
-    this.displayDynamicBubble(() => {
-      this.forbidMoving = false;
-      EventBus.publish("character:speak", { speaker: this, text });
-    });
-  }
-
-  private async displayDynamicBubble(onFinished: () => void) {
+  async startSpeaking() {
     if (this.isSpeaking) {
       return; // the character is already speaking
     }
+
+    console.log("Start speaking!", [...this.speakingLines]);
+
+    this.stopThinking();
+    this.forbidMoving = true;
+    this.isSpeaking = true;
+    this.speakingOffset.character = 0;
+    this.speakingOffset.line = 0;
 
     // Text setup
     const lineHeight = 30;
@@ -354,32 +384,51 @@ export default class Character {
         size: fontSize,
         font: "monospace",
         transform: {
-          color: Color.white,
+          color: Color.black,
         },
       }),
       this.k.pos(textX, secondTextY),
     ]);
 
-    {
-      let currentLine = 0;
-      let currentLineCharacter = 0;
-      let obfuscatedLine: string;
+    console.log("Speaking lines:", [...this.speakingLines]);
+    console.log("this.speakingOffset:", { ...this.speakingOffset });
 
-      while (this.isSpeaking) {
-        do {
-          obfuscatedLine = this.obfuscateBasedOnDistance(
-            this.speakingLines[currentLine],
-            this.player
-          );
-          const character = obfuscatedLine[currentLineCharacter];
-          textSecondLine.text += character;
-          await this.k.wait(character === "." ? 0.1 : 0.03);
-          currentLineCharacter++;
-        } while (currentLineCharacter < obfuscatedLine.length);
-        textFirstLine.text = textSecondLine.text;
-        textSecondLine.text = "";
-        currentLine++;
+    while (true) {
+      const line = this.speakingLines[this.speakingOffset.line];
+      const character = line[this.speakingOffset.character];
+      const isLastLine =
+        this.speakingOffset.line === this.speakingLines.length - 1;
+      const isLastCharacter =
+        this.speakingOffset.character ===
+        this.speakingLines[this.speakingOffset.line].length;
+
+      if (isLastLine && isLastCharacter) {
+        if (!this.isSpeaking) {
+          break;
+        }
+        console.log("Reached last line, waiting for the stream");
+        await this.k.wait(0.02);
+        continue;
       }
+
+      const obfuscatedLine = this.obfuscateBasedOnDistance(
+        this.speakingLines[this.speakingOffset.line],
+        this.player
+      );
+      const obfuscatedCharacter = obfuscatedLine[this.speakingOffset.character];
+      textSecondLine.text += obfuscatedCharacter;
+      this.speakingOffset.character++;
+
+      if (this.speakingOffset.character == line.length) {
+        if (!isLastLine) {
+          textFirstLine.text = textSecondLine.text;
+          textSecondLine.text = "";
+          this.speakingOffset.character = 0;
+          this.speakingOffset.line++;
+        }
+      }
+
+      await this.k.wait(character === "." ? 0.1 : 0.03);
     }
 
     await this.k.wait(1);
@@ -391,7 +440,8 @@ export default class Character {
 
     textFirstLine.destroy();
     textSecondLine.destroy();
-    onFinished();
+    this.forbidMoving = false;
+    EventBus.publish("character:speak", { speaker: this });
   }
 }
 

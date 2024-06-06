@@ -47,6 +47,8 @@ export async function getNpcAssistant(npc: NPC.Name): Promise<Assistant> {
     return existingAssistant;
   }
 
+  console.log("Creating assistant for", npc, "...");
+
   const fullName = npc.replace(/_/g, " ");
 
   const assistant = (await (
@@ -61,7 +63,7 @@ export async function getNpcAssistant(npc: NPC.Name): Promise<Assistant> {
     })
   ).json()) as Assistant;
 
-  console.log("Created assistant", assistant);
+  console.log("Created assistant for:", npc);
 
   assistants.push(assistant);
 
