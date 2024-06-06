@@ -13,9 +13,25 @@ import {
   truncateText,
 } from "../utils";
 import EventBus from "./EventBus";
-import settings from "../settings";
 import { Color } from "../color";
 import { js as Easystar } from "easystarjs";
+import { hear } from "../lib/hear";
+
+export const characterNames = [
+  "Dieter_Hoffman",
+  "Emma_Dubois",
+  "Enzo_Muller",
+  "Farida_Wang",
+  "Ines_Dubois",
+  "Jeanne_Costa",
+  "Jonathan_Chassang",
+  "Laurent_Dubois",
+  "Matthieu_Mancini",
+  "Paul_Martinez",
+] as const;
+
+export type CharacterName = (typeof characterNames)[number];
+
 export type PlayerMovement = {
   move: (character: Character) => void;
   animToPlay: string;
@@ -51,7 +67,7 @@ const movement: {
 };
 
 export type CharacterConstructor = {
-  name: string;
+  name: CharacterName;
   initialPosition: Vec2;
   speed: number;
   scaleFactor: number;
@@ -62,7 +78,7 @@ export type CharacterConstructor = {
 };
 
 export default class Character {
-  name: string;
+  name: CharacterName;
   initialPosition: Vec2;
   speed: number;
   gameObject: GameObj;
@@ -76,6 +92,55 @@ export default class Character {
   player: Character | null;
   thinkingBubble: GameObj | null = null;
   thinkingText: GameObj<PosComp | TextComp> | null = null;
+
+  /**
+   * The full text that the character is speaking.
+   * It can grow over time as the character speaks.
+   */
+  #speaking = "";
+
+  get speaking() {
+    return this.#speaking;
+  }
+
+  set speaking(text: string) {
+    this.#speaking = text;
+    const words = text.split(" ");
+    const speakingLines = new Array<Array<string>>();
+    this.speakingLines = [];
+
+    let lineIndex = 0;
+
+    words.forEach((word) => {
+      const newLineWords = [...(speakingLines[lineIndex] ?? []), word];
+      const newLineText = newLineWords.join(" ");
+
+      if (newLineText.length > 30) {
+        lineIndex++;
+        speakingLines[lineIndex] = [word];
+        this.speakingLines[lineIndex] = word;
+      } else {
+        speakingLines[lineIndex] = newLineWords;
+        this.speakingLines[lineIndex] = newLineText;
+      }
+    });
+  }
+
+  /**
+   * A derived value from this.speaking.
+   */
+  speakingLines = new Array<string>();
+
+  /**
+   * The last character line/word/character.
+   */
+  speakingOffset = {
+    line: 0,
+    character: 0,
+  };
+
+  isSpeaking = false;
+  speakingCharacter = 0;
 
   constructor({
     name,
@@ -132,7 +197,7 @@ export default class Character {
     this.direction = direction;
   }
 
-  hear(text: string, speaker: Character) {
+  async hear(text: string, speaker: Character) {
     const shouldAnswer =
       !this.forbidMoving &&
       !this.thinkingBubble &&
@@ -144,41 +209,29 @@ export default class Character {
       this.startThinking();
     }
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
-    fetch(`https://app-fqj7trlqhq-od.a.run.app/hear/${settings.endpoint}`, {
-      method: "POST",
-      // no cors
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        content: obfuscatedText,
-        npc: this.name,
-        id: settings.gameId,
-        firstname: this.firstName,
-        lastname: this.lastName,
-        speaker: speaker.firstName + " " + speaker.lastName,
-        distance: distanceToString(
-          calculateDistance(this.gameObject.pos, speaker.gameObject.pos)
-        ),
-        noAnswerExpected: !shouldAnswer,
-      }),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        if (data.Speech && data.Speech.length > 0) {
-          this.speak(data.Speech);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        this.speak("Nolo comprendo");
-      })
-      .finally(() => {
-        this.stopThinking();
+
+    try {
+      const responseStream = hear({
+        speaker: speaker,
+        listener: this,
+        text: obfuscatedText,
+        shouldAnswer,
       });
+
+      this.speaking = "";
+
+      for await (const response of responseStream) {
+        console.log("Speaking:", response);
+        this.speaking += response;
+        this.startSpeaking();
+      }
+      this.isSpeaking = false;
+    } catch (e) {
+      this.speaking = "Nolo comprendo, mi amigo! Soy un gogolo...";
+      this.startSpeaking();
+    } finally {
+      this.stopThinking();
+    }
   }
 
   playAnimation(animation: string) {
@@ -251,30 +304,19 @@ export default class Character {
     this.thinkingText = null;
   }
 
-  speak(text: string) {
-    const maxCharsPerLine = 30;
-    const words = text.split(" ");
-    let lines = [];
-    let currentLine = "";
+  async startSpeaking() {
+    if (this.isSpeaking) {
+      return; // the character is already speaking
+    }
+
+    console.log("Start speaking!", [...this.speakingLines]);
+
+    this.stopThinking();
     this.forbidMoving = true;
+    this.isSpeaking = true;
+    this.speakingOffset.character = 0;
+    this.speakingOffset.line = 0;
 
-    words.forEach((word) => {
-      if ((currentLine + word).length <= maxCharsPerLine) {
-        currentLine += " " + word;
-      } else {
-        lines.push(currentLine);
-        currentLine = word;
-      }
-    });
-    lines.push(currentLine);
-
-    this.displayDynamicBubble(lines, () => {
-      this.forbidMoving = false;
-      EventBus.publish("character:speak", { speaker: this, text });
-    });
-  }
-
-  private async displayDynamicBubble(lines: string[], onFinished: () => void) {
     // Text setup
     const lineHeight = 30;
     const fontSize = 16;
@@ -338,31 +380,64 @@ export default class Character {
         size: fontSize,
         font: "monospace",
         transform: {
-          color: Color.white,
+          color: Color.black,
         },
       }),
       this.k.pos(textX, secondTextY),
     ]);
 
-    let line;
-    while ((line = lines.shift())) {
-      const obfuscatedLine = this.obfuscateBasedOnDistance(line, this.player);
-      for (let char of obfuscatedLine) {
-        textSecondLine.text += char;
-        const waitingTime = char === "." ? 0.1 : 0.03;
-        await this.k.wait(waitingTime);
+    console.log("Speaking lines:", [...this.speakingLines]);
+    console.log("this.speakingOffset:", { ...this.speakingOffset });
+
+    while (true) {
+      const line = this.speakingLines[this.speakingOffset.line];
+      const character = line[this.speakingOffset.character];
+      const isLastLine =
+        this.speakingOffset.line === this.speakingLines.length - 1;
+      const isLastCharacter =
+        this.speakingOffset.character ===
+        this.speakingLines[this.speakingOffset.line].length;
+
+      if (isLastLine && isLastCharacter) {
+        if (!this.isSpeaking) {
+          break;
+        }
+        console.log("Reached last line, waiting for the stream");
+        await this.k.wait(0.02);
+        continue;
       }
-      textFirstLine.text = textSecondLine.text;
-      textSecondLine.text = "";
+
+      const obfuscatedLine = this.obfuscateBasedOnDistance(
+        this.speakingLines[this.speakingOffset.line],
+        this.player
+      );
+      const obfuscatedCharacter = obfuscatedLine[this.speakingOffset.character];
+      textSecondLine.text += obfuscatedCharacter;
+      this.speakingOffset.character++;
+
+      if (this.speakingOffset.character == line.length) {
+        if (!isLastLine) {
+          textFirstLine.text = textSecondLine.text;
+          textSecondLine.text = "";
+          this.speakingOffset.character = 0;
+          this.speakingOffset.line++;
+        }
+      }
+
+      await this.k.wait(character === "." ? 0.1 : 0.03);
     }
+
     await this.k.wait(1);
 
     bubbleBorder.destroy();
     bubbleContent.destroy();
 
+    this.speakingLines = [];
+
     textFirstLine.destroy();
     textSecondLine.destroy();
-    onFinished();
+    this.forbidMoving = false;
+    EventBus.publish("character:speak", { speaker: this });
   }
 
   recalculatePath(easystar: Easystar) {
