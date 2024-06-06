@@ -1,11 +1,11 @@
-import json 
+import json
 import os
 import pathlib
-from .classes import Speech 
+from .classes import Speech
 
 # Load static files corresponding to the current game state
 context = open(pathlib.Path("data/static/context.txt"), 'r').read()
-instructions = open(pathlib.Path("data/instructions.txt"), 'r').read()
+instructions = open(pathlib.Path("data/static/instructions.txt"), 'r').read()
 
 
 def getPrompt(speech: Speech):
@@ -23,10 +23,14 @@ def getPrompt(speech: Speech):
     """
 
     concat_id = speech.firstname+'_'+speech.lastname
-    conversations = open("data/provisoire/conversations_"+concat_id  + '_' + speech.id+'.txt', 'r').read()
-    heard_conversations = open("data/provisoire/heard_conversation_"+concat_id + '_' + speech.id+'.txt', 'r').read()
-    npc = open(pathlib.Path("data/static/npc/npc_"+concat_id + '.txt'), 'r').read()
-    relation = open(pathlib.Path("data/static/comportement/comportement_"+concat_id + '.txt'), 'r').read()
+    conversations = open("data/provisoire/conversations_" +
+                         concat_id + '_' + speech.id+'.txt', 'r').read()
+    heard_conversations = open(
+        "data/provisoire/heard_conversation_"+concat_id + '_' + speech.id+'.txt', 'r').read()
+    npc = open(pathlib.Path("data/static/npc/npc_" +
+               concat_id + '.txt'), 'r').read()
+    relation = open(pathlib.Path(
+        "data/static/comportement/comportement_"+concat_id + '.txt'), 'r').read()
 
     return f"""{context} \n\n
         {npc} \n\n
@@ -39,5 +43,4 @@ def getPrompt(speech: Speech):
         {speech.speaker} is speaking and says : "{speech.content}" \n\n
         
         {instructions}     
-        """ 
-
+        """
