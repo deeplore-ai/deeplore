@@ -8,6 +8,7 @@ from .classes import Speech
 from .gemini import chat_gemini
 from .openai import chat_openai
 from .langchain import *
+from .ollama import *
 
 ##### API #################################
 origins = ["*"]
@@ -77,6 +78,8 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
             result = await loop.run_in_executor(executor, chat_langchain, speech)
         elif model == "openai":
             result = await loop.run_in_executor(executor, chat_openai, speech)
+        elif model == "ollama":
+            result = await loop.run_in_executor(executor,chat_ollama,speech)
         else:
             result = await loop.run_in_executor(executor, chat, speech)
 
