@@ -1,3 +1,5 @@
+import MD5 from "crypto-js/md5";
+
 import Category from "./Category";
 
 export default class Character {
@@ -20,8 +22,12 @@ export default class Character {
         character.id = dto.id;
         character.firstname = dto.firstname;
         character.lastname = dto.lastname;
-        character.categories = dto.categories.map((category: any) => Category.fromDTO(category));
+        character.categories = dto.categories ? dto.categories.map((category: any) => Category.fromDTO(category)) : [];
         return character;
+    }
+
+    getKey() {
+        return MD5(JSON.stringify(this.toDTO())).toString();
     }
 }
 
