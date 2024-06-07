@@ -50,6 +50,8 @@ const movement: {
   },
 };
 
+const url = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+
 export type CharacterConstructor = {
   name: string;
   initialPosition: Vec2;
@@ -144,7 +146,7 @@ export default class Character {
       this.startThinking();
     }
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
-    fetch(`https://app-fqj7trlqhq-od.a.run.app/hear/${settings.endpoint}`, {
+    fetch(`${url}/hear/${settings.endpoint}`, {
       method: "POST",
       // no cors
       headers: {
