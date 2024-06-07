@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 import asyncio
+
+from .models.ollama_simple import OllamaSimple
+
 from .mistral import *
 from .config import DEBUG
 from .classes import Speech
@@ -25,6 +28,7 @@ app.add_middleware(
 executor = ThreadPoolExecutor(max_workers=8)
 loop = asyncio.get_event_loop()
 
+ollama_simple = OllamaSimple(model_name='llama3-gradient')
 
 @app.get("/", tags=["root"])
 async def root():
@@ -62,14 +66,14 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
     var = speech.firstname+'_'+speech.lastname + '_' + speech.id + '.txt'
 
     # Store the speech heard by the NPC in a file
-    with open("data/provisoire/heard_conversation_" + var, 'a') as f:
+    with open("data/provisoire/heard_conversation_" + var, 'a', encoding='utf-8') as f:
         f.write("\n"+speech.speaker + " ; " +
                 speech.distance + ' ; ' + speech.content)
 
     # Get the NPC's response to the speech if needed
     if not speech.noAnswerExpected:
         # create the file if it doesn't exist
-        open("data/provisoire/conversations_" + var, 'a').close()
+        open("data/provisoire/conversations_" + var, 'a', encoding='utf-8').close()
 
         # Get the NPC's response to the speech using the specified NLP model
         if "Gemini" in model:
@@ -80,11 +84,13 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
             result = await loop.run_in_executor(executor, chat_openai, speech)
         elif model == "ollama":
             result = await loop.run_in_executor(executor,chat_ollama,speech)
+        elif model == "ollama-simple":
+            result = await loop.run_in_executor(executor,ollama_simple.get_answer, speech)
         else:
             result = await loop.run_in_executor(executor, chat, speech)
 
         # Store the NPC's response to the speech in a file
-        with open("data/provisoire/conversations_" + var, 'a') as f:
+        with open("data/provisoire/conversations_" + var, 'a', encoding='utf-8') as f:
             f.write("\n"+speech.speaker + ' : ' + speech.content)
             f.write("\n" + speech.firstname + ' ' +
                     speech.lastname + ':' + result)

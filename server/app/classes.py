@@ -40,3 +40,9 @@ def test_speech():
     """
     return Speech(id="Priest", firstname="Matthieu", lastname="Mancini", speaker="Mancini", distance="1m", content="Bonjour, je suis un policier, je suis en train d'enquêter sur un meurtre dans la ville. Avez-vous vu ou entendu quelque chose d'étrange ?")
         
+class Model():
+    def __init__(self, model_name: str):
+        self.model_name = model_name
+    
+    def get_answer(self, speech: Speech):
+        pass
