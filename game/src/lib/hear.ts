@@ -1,10 +1,6 @@
-import Character from "../models/Character";
+import Character, { CharacterName } from "../models/Character";
 import { openai } from "../openai-sdk";
-
-/**
- * Set to true to use the OpenAI client-side SDK instead of the server application.
- */
-const useOpenAiSdk = false;
+import settings from "../settings";
 
 export function hear({
   listener,
@@ -17,30 +13,55 @@ export function hear({
   text: string;
   shouldAnswer?: boolean;
 }): AsyncGenerator<string, void, unknown> {
-  if (useOpenAiSdk) {
+  if (settings.useOpenAiSdk) {
     return openai.talk({
-      from: speaker.name,
-      to: listener.name,
+      listener: listener.name,
+      speaker: speaker.name,
       text,
       shouldAnswer,
     });
   } else {
-    return fetch(`localhost:8080/hear/${settings.endpoint}`, {
+    return callDeepLoreApi({
+      content: text,
+      npc: listener.name,
+      id: settings.gameId,
+      firstname: listener.firstName,
+      lastname: listener.lastName,
+      speaker: speaker.firstName + " " + speaker.lastName,
+      distance: "0",
+      noAnswerExpected: !shouldAnswer,
+    });
+  }
+}
+
+async function* callDeepLoreApi(input: {
+  content: string;
+  npc: CharacterName;
+  id: string;
+  firstname: string;
+  lastname: string;
+  speaker: string;
+  distance: string;
+  noAnswerExpected: boolean;
+}) {
+  const response = await fetch(
+    `http://localhost:8080/hear/${settings.endpoint}`,
+    {
       method: "POST",
       // no cors
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        content: text,
-        npc: this.name,
-        id: settings.gameId,
-        firstname: this.firstName,
-        lastname: this.lastName,
-        speaker: speaker.firstName + " " + speaker.lastName,
-        noAnswerExpected: !shouldAnswer,
-      }),
-    });
-  }
+      body: JSON.stringify(input),
+    }
+  );
+
+  const data = (await response.json()) as {
+    NPC: CharacterName;
+    Speaker: CharacterName;
+    Speech: string;
+  };
+
+  yield data.Speech;
 }

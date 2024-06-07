@@ -11,22 +11,24 @@ export namespace openai {
 
   export function setApiKey(key: string) {
     API_KEY = key;
+    localStorage.setItem("openai-api-key", key);
   }
 
   export function getApiKey() {
-    if (!API_KEY) {
-      console.error("OpenAI API key not set!");
-      console.error("Please call `setApiKey` before making any requests.");
-      console.error(
-        "You can get an API key from https://platform.openai.com/account/api-keys"
-      );
-      console.error(
-        "Since this code is running on the client, do not expose your API key."
-      );
-      throw new Error("OpenAI API key not set.");
+    if (API_KEY) {
+      return API_KEY;
+    }
+    const cachedApiKey = localStorage.getItem("openai-api-key");
+    if (cachedApiKey) {
+      API_KEY = cachedApiKey;
+      return API_KEY;
     }
 
-    return API_KEY;
+    console.error(`OpenAI API key not set!
+Please open your inspector and run call 'localStorage.setItem("openai-api-key", "<your_api_key>")' before making any requests.
+You can get an API key from https://platform.openai.com/account/api-keys
+Since this code is running on the client, do not expose your API key`);
+    throw new Error("OpenAI API key not set.");
   }
 
   export type StreamChunk =
@@ -56,18 +58,18 @@ export namespace openai {
    * Talk to an NPC and get a streamed response.
    */
   export async function* talk({
-    from,
-    to,
+    listener,
+    speaker,
     text,
     shouldAnswer,
   }: {
-    from: CharacterName;
-    to: CharacterName;
+    listener: CharacterName;
+    speaker: CharacterName;
     text: string;
     shouldAnswer?: boolean;
   }) {
-    const thread = await getNpcThread(to, from);
-    const secondaryCharacterFullName = from.replace(/_/g, " ");
+    const thread = await getNpcThread(listener, speaker);
+    const speakerFullName = speaker.replace(/_/g, " ");
 
     // add the message
     await openai.post(`threads/${thread.id}/messages`, {
@@ -80,14 +82,14 @@ export namespace openai {
     }
 
     // get the response
-    const assistant = await getNpcAssistant(to);
+    const assistant = await getNpcAssistant(listener);
 
     const run = await post(`threads/${thread.id}/runs`, {
       assistant_id: assistant.id,
       stream: true,
       temperature: 1.3,
       tool_resources: assistant.tool_resources,
-      additional_instructions: `Dialoguez avec ${secondaryCharacterFullName}. Vous êtes tous les deux dans le village de Rezé-sur-Savoie, où un meurtre mystérieux vient d'avoir lieu.`,
+      additional_instructions: `Dialoguez avec ${speakerFullName}. Vous êtes tous les deux dans le village de Rezé-sur-Savoie, où un meurtre mystérieux vient d'avoir lieu.`,
     });
 
     const reader = run.body?.getReader();

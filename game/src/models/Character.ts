@@ -198,14 +198,14 @@ export default class Character {
   }
 
   async hear(text: string, speaker: Character) {
+    if (!text) return;
+
     const shouldAnswer =
       !this.forbidMoving &&
       !this.thinkingBubble &&
       calculateDistance(this.gameObject.pos, speaker.gameObject.pos) <
         START_TRUNCATED_RANGE;
-    console.log(shouldAnswer);
     if (shouldAnswer) {
-      console.log("here");
       this.startThinking();
     }
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
@@ -221,7 +221,6 @@ export default class Character {
       this.speaking = "";
 
       for await (const response of responseStream) {
-        console.log("Speaking:", response);
         this.speaking += response;
         this.startSpeaking();
       }
@@ -245,7 +244,6 @@ export default class Character {
   movementNeeded(mapWidth: number, mapHeight: number) {
     const x = this.gameObject.pos.x / scaleFactor;
     const y = this.gameObject.pos.y / scaleFactor;
-    console.log(x, y, mapWidth, mapHeight);
     return x % mapWidth === 0 && y % mapHeight === 0;
   }
 
@@ -308,8 +306,6 @@ export default class Character {
     if (this.isSpeaking) {
       return; // the character is already speaking
     }
-
-    console.log("Start speaking!", [...this.speakingLines]);
 
     this.stopThinking();
     this.forbidMoving = true;
@@ -386,24 +382,20 @@ export default class Character {
       this.k.pos(textX, secondTextY),
     ]);
 
-    console.log("Speaking lines:", [...this.speakingLines]);
-    console.log("this.speakingOffset:", { ...this.speakingOffset });
-
     while (true) {
       const line = this.speakingLines[this.speakingOffset.line];
       const character = line[this.speakingOffset.character];
       const isLastLine =
-        this.speakingOffset.line === this.speakingLines.length - 1;
+        this.speakingOffset.line >= this.speakingLines.length - 1;
       const isLastCharacter =
-        this.speakingOffset.character ===
+        this.speakingOffset.character >=
         this.speakingLines[this.speakingOffset.line].length;
 
       if (isLastLine && isLastCharacter) {
         if (!this.isSpeaking) {
           break;
         }
-        console.log("Reached last line, waiting for the stream");
-        await this.k.wait(0.02);
+        await this.k.wait(1);
         continue;
       }
 
@@ -465,13 +457,4 @@ export default class Character {
     );
     easystar.calculate();
   }
-}
-
-function distanceToString(distance: number) {
-  if (distance < START_TRUNCATED_RANGE) {
-    return "proche";
-  } else if (distance < (START_TRUNCATED_RANGE + MAX_LISTEN_RANGE) / 2) {
-    return "pas très loin";
-  }
-  return "loin";
 }

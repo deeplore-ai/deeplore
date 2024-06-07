@@ -1,0 +1,9 @@
+services:
+  api:
+    container_name: server-deeplore
+    restart: always
+    build:
+      context: ./server
+      dockerfile: Dockerfile    
+    ports:
+      - "8080:8080"

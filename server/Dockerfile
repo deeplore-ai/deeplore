@@ -6,10 +6,13 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r  requirements.txt
 
 ENV APP_HOME /root
+
 WORKDIR $APP_HOME
-COPY /app $APP_HOME/app
-COPY /data $APP_HOME/data
-COPY .env.yaml /.env.yaml
+
+COPY /app app/
+COPY /data data/
+COPY /.env.yaml .
 
 EXPOSE 8080
+
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]

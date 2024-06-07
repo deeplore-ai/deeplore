@@ -2,12 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 import asyncio
-from .mistral import *
+# from .mistral import *
 from .config import DEBUG
 from .classes import Speech
-from .gemini import chat_gemini
+# from .gemini import chat_gemini
 from .openai import chat_openai
-from .langchain import *
+# from .langchain import *
 
 ##### API #################################
 origins = ["*"]
@@ -63,7 +63,7 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
     # Store the speech heard by the NPC in a file
     with open("data/provisoire/heard_conversation_" + var, 'a') as f:
         f.write("\n"+speech.speaker + " ; " +
-                speech.distance + ' ; ' + speech.content)
+                (speech.distance if speech.distance else '0') + ' ; ' + speech.content)
 
     # Get the NPC's response to the speech if needed
     if not speech.noAnswerExpected:
@@ -71,14 +71,14 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
         open("data/provisoire/conversations_" + var, 'a').close()
 
         # Get the NPC's response to the speech using the specified NLP model
-        if "Gemini" in model:
-            result = await loop.run_in_executor(executor, chat_gemini, speech, model)
-        elif model == "LangChain":
-            result = await loop.run_in_executor(executor, chat_langchain, speech)
-        elif model == "openai":
-            result = await loop.run_in_executor(executor, chat_openai, speech)
-        else:
-            result = await loop.run_in_executor(executor, chat, speech)
+        # if "Gemini" in model:
+        #     result = await loop.run_in_executor(executor, chat_gemini, speech, model)
+        # elif model == "LangChain":
+        #     result = await loop.run_in_executor(executor, chat_langchain, speech)
+        # elif model == "openai":
+        result = await loop.run_in_executor(executor, chat_openai, speech)
+        # else:
+        #     result = await loop.run_in_executor(executor, chat, speech)
 
         # Store the NPC's response to the speech in a file
         with open("data/provisoire/conversations_" + var, 'a') as f:

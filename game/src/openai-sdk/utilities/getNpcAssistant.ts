@@ -55,7 +55,7 @@ export async function getNpcAssistant(npc: CharacterName): Promise<Assistant> {
     await openai.post(`assistants`, {
       name: assistantName,
       model: "gpt-4o",
-      description: `Vous êtes ${fullName}, un habitant du village alpin de Rezé-sur-Savoie dans lequel un meurtre mystérieux vient d'avoir lieu.`,
+      instructions: `Tu es ${fullName}, un habitant du village alpin de Rezé-sur-Savoie dans lequel un meurtre mystérieux vient d'avoir lieu.`,
       tools: [{ type: "file_search" }],
       tool_resources: {
         file_search: { vector_store_ids: [npcVectorStore.id] },
