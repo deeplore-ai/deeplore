@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { upsertCharacter } from "$lib/database";
 	import Category from "$lib/models/Category";
 	import Character from "$lib/models/Character";
 
-    export let character: Character;
+    let {character, onsave} = $props<{character: Character, onsave: (character: Character) => void}>();
 
-    const draftCharacter = character.toDTO();
+    const draftCharacter = $state(character.toDTO());
 
     function onNameChange(attr: "firstname" | "lastname", value: string) {
         draftCharacter[attr] = value;
@@ -23,8 +22,8 @@
         draftCharacter.categories = [...draftCharacter.categories, new Category()];
     }
 
-    async function save() {
-        await upsertCharacter(Character.fromDTO(draftCharacter));
+    function save() {
+        onsave(Character.fromDTO(draftCharacter));
     }
 
     function onRender(_element: HTMLElement) {
@@ -53,7 +52,7 @@
         </h1>
         <div>
         {#each draftCharacter.categories as category, i}
-            <details open>
+            <details>
                 <summary>
                     <span contenteditable class="category-name" data-index={i}
                         oninput={(e: Event) => onCategoryNameChange(i, (e.target as HTMLSpanElement).innerText)}
@@ -79,6 +78,11 @@
         padding: 0 1rem;
         display: flex;
         flex-direction: column;
+    }
+
+    h1 > span {
+        display: inline-block;
+        min-width: 50px;
     }
 
     article > div {

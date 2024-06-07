@@ -1,4 +1,4 @@
 // place files you want to import through the `$lib` alias in this folder.
 
-export { getCharacters } from './database';
+export { getCharacters, getSimpleContents, getSimpleContent } from './database';
 

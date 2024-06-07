@@ -66,6 +66,8 @@ const movement: {
   },
 };
 
+const url = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+
 export type CharacterConstructor = {
   name: CharacterName;
   initialPosition: Vec2;
@@ -209,7 +211,6 @@ export default class Character {
       this.startThinking();
     }
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
-
     try {
       const responseStream = hear({
         speaker: speaker,

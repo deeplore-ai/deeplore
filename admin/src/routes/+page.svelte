@@ -1,33 +1,32 @@
-<script lang="ts">
-    import CharacterSheet from '$lib/components/CharacterSheet.svelte';
-	import Character from '$lib/models/Character';
-    /** @type {import('./$types').PageData} */
-	export let data;
+<article>
+    <img src="instructions.png" alt="Instructions">
+    Create and update the instructions that your chaarcters must follow when answering
+    <footer>
+        <a href="/instructions">Go to the instructions page</a>
+    </footer>
+</article>
 
-    let selectedCharacter: Character | null = null;
+<article>
+    <img src="context.png" alt="Context">
+    Create and update the context of your story
+    <footer>
+        <a href="/context">Go to the context page</a>
+    </footer>
+</article>
 
-    function selectCharacter(character: Character) {
-        selectedCharacter = character;
-    }
-</script>
+<article>
+    <img src="characters.gif" alt="Character">
+    Create and update the characters of your story
+    <footer>
+        <a href="/characters">Go to the characters page</a>
+    </footer>
+</article>
 
-<section>
-<ul>
-{#each data.characters as character}
-    <li><button onclick={() => selectCharacter(character)}>{character.firstname} {character.lastname}</button></li>
-{/each}
-<button onclick={() => selectCharacter(new Character())}>Ajouter un personnage</button>
-</ul>
-
-{#if selectedCharacter}
-    <CharacterSheet character={selectedCharacter} />
-{/if}
-</section>
 
 <style>
-    section {
-        display: flex;
-        height: calc(100vh - var(--ly-header-size));
-        overflow: hidden;
+    article {
+        width: 300px;
+        max-height: 500px;
     }
 </style>
+
