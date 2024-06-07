@@ -63,7 +63,7 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
     # Store the speech heard by the NPC in a file
     with open("data/provisoire/heard_conversation_" + var, 'a') as f:
         f.write("\n"+speech.speaker + " ; " +
-                speech.distance + ' ; ' + speech.content)
+                (speech.distance if speech.distance else '0') + ' ; ' + speech.content)
 
     # Get the NPC's response to the speech if needed
     if not speech.noAnswerExpected:

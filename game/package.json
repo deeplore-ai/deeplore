@@ -15,6 +15,7 @@
   "dependencies": {
     "easystarjs": "^0.4.4",
     "kaboom": "^3000.1.17",
+    "openai": "^4.47.3",
     "socket.io-client": "^4.7.5",
     "terser": "^5.30.3"
   }
