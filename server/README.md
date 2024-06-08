@@ -1,12 +1,15 @@
 # Setup
 
-## Python 
+## Python
+
 The first thing to do is to install the python above the version 3.10
 
 ### Official website
+
 For this, you can go on the [official website](https://www.python.org/downloads/). Then download the version you want. Follow the steps.
 
 ### Chocolatey
+
 Chocolatey install it for you :  
 
 ```PowerShell
@@ -14,9 +17,11 @@ choco install python
 ```
 
 ### Anaconda
+
 I don't recommend using this.  
 
-### Verify 
+### Verify
+
 To verify if python is installed, open a command prompt :
 
 ```cmd.exe
@@ -60,7 +65,7 @@ In the [requirements file](https://github.com/deeplore-ai/deeplore/blob/master/s
 pip install -r requirements.txt
 ```
 
-# Local 
+# Local
 
 ## Model
 
