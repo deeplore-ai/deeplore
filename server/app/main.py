@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 import asyncio
 from .model.mistral import *
 from .config import DEBUG, SERVEUR_ADRESSE
-from .classes import Speech
+from .classes import Speech, People
 from .model.gemini import chat_gemini
 from .model.langchain import *
 
@@ -41,7 +41,7 @@ async def root():
     return {"Status": "Alive"}
 
 @app.post("/initialize")
-async def initialize(personList, id: str):
+async def initialize(personList: People, id: str):
     """
     Initialize a conversation file for a specific user.
 

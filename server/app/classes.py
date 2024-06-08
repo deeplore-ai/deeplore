@@ -18,7 +18,6 @@ class People(BaseModel):
     """
     firstname: str
     lastname: str
-    role : str
     
         
 def test_speech():
