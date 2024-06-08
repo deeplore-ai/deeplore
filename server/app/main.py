@@ -70,7 +70,7 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
         open("data/provisoire/conversations_" + var, 'a').close()
 
         # Get the NPC's response to the speech using the specified NLP model
-        if "gemini" in model:
+        if model == "Gemini":
             result = await loop.run_in_executor(executor, chat_gemini, speech)
         elif model == "LangChain":
             result = await loop.run_in_executor(executor, chat_langchain, speech)
