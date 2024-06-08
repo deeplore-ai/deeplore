@@ -22,7 +22,7 @@ try:
         text_splitter = RecursiveCharacterTextSplitter()
 
         # Load first time to avoid NLTK delay
-        loader = DirectoryLoader('data', glob="**/*.txt")
+        loader = DirectoryLoader('data', glob="**data/static/*.txt")
         docs = loader.load()
 
         # Split text into chunks 

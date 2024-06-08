@@ -41,7 +41,7 @@ async def root():
     return {"Status": "Alive"}
 
 @app.post("/initialize")
-async def initialize(id: str):
+async def initialize(personList, id: str):
     """
     Initialize a conversation file for a specific user.
 
@@ -53,14 +53,15 @@ async def initialize(id: str):
     id (str): The unique identifier of the user for whom the conversation file is being initialized.
 
     Returns:
-    dict: A dictionary containing the server address.
+    dict: A dictionary containing a no response.
 
     Raises:
     None
     """
+    for person in personList:
     # create the file if it doesn't exist
-    open("data/provisoire/conversations_" + id, 'a').close()
-    return {"server": SERVEUR_ADRESSE}
+        open("data/provisoire/conversations_"+person.firstname+'_'+person.lastname + '_' + id, 'a').close()
+    return {"send": ""}
 
 
 
