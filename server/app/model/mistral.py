@@ -1,11 +1,14 @@
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
-from .config import MISTRAL_API_KEY, DEBUG
-from .classes import Speech
-from .utils import getPrompt
+from ..config import MISTRAL_API_KEY, DEBUG, LOCAL, MODEL_NAME
+from ..classes import Speech
+from ..utils import getPrompt
 
-model = "mistral-large-latest"
-client = MistralClient(api_key=MISTRAL_API_KEY)
+if not LOCAL :
+    try :
+        client = MistralClient(api_key=MISTRAL_API_KEY)
+    except Exception as e:
+        print(e)
 
 
 def test_chat_priest(speech: Speech):
@@ -24,7 +27,7 @@ def test_chat_priest(speech: Speech):
     The DEBUG flag is used to print the chat response if it is set to True.
     """
     chat_response = client.chat(
-        model=model,
+        model=MODEL_NAME,
         messages=[ChatMessage(role="user", content=f"""
                             Respond in french. 
                             You are a non playable character in a inspector story game. 
@@ -52,7 +55,7 @@ def chat(speech: Speech):
     The DEBUG flag is used to print the chat response if it is set to True.
     """
     chat_response = client.chat(
-        model=model,
+        model=MODEL_NAME,
         messages=[ChatMessage(role="user", content=f"""
                            {getPrompt(speech)} 
                             """)]

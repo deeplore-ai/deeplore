@@ -12,3 +12,8 @@ os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 # DEBUG flag
 DEBUG = True
+
+# Serveur adresse
+SERVEUR_ADRESSE = "http://localhost:8000" # Serveur adresse where the chatbot server is hosted
+LOCAL = True # Boolean to indicate if the model is local or not
+MODEL_NAME = "llama3-chatqa:70b" # Model name used for the chatbot

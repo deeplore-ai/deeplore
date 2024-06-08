@@ -19,4 +19,16 @@ Un petit trailer youtube [ici](https://youtu.be/APyIznX-HLs).
 
 Deep Lore est un concept où un LLM est affecté à chaque PNJ afin de les augmenter afin d'interagir en langage naturel avec le joueur, mais aussi entre PNJ. Grace à une narration travaillée et riche, chaque PNJ a sa propre histoire, ses propres intentions et ses propres "personnalités". L'histoire va donc évoluer en fonction du joueur, et une bonne ou une mauvaise action va pouvoir se propager à travers les PNJ qui vont discuter les uns avec les autres.  
 
+## Installation
+
+The installation is in two parts, the **Game** and the **Back**. Follows those instructions :  
+
 [Installation backend](https://github.com/deeplore-ai/deeplore/blob/master/server/README.md)
+
+For the Game, open a command prompt :  
+
+```cmd.exe
+cd deeplore/game
+npm install 
+npm run dev
+```

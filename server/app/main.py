@@ -2,12 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 import asyncio
-from .mistral import *
+from .model.mistral import *
 from .config import DEBUG
 from .classes import Speech
-from .gemini import chat_gemini
-from .openai import chat_openai
-from .langchain import *
+from .model.gemini import chat_gemini
+from .model.langchain import *
 
 ##### API #################################
 origins = ["*"]
@@ -71,12 +70,10 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
         open("data/provisoire/conversations_" + var, 'a').close()
 
         # Get the NPC's response to the speech using the specified NLP model
-        if "Gemini" in model:
-            result = await loop.run_in_executor(executor, chat_gemini, speech, model)
+        if "gemini" in model:
+            result = await loop.run_in_executor(executor, chat_gemini, speech)
         elif model == "LangChain":
             result = await loop.run_in_executor(executor, chat_langchain, speech)
-        elif model == "openai":
-            result = await loop.run_in_executor(executor, chat_openai, speech)
         else:
             result = await loop.run_in_executor(executor, chat, speech)
 
