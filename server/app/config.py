@@ -14,6 +14,6 @@ os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 DEBUG = True
 
 # Serveur adresse
-SERVEUR_ADRESSE = "http://localhost:8000" # Serveur adresse where the chatbot server is hosted
-LOCAL = True # Boolean to indicate if the model is local or not
-MODEL_NAME = "llama3-chatqa:70b" # Model name used for the chatbot
+SERVEUR_ADRESSE = yaml.safe_load(open(".env.yaml", "r"))["SERVEUR_ADRESSE"] # Serveur adresse where the chatbot server is hosted
+LOCAL = yaml.safe_load(open(".env.yaml", "r"))["LOCAL"] # Boolean to indicate if the model is local or not
+MODEL_NAME = yaml.safe_load(open(".env.yaml", "r"))["MODEL_NAME"] # Model name used for the chatbot

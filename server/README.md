@@ -98,13 +98,13 @@ Put your API key in the file.
 
 # Config
 
-In the [configuration file](app/config.py), adpat those lines to correspond to your setup :  
+In the [.env.file](.env.yaml.example), adpat those lines to correspond to your setup :  
 
 ```python
 # Serveur adresse
-SERVEUR_ADRESSE = "http://localhost:8000" # Serveur adresse where the back is hosted (default in local with fastapi)
-LOCAL = True # Boolean to indicate if the model is local or not
-MODEL_NAME = "llama3-chatqa:70b" # Model name used for the chatbot
+SERVEUR_ADRESSE: "http://localhost:8000" # Serveur adresse where the back is hosted (default in local with fastapi)
+LOCAL: True # Boolean to indicate if the model is local or not
+MODEL_NAME: "llama3-chatqa:70b" # Model name used for the chatbot
 ```
 
 # Deployment
