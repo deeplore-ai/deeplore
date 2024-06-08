@@ -17,3 +17,4 @@ DEBUG = True
 SERVEUR_ADRESSE = yaml.safe_load(open(".env.yaml", "r"))["SERVEUR_ADRESSE"] # Serveur adresse where the chatbot server is hosted
 LOCAL = yaml.safe_load(open(".env.yaml", "r"))["LOCAL"] # Boolean to indicate if the model is local or not
 MODEL_NAME = yaml.safe_load(open(".env.yaml", "r"))["MODEL_NAME"] # Model name used for the chatbot
+USE_GEMINI = yaml.safe_load(open(".env.yaml", "r"))["USE_GEMINI"] # Gemini is used

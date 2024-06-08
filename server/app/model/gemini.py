@@ -1,10 +1,10 @@
 from ..utils import getPrompt
-from ..config import GOOGLE_API_KEY, DEBUG, LOCAL, MODEL_NAME
+from ..config import GOOGLE_API_KEY, DEBUG, MODEL_NAME, USE_GEMINI
 from ..classes import Speech
 
 import google.generativeai as genai
 
-if not LOCAL :
+if USE_GEMINI :
     try:
         genai.configure(api_key=GOOGLE_API_KEY) 
     except Exception as e:
