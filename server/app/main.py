@@ -41,7 +41,7 @@ async def root():
     return {"Status": "Alive"}
 
 @app.post("/initialize")
-async def initialize(personList: People, id: str):
+async def initialize(personList, id: str):
     """
     Initialize a conversation file for a specific user.
 
