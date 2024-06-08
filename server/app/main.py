@@ -58,8 +58,8 @@ async def initialize(personList: People, id: str):
     Raises:
     None
     """
+    # create the conversations file for each person
     for person in personList:
-    # create the file if it doesn't exist
         open("data/provisoire/conversations_"+person.firstname+'_'+person.lastname + '_' + id, 'a').close()
     return {"send": ""}
 
