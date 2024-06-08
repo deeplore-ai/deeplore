@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 import asyncio
 from .model.mistral import *
-from .config import DEBUG
+from .config import DEBUG, SERVEUR_ADRESSE
 from .classes import Speech
 from .model.gemini import chat_gemini
 from .model.langchain import *
@@ -40,6 +40,29 @@ async def root():
     """
     return {"Status": "Alive"}
 
+@app.post("/initialize")
+async def initialize(id: str):
+    """
+    Initialize a conversation file for a specific user.
+
+    This function creates a new file in the 'data/provisoire/' directory to store the conversation
+    history for a specific user identified by their unique 'id'. If the file already exists, no action
+    is taken.
+
+    Parameters:
+    id (str): The unique identifier of the user for whom the conversation file is being initialized.
+
+    Returns:
+    dict: A dictionary containing the server address.
+
+    Raises:
+    None
+    """
+    # create the file if it doesn't exist
+    open("data/provisoire/conversations_" + id, 'a').close()
+    return {"server": SERVEUR_ADRESSE}
+
+
 
 @app.post("/hear/{model}")
 async def hear(speech: Speech, model: str):  # TODO move npc to listener
@@ -66,9 +89,6 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
 
     # Get the NPC's response to the speech if needed
     if not speech.noAnswerExpected:
-        # create the file if it doesn't exist
-        open("data/provisoire/conversations_" + var, 'a').close()
-
         # Get the NPC's response to the speech using the specified NLP model
         if model == "Gemini":
             result = await loop.run_in_executor(executor, chat_gemini, speech)
