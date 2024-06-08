@@ -102,10 +102,13 @@ In the [.env.file](.env.yaml.example), adpat those lines to correspond to your s
 
 ```python
 # Serveur adresse
-SERVEUR_ADRESSE: "http://localhost:8000" # Serveur adresse where the back is hosted (default in local with fastapi)
+# Serveur adresse
+SERVEUR_ADRESSE: "http://localhost:8000" # Serveur adresse where the chatbot server is hosted
 LOCAL: True # Boolean to indicate if the model is local or not
 MODEL_NAME: "llama3-chatqa:70b" # Model name used for the chatbot
-USE_GEMINI: False
+USE_GEMINI: False # (API Key required)
+USE_LANGCHAIN: False # (API Key required)
+USE_MISTRAL: False # (API Key required)
 ```
 
 # Deployment

@@ -1,10 +1,10 @@
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
-from ..config import MISTRAL_API_KEY, DEBUG, LOCAL, MODEL_NAME
+from ..config import MISTRAL_API_KEY, DEBUG, LOCAL, MODEL_NAME, USE_MISTRAL
 from ..classes import Speech
 from ..utils import getPrompt
 
-if not LOCAL :
+if USE_MISTRAL:
     try :
         client = MistralClient(api_key=MISTRAL_API_KEY)
     except Exception as e:

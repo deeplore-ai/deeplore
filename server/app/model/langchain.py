@@ -13,33 +13,34 @@ from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 
 
 from ..utils import getPrompt
-from ..config import LOCAL, MODEL_NAME, MISTRAL_API_KEY
+from ..config import LOCAL, MODEL_NAME, MISTRAL_API_KEY, USE_LANGCHAIN, USE_GEMINI, USE_MISTRAL
 from ..classes import Speech
 
 ##### CREATE THE VECTOR STORE (RAG) ###################
 try:
-    text_splitter = RecursiveCharacterTextSplitter()
+    if USE_LANGCHAIN:
+        text_splitter = RecursiveCharacterTextSplitter()
 
-    # Load first time to avoid NLTK delay
-    loader = DirectoryLoader('data', glob="**/*.txt")
-    docs = loader.load()
+        # Load first time to avoid NLTK delay
+        loader = DirectoryLoader('data', glob="**/*.txt")
+        docs = loader.load()
 
-    # Split text into chunks 
-    documents = text_splitter.split_documents(docs)
-    # Define the embedding model
-    if LOCAL :
-        embeddings = OllamaEmbeddings(model=MODEL_NAME)
-    elif "gemini" in MODEL_NAME :
-        embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    elif "mistral" in MODEL_NAME :
-        embeddings = MistralAIEmbeddings(model=MODEL_NAME, mistral_api_key=MISTRAL_API_KEY,)
-    elif "gpt" in MODEL_NAME :
-        embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+        # Split text into chunks 
+        documents = text_splitter.split_documents(docs)
+        # Define the embedding model
+        if LOCAL :
+            embeddings = OllamaEmbeddings(model=MODEL_NAME)
+        elif "gemini" in MODEL_NAME :
+            embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+        elif "mistral" in MODEL_NAME :
+            embeddings = MistralAIEmbeddings(model=MODEL_NAME, mistral_api_key=MISTRAL_API_KEY,)
+        elif "gpt" in MODEL_NAME :
+            embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 
-    # Create the vector store 
-    vector = FAISS.from_documents(documents, embeddings)
-    # Define a retriever interface
-    retriever = vector.as_retriever()
+        # Create the vector store 
+        vector = FAISS.from_documents(documents, embeddings)
+        # Define a retriever interface
+        retriever = vector.as_retriever()
 except Exception as e:
     print(e)
 
