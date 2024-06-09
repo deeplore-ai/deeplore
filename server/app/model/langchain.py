@@ -10,6 +10,7 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGener
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.llms import Ollama
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+import traceback 
 
 
 from ..utils import getPrompt
@@ -22,7 +23,7 @@ try:
         text_splitter = RecursiveCharacterTextSplitter()
 
         # Load first time to avoid NLTK delay
-        loader = DirectoryLoader('data', glob="**data/static/*.txt")
+        loader = DirectoryLoader('data', glob="**/static/*.txt")
         docs = loader.load()
 
         # Split text into chunks 
@@ -42,7 +43,8 @@ try:
         # Define a retriever interface
         retriever = vector.as_retriever()
 except Exception as e:
-    print(e)
+    print("Error while initializing the vector store of LangChain")
+    traceback.print_exc() 
 
 
 def chat_langchain(speech: Speech) -> str:
