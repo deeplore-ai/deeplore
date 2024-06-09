@@ -16,6 +16,7 @@ import EventBus from "./EventBus";
 import { Color } from "../color";
 import { js as Easystar } from "easystarjs";
 import { hear } from "../lib/hear";
+import { Player } from "./Player";
 
 export const characterNames = [
   "Dieter_Hoffman",
@@ -66,8 +67,6 @@ const movement: {
   },
 };
 
-const url = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
-
 export type CharacterConstructor = {
   name: CharacterName;
   initialPosition: Vec2;
@@ -76,7 +75,8 @@ export type CharacterConstructor = {
   k: KaboomCtx;
   firstName: string;
   lastName: string;
-  player: Character | null;
+  player: Player | null;
+  tagList?: string[];
 };
 
 export default class Character {
@@ -91,7 +91,7 @@ export default class Character {
   forbidMoving: boolean;
   firstName: string;
   lastName: string;
-  player: Character | null;
+  player: Player | null;
   thinkingBubble: GameObj | null = null;
   thinkingText: GameObj<PosComp | TextComp> | null = null;
 
@@ -153,6 +153,7 @@ export default class Character {
     firstName,
     lastName,
     player,
+    tagList = ["npc"]
   }: CharacterConstructor) {
     this.name = name;
     this.initialPosition = initialPosition;
@@ -167,6 +168,7 @@ export default class Character {
       k.pos(initialPosition),
       k.scale(scaleFactor),
       name,
+      ...tagList
     ]);
 
     this.k = k;
@@ -203,10 +205,9 @@ export default class Character {
     if (!text) return;
 
     const shouldAnswer =
-      !this.forbidMoving &&
-      !this.thinkingBubble &&
-      calculateDistance(this.gameObject.pos, speaker.gameObject.pos) <
-        START_TRUNCATED_RANGE;
+      !this.isThinking() &&
+      !this.isSpeaking &&
+      this.playerIsTalkingToMe();
     if (shouldAnswer) {
       this.startThinking();
     }
@@ -225,13 +226,27 @@ export default class Character {
         this.speaking += response;
         this.startSpeaking();
       }
-      this.isSpeaking = false;
     } catch (e) {
-      this.speaking = "Nolo comprendo, mi amigo! Soy un gogolo...";
-      this.startSpeaking();
+      if (shouldAnswer) {
+        this.speaking = "Nolo comprendo, mi amigo! Soy un gogolo...";
+        this.startSpeaking();
+      }
     } finally {
       this.stopThinking();
     }
+  }
+
+  playerIsTalkingToMe() {
+    return (
+      calculateDistance(this.gameObject.pos, this.player?.gameObject.pos) <
+        START_TRUNCATED_RANGE &&
+      (this.player?.interlocutorCollider.interlocutor === null ||
+        this.player?.interlocutorCollider.interlocutor === this.gameObject)
+    );
+  }
+
+  isThinking() {
+    return this.thinkingBubble;
   }
 
   playAnimation(animation: string) {
@@ -393,11 +408,11 @@ export default class Character {
         this.speakingLines[this.speakingOffset.line].length;
 
       if (isLastLine && isLastCharacter) {
-        if (!this.isSpeaking) {
-          break;
+        if (this.isSpeaking) {
+          await this.k.wait(1);
+          this.isSpeaking = false;
         }
-        await this.k.wait(1);
-        continue;
+        break;
       }
 
       const obfuscatedLine = this.obfuscateBasedOnDistance(

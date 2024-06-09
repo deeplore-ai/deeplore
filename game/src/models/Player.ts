@@ -4,10 +4,23 @@ import { PlayerDirection } from "../types";
 
 import Character, { CharacterConstructor } from "./Character";
 import Game from "./Game";
+import InterlocutorCollider from "./InterlocutorCollider";
 
 export class Player extends Character {
+  interlocutorCollider: InterlocutorCollider;
   constructor(args: CharacterConstructor) {
-    super(args);
+    super({...args, tagList: ["player"]});
+
+    this.interlocutorCollider = new InterlocutorCollider(
+      args.k,
+      args.initialPosition,
+    );
+  }
+
+  move(direction: PlayerDirection) {
+    super.move(direction);
+    this.interlocutorCollider.setDirection(direction);
+    this.interlocutorCollider.setPosition(this.gameObject.pos);
   }
 
   public setupControls() {
