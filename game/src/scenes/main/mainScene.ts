@@ -20,6 +20,7 @@ import Game from "../../models/Game";
 import EventBus from "../../models/EventBus";
 import { listenSpeech } from "../../speech-to-text/listenSpeech";
 import { convertCollisionLayerToGrid, setupMap } from "./map";
+import { initialize } from "../../lib/initialize";
 
 const easystar = new easystarjs.js();
 const player = pnj.paul_martinez;
@@ -41,6 +42,8 @@ characters = [
 characters.forEach((character) => {
   character.player = player;
 });
+
+initialize(characters);
 
 const onCharacterSpeak = ({
   speaker,
