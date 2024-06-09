@@ -1,35 +1,50 @@
 from langchain_community.document_loaders import DirectoryLoader
-# from langchain_mistralai.chat_models import ChatMistralAI
-# from langchain_mistralai.embeddings import MistralAIEmbeddings
+from langchain_mistralai.chat_models import ChatMistralAI
+from langchain_mistralai.embeddings import MistralAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
+from langchain_community.embeddings import OllamaEmbeddings
+from langchain_community.llms import Ollama
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+import traceback 
 
 
-from .utils import getPrompt
-# from .config import MISTRAL_API_KEY, DEBUG
-from .classes import Speech
+from ..utils import getPrompt
+from ..config import LOCAL, MODEL_NAME, MISTRAL_API_KEY, USE_LANGCHAIN, USE_GEMINI, USE_MISTRAL
+from ..classes import Speech
 
 ##### CREATE THE VECTOR STORE (RAG) ###################
-text_splitter = RecursiveCharacterTextSplitter()
+try:
+    if USE_LANGCHAIN:
+        text_splitter = RecursiveCharacterTextSplitter()
 
-# Load first time to avoid NLTK delay
-loader = DirectoryLoader('data', glob="**/*.txt")
-docs = loader.load()
+        # Load first time to avoid NLTK delay
+        loader = DirectoryLoader('data', glob="**/static/*.txt")
+        docs = loader.load()
 
-# Split text into chunks 
-documents = text_splitter.split_documents(docs)
-# Define the embedding model
-#embeddings = MistralAIEmbeddings(model="mistral-embed", mistral_api_key=MISTRAL_API_KEY,)
-embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+        # Split text into chunks 
+        documents = text_splitter.split_documents(docs)
+        # Define the embedding model
+        if LOCAL :
+            embeddings = OllamaEmbeddings(model=MODEL_NAME)
+        elif "gemini" in MODEL_NAME :
+            embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+        elif "mistral" in MODEL_NAME :
+            embeddings = MistralAIEmbeddings(model=MODEL_NAME, mistral_api_key=MISTRAL_API_KEY,)
+        elif "gpt" in MODEL_NAME :
+            embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 
-# Create the vector store 
-vector = FAISS.from_documents(documents, embeddings)
-# Define a retriever interface
-retriever = vector.as_retriever()
+        # Create the vector store 
+        vector = FAISS.from_documents(documents, embeddings)
+        # Define a retriever interface
+        retriever = vector.as_retriever()
+except Exception as e:
+    print("Error while initializing the vector store of LangChain")
+    traceback.print_exc() 
 
 
 def chat_langchain(speech: Speech) -> str:
@@ -47,7 +62,15 @@ def chat_langchain(speech: Speech) -> str:
     """
 
     # Define LLM
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.9)
+    temperature = 0.4
+    if "mistral" in MODEL_NAME :
+        model = ChatMistralAI(model=MODEL_NAME, mistral_api_key=MISTRAL_API_KEY, temperature=temperature)
+    elif "gemini" in MODEL_NAME :
+        model = ChatGoogleGenerativeAI(model=MODEL_NAME, temperature=temperature)
+    elif LOCAL :
+        model = Ollama(model=MODEL_NAME, temperature=temperature, num_ctx=8192)
+    elif "gpt" in MODEL_NAME :
+        model = ChatOpenAI(model=MODEL_NAME, temperature=temperature)
 
     # Define prompt template
     prompt = ChatPromptTemplate.from_template("""

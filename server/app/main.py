@@ -2,12 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 import asyncio
-from .mistral import *
-from .config import DEBUG
-from .classes import Speech
-from .gemini import chat_gemini
-from .openai import chat_openai
-from .langchain import *
+from .model.mistral import *
+from .config import DEBUG, SERVEUR_ADRESSE
+from .classes import PeopleList, Speech, People
+from .model.gemini import chat_gemini
+from .model.langchain import *
 
 ##### API #################################
 origins = ["*"]
@@ -41,6 +40,30 @@ async def root():
     """
     return {"Status": "Alive"}
 
+@app.post("/initialize")
+async def initialize(personList: PeopleList, id: str):
+    """
+    Initialize a conversation file for a specific user.
+
+    This function creates a new file in the 'data/provisoire/' directory to store the conversation
+    history for a specific user identified by their unique 'id'. If the file already exists, no action
+    is taken.
+
+    Parameters:
+    id (str): The unique identifier of the user for whom the conversation file is being initialized.
+
+    Returns:
+    dict: A dictionary containing a no response.
+
+    Raises:
+    None
+    """
+    # create the conversations file for each person
+    for person in personList.people:
+        open("data/provisoire/conversations_"+person.firstname+'_'+person.lastname + '_' + id + '.txt', 'a', encoding='utf-8').close()
+    return {"send": ""}
+
+
 
 @app.post("/hear/{model}")
 async def hear(speech: Speech, model: str):  # TODO move npc to listener
@@ -61,27 +84,22 @@ async def hear(speech: Speech, model: str):  # TODO move npc to listener
     var = speech.firstname+'_'+speech.lastname + '_' + speech.id + '.txt'
 
     # Store the speech heard by the NPC in a file
-    with open("data/provisoire/heard_conversation_" + var, 'a') as f:
+    with open("data/provisoire/heard_conversation_" + var, 'a', encoding='utf-8') as f:
         f.write("\n"+speech.speaker + " ; " +
                 (speech.distance if speech.distance else '0') + ' ; ' + speech.content)
 
     # Get the NPC's response to the speech if needed
     if not speech.noAnswerExpected:
-        # create the file if it doesn't exist
-        open("data/provisoire/conversations_" + var, 'a').close()
-
         # Get the NPC's response to the speech using the specified NLP model
-        if "Gemini" in model:
-            result = await loop.run_in_executor(executor, chat_gemini, speech, model)
+        if model == "Gemini":
+            result = await loop.run_in_executor(executor, chat_gemini, speech)
         elif model == "LangChain":
             result = await loop.run_in_executor(executor, chat_langchain, speech)
-        elif model == "openai":
-            result = await loop.run_in_executor(executor, chat_openai, speech)
         else:
             result = await loop.run_in_executor(executor, chat, speech)
 
         # Store the NPC's response to the speech in a file
-        with open("data/provisoire/conversations_" + var, 'a') as f:
+        with open("data/provisoire/conversations_" + var, 'a', encoding='utf-8') as f:
             f.write("\n"+speech.speaker + ' : ' + speech.content)
             f.write("\n" + speech.firstname + ' ' +
                     speech.lastname + ':' + result)
@@ -106,7 +124,7 @@ async def get_file(file: str):
     Raises:
     FileNotFoundError: If the specified file does not exist in the directory.
     """
-    with open("data/provisoire/"+file, 'r') as f:
+    with open("data/provisoire/"+file, 'r', encoding='utf-8') as f:
         return f.read()
 
 

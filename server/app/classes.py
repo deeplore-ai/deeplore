@@ -12,14 +12,19 @@ class Speech(BaseModel):
     content: str | None = None # What the speaker is saying
     noAnswerExpected: bool = False # If the speaker need an answer or not
     
-    
+
 class People(BaseModel):
     """
     """
     firstname: str
     lastname: str
-    role : str
-    
+
+
+class PeopleList(BaseModel):
+    """
+    A class representing a list of people.
+    """
+    people: list[People]
         
 def test_speech():
     """
