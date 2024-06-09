@@ -25,7 +25,13 @@ The installation is in two parts, the **Game** and the **Back**. Follows those i
 
 [Installation backend](https://github.com/deeplore-ai/deeplore/blob/master/server/README.md)
 
-For the Game, open a command prompt :  
+For the Game, install node with Chocolatey :  
+
+```PowerShell
+choco install nodejs.install
+```
+
+Then, open a command prompt :  
 
 ```cmd.exe
 cd deeplore/game
