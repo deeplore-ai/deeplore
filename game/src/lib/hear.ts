@@ -2,6 +2,8 @@ import Character, { CharacterName } from "../models/Character";
 import { openai } from "../openai-sdk";
 import settings from "../settings";
 
+const URL = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+
 export function hear({
   listener,
   speaker,
@@ -45,7 +47,7 @@ async function* callDeepLoreApi(input: {
   noAnswerExpected: boolean;
 }) {
   const response = await fetch(
-    `http://localhost:8080/hear/${settings.endpoint}`,
+    `${URL}/hear/${settings.endpoint}`,
     {
       method: "POST",
       // no cors

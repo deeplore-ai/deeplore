@@ -118,6 +118,8 @@ export const createMainScene = () => {
     // Player can move
     player.setupControls();
 
+    k.add(player.interlocutorCollider.gameObject);
+
     // Frame update
     k.onUpdate(() => {
       if (Game.getInstance().isGamePaused) return;
