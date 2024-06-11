@@ -72,7 +72,8 @@ def chat_langchain(speech: Speech) -> str:
         model = Ollama(model=MODEL_NAME, temperature=temperature, num_ctx=8192)
     elif "gpt" in MODEL_NAME :
         model = ChatOpenAI(model=MODEL_NAME, temperature=temperature)
-
+    else:
+        raise ValueError(f"Model {MODEL_NAME} not supported")
     # Define prompt template
     prompt = ChatPromptTemplate.from_template("""
         <context> {context} </context> \n

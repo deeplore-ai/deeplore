@@ -15,12 +15,16 @@ createTrainScene();
 
 // When using OpenAI sdk, uncomment this line
 // This will create all the assistants in the database (if they don't exist)
+
+let promise = Promise.resolve();
 if (settings.useOpenAiSdk) {
-  await openai.createAllAssistants();
+  promise = openai.createAllAssistants();
 }
 
-if (DEV_MODE) {
-  k.go("main");
+promise.then(() => {
+  if (DEV_MODE) {
+    k.go("main");
 } else {
-  k.go("init");
-}
+    k.go("init");
+  }
+});

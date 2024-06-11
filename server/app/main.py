@@ -1,9 +1,10 @@
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 import asyncio
 from .model.mistral import *
-from .config import DEBUG, SERVEUR_ADRESSE
+from .config import DEBUG
 from .classes import PeopleList, Speech, People
 from .model.gemini import chat_gemini
 from .model.langchain import *
@@ -58,6 +59,7 @@ async def initialize(personList: PeopleList, id: str):
     Raises:
     None
     """
+    Path("data/provisoire").mkdir(parents=True, exist_ok=True)
     # create the conversations file for each person
     for person in personList.people:
         open("data/provisoire/conversations_"+person.firstname+'_'+person.lastname + '_' + id + '.txt', 'a', encoding='utf-8').close()
