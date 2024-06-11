@@ -182,10 +182,9 @@ export const setupKaboom = () => {
       },
     },
   });
-
+  k.loadSprite("logo", "/homepage.png");
   k.loadSprite(`map`, `./map.png`);
-
-  k.setBackground(Color.black);
+  k.setBackground(Color.purple);
 };
 
 export function fromXYToGrid(x: number, y: number, cellSize: number) {

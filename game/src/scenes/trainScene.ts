@@ -69,7 +69,7 @@ export const createTrainScene = () => {
     const scale = 4;
     const trainSpeed = 50000; // adjust this value to make the train move faster or slower
 
-    /* k.add([
+    k.add([
       trainSprite,
       k.pos(-trainWidth * 5, k.height() - trainHeight * 2),
       k.scale(scale),
@@ -84,6 +84,6 @@ export const createTrainScene = () => {
           }
         },
       },
-    ]); */
+    ]);
   });
 };

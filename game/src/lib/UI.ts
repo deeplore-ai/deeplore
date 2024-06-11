@@ -13,6 +13,9 @@ export const microButton = document.getElementById(
   "micro"
 ) as HTMLButtonElement;
 export const chatButton = document.getElementById("chat") as HTMLButtonElement;
+export const musicButton = document.getElementById("music") as HTMLButtonElement;
+export const newGameButton = document.getElementById("newgame") as HTMLButtonElement;
+export const continueButton = document.getElementById("continue") as HTMLButtonElement;
 
 export const nextButton = document.getElementById("next") as HTMLButtonElement;
 export const nextDescription = document.getElementById(
@@ -107,3 +110,20 @@ export const hideChatButton = () => {
   chatButton.style.display = "none";
   microButton.style.display = "none";
 };
+
+export const displayNewGameButton = () => {
+  newGameButton.style.display = "flex";
+};
+
+export const hideNewGameButton = () => {
+  newGameButton.style.display = "none";
+};
+
+export const displayContinueButton = () => {
+  continueButton.style.display = "flex";
+};
+
+export const hideContinueButton = () => {
+  continueButton.style.display = "none";
+};
+
