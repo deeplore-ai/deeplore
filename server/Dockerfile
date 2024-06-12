@@ -11,7 +11,6 @@ WORKDIR $APP_HOME
 
 COPY /app app/
 COPY /data data/
-COPY /.env.yaml .
 
 EXPOSE 8080
 
