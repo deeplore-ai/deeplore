@@ -4,6 +4,12 @@ import settings from "../settings";
 
 const URL = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
 
+interface DeepLoreCharacter {
+  session_id: string;
+  firstname: string;
+  lastname: string;
+}
+
 export function hear({
   listener,
   speaker,
@@ -25,11 +31,16 @@ export function hear({
   } else {
     return callDeepLoreApi({
       content: text,
-      npc: listener.name,
-      id: settings.gameId,
-      firstname: listener.firstName,
-      lastname: listener.lastName,
-      speaker: speaker.firstName + " " + speaker.lastName,
+      target: {
+        session_id: settings.gameId,
+        firstname: listener.firstName,
+        lastname: listener.lastName,
+      },
+      speaker: {
+        session_id: settings.gameId,
+        firstname: speaker.firstName,
+        lastname: speaker.lastName,
+      },
       distance: "0",
       noAnswerExpected: !shouldAnswer,
     });
@@ -38,11 +49,8 @@ export function hear({
 
 async function* callDeepLoreApi(input: {
   content: string;
-  npc: CharacterName;
-  id: string;
-  firstname: string;
-  lastname: string;
-  speaker: string;
+  target: DeepLoreCharacter;
+  speaker: DeepLoreCharacter;
   distance: string;
   noAnswerExpected: boolean;
 }) {

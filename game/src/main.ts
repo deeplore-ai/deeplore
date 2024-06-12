@@ -7,7 +7,7 @@ import settings from "./settings";
 import { openai } from "./openai-sdk";
 import { createHomeScene } from "./scenes/home";
 
-export const DEV_MODE = false;
+export const DEV_MODE = true;
 
 setupKaboom();
 createMainScene();

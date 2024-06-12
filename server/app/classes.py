@@ -1,30 +1,54 @@
 from pydantic import BaseModel
 
-class Speech(BaseModel):
-    """
-    A class representing what a PNJ say.
-    """
-    id: str # id of the person who is playing the game
-    firstname: str # First name of the PNJ
-    lastname: str # Last name of the PNJ
-    speaker: str | None = None # Who is speaking
-    distance: str | None = None # How far is the speaker
-    content: str | None = None # What the speaker is saying
-    noAnswerExpected: bool = False # If the speaker need an answer or not
-    
 
-class People(BaseModel):
+class InstantiatedCharacter(BaseModel):
     """
     """
     firstname: str
     lastname: str
+    session_id: str
 
+    def fullname(self):
+        return f"{self.firstname} {self.lastname}"
+
+class Speech(BaseModel):
+    """
+    A class representing what a PNJ say.
+    """
+    target: InstantiatedCharacter | None = None # Who is speaking
+    speaker: InstantiatedCharacter | None = None # Who is speaking
+    distance: str | None = None # How far is the speaker
+    content: str | None = None # What the speaker is saying
+    noAnswerExpected: bool = False # If the speaker need an answer or not
+
+    def answer_speech(self, answer: str):
+        answer_speech = Speech()
+        answer_speech.speaker = self.target
+        answer_speech.target = self.speaker   
+        answer_speech.content = answer
+        answer_speech.distance = self.distance
+        answer_speech.noAnswerExpected = False
+        return answer_speech
+
+
+class Conversation(BaseModel):
+    speaker: InstantiatedCharacter
+    content: str
+    
+    def to_prompt(self):
+        return f"{self.speaker.fullname()} : {self.content}"
+
+class HeardConversation(Conversation):
+    distance: str
+    
+    def to_prompt(self):
+        return f"{self.speaker.fullname()} : {self.distance} : {self.content}"
 
 class PeopleList(BaseModel):
     """
     A class representing a list of people.
     """
-    people: list[People]
+    people: list[InstantiatedCharacter]
         
 def test_speech():
     """

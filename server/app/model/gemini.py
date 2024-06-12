@@ -11,7 +11,7 @@ if USE_GEMINI :
         print(e)
 
 
-def chat_gemini(speech: Speech) -> str:
+async def chat_gemini(speech: Speech) -> str:
     """
     This function is used to generate a chat response using the Gemini model.
 
@@ -30,7 +30,7 @@ def chat_gemini(speech: Speech) -> str:
 
     model = genai.GenerativeModel(model_name=MODEL_NAME)
     chat_response = model.generate_content(f"""
-                           {getPrompt(speech)} \n
+                           {await getPrompt(speech)} \n
                             """)  
 
     if DEBUG :

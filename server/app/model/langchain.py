@@ -10,9 +10,9 @@ from langchain_google_vertexai import VertexAI, VertexAIEmbeddings
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.llms import Ollama
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-import traceback 
+import traceback
 
-
+from ..dependencies import datastore, loop
 from ..utils import getPrompt
 from ..config import LOCAL, MODEL_NAME, MISTRAL_API_KEY, USE_LANGCHAIN, USE_GEMINI, USE_MISTRAL, GOOGLE_PROJECT_NAME
 from ..classes import Speech
@@ -20,14 +20,6 @@ from ..classes import Speech
 ##### CREATE THE VECTOR STORE (RAG) ###################
 try:
     if USE_LANGCHAIN:
-        text_splitter = RecursiveCharacterTextSplitter()
-
-        # Load first time to avoid NLTK delay
-        loader = DirectoryLoader('data', glob="**/static/*.txt")
-        docs = loader.load()
-
-        # Split text into chunks 
-        documents = text_splitter.split_documents(docs)
         # Define the embedding model
         if LOCAL :
             embeddings = OllamaEmbeddings(model=MODEL_NAME)
@@ -38,8 +30,15 @@ try:
         elif "gpt" in MODEL_NAME :
             embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 
-        # Create the vector store 
-        vector = FAISS.from_documents(documents, embeddings)
+        try:
+            vector = FAISS.load_local("data/provisoire/vector_store.faiss", embeddings, allow_dangerous_deserialization=True)
+        except:
+            text_splitter = RecursiveCharacterTextSplitter()
+            docs = loop.run_until_complete(datastore.get_vectorizable_content())
+            documents = text_splitter.split_documents(docs)
+            vector = FAISS.from_documents(documents, embeddings)
+            vector.save_local("data/provisoire/vector_store.faiss")
+        
         # Define a retriever interface
         retriever = vector.as_retriever()
 except Exception as e:
@@ -47,7 +46,7 @@ except Exception as e:
     traceback.print_exc() 
 
 
-def chat_langchain(speech: Speech) -> str:
+async def chat_langchain(speech: Speech) -> str:
     """
     This function is responsible for creating a chain of LangChain components to answer questions.
     It uses a retrieval-augmented generation (RAG) approach, where a vector store (FAISS) is used to 
@@ -95,7 +94,7 @@ def chat_langchain(speech: Speech) -> str:
     # The invoke method of the retrieval_chain is used to generate a response based on the input
     # parameters. In this case, the input parameters are the user's question and the prompt for the
     # language model.
-    response = retrieval_chain.invoke({"input": getPrompt(speech), "question":speech.content})
+    response = retrieval_chain.invoke({"input": await getPrompt(speech), "question":speech.content})
 
     # Return the answer from the response
     return response["answer"]
