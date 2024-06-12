@@ -190,8 +190,112 @@
         height: 100%;
       }
 
+      #music {
+        position: absolute;
+        flex-direction: column;
+        bottom: 20px;
+        left: 160px;
+        width: 120px;
+        height: 120px;
+        color: white;
+        font-size: 2rem;
+        z-index: 10;
+        background: transparent;
+        padding: 5px;
+        border: none;
+        transition: all 110ms;
+        transform: scale(1);
+        display: flex;
+        cursor: pointer;
+      }
+
+      #music-image {
+        background-image: url("music.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+      }
+
       #next-image {
         background-image: url("arrow.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+      }
+
+      #newgame {
+        position: absolute;
+        flex-direction: column;
+        bottom: 50%;
+        left: 50%;
+        width: 191px;
+        height: 44px;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        background: transparent;
+        padding: 5px;
+        border: none;
+        transition: all 110ms;
+        transform: scale(1);
+        cursor: pointer;
+      }
+
+      #newgame-image {
+        background-image: url("newgame.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+      }
+
+      #newgame {
+        position: absolute;
+        flex-direction: column;
+        top: 60%;
+        left: 50%;
+        width: 191px;
+        height: 44px;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        background: transparent;
+        padding: 5px;
+        border: none;
+        transition: all 110ms;
+        cursor: pointer;
+      }
+
+      #newgame-image {
+        background-image: url("newgame.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+      }
+
+      #continue {
+        position: absolute;
+        flex-direction: column;
+        top: 70%;
+        left: 50%;
+        width: 190px;
+        height: 42px;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        background: transparent;
+        padding: 5px;
+        border: none;
+        transition: all 110ms;
+        cursor: pointer;
+      }
+
+      #continue-image {
+        background-image: url("continue.png");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -220,8 +324,32 @@
         <div id="next-image"></div>
       </button>
 
+      <button id="music" onclick="toggleMusic()">
+        <div id="music-image"></div>
+      </button>
+
+      <button id="newgame">
+        <div id="newgame-image"></div>
+      </button>
+
+      <button id="continue">
+        <div id="continue-image"></div>
+      </button>
+
       <canvas id="game"></canvas>
+
+      <audio id="bg-music" src="/ost.mp3" autoplay></audio>
     </div>
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      function toggleMusic() {
+        const music = document.getElementById("bg-music");
+        if (music.paused) {
+          music.play();
+        } else {
+          music.pause();
+        }
+      }
+    </script>
   </body>
 </html>

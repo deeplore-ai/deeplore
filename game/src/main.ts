@@ -5,13 +5,15 @@ import { createTrainScene } from "./scenes/trainScene";
 import { k } from "./lib/ctx";
 import settings from "./settings";
 import { openai } from "./openai-sdk";
+import { createHomeScene } from "./scenes/home";
 
-export const DEV_MODE = true;
+export const DEV_MODE = false;
 
 setupKaboom();
 createMainScene();
 createInitialScene();
 createTrainScene();
+createHomeScene();
 
 // When using OpenAI sdk, uncomment this line
 // This will create all the assistants in the database (if they don't exist)
@@ -25,6 +27,6 @@ promise.then(() => {
   if (DEV_MODE) {
     k.go("main");
 } else {
-    k.go("init");
+    k.go("home");
   }
 });
