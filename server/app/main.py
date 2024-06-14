@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .model.mistral import *
 from .config import DEBUG
-from .classes import PeopleList, Speech
+from .domain import Speech, PeopleList
 from .model.gemini import chat_gemini
 from .model.langchain import *
 from .dependencies import datastore, executor, loop
@@ -40,27 +40,27 @@ async def root():
 
 @app.post("/initialize")
 async def initialize(personList: PeopleList):
-    await datastore.start_session(personList)
+    datastore.start_session(personList)
     return
 
 
 @app.post("/hear/{model}")
 async def hear(speech: Speech, model: str):
     if speech.noAnswerExpected:
-        await datastore.hear(speech)
+        datastore.hear(speech)
         return
     
     # Get the NPC's response to the speech using the specified NLP model
     if model == "Gemini":
         result = await loop.run_in_executor(executor, chat_gemini, speech)
     elif model == "LangChain":
-        result = await chat_langchain(speech)
+        result = await loop.run_in_executor(executor, chat_langchain, speech)
     else:
         result = await loop.run_in_executor(executor, chat, speech)
 
     answer_speech = speech.answer_speech(result)
 
-    await datastore.converse(speech, answer_speech)
+    datastore.converse(speech, answer_speech)
 
 # Return the NPC's name, the speaker's name, and the NPC's response
     return {

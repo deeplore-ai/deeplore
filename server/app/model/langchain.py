@@ -15,7 +15,7 @@ import traceback
 from ..dependencies import datastore, loop
 from ..utils import getPrompt
 from ..config import LOCAL, MODEL_NAME, MISTRAL_API_KEY, USE_LANGCHAIN, USE_GEMINI, USE_MISTRAL, GOOGLE_PROJECT_NAME
-from ..classes import Speech
+from ..domain import Speech
 
 ##### CREATE THE VECTOR STORE (RAG) ###################
 try:
@@ -34,7 +34,7 @@ try:
             vector = FAISS.load_local("data/provisoire/vector_store.faiss", embeddings, allow_dangerous_deserialization=True)
         except:
             text_splitter = RecursiveCharacterTextSplitter()
-            world_info = loop.run_until_complete(datastore.get_vectorizable_content())
+            world_info = datastore.get_vectorizable_content()
             splitted_world_info = text_splitter.split_text(world_info)
             vector = FAISS.from_texts(splitted_world_info, embeddings)
             vector.save_local("data/provisoire/vector_store.faiss")
@@ -46,7 +46,7 @@ except Exception as e:
     traceback.print_exc() 
 
 
-async def chat_langchain(speech: Speech) -> str:
+def chat_langchain(speech: Speech) -> str:
     """
     This function is responsible for creating a chain of LangChain components to answer questions.
     It uses a retrieval-augmented generation (RAG) approach, where a vector store (FAISS) is used to 
@@ -94,7 +94,7 @@ async def chat_langchain(speech: Speech) -> str:
     # The invoke method of the retrieval_chain is used to generate a response based on the input
     # parameters. In this case, the input parameters are the user's question and the prompt for the
     # language model.
-    response = retrieval_chain.invoke({"input": await getPrompt(speech), "question":speech.content})
+    response = retrieval_chain.invoke({"input": getPrompt(speech), "question":speech.content})
 
     # Return the answer from the response
     return response["answer"]

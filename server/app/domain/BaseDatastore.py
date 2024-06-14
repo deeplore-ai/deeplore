@@ -1,11 +1,11 @@
-from app.classes import InstantiatedCharacter, PeopleList, Speech
+from . import InstantiatedCharacter, PeopleList, Speech
 
 
 class BaseDatastore:
     def get_vectorizable_content(self):
         pass
 
-    def start_session(self, session_id: str, people_list: PeopleList):
+    def start_session(self, people_list: PeopleList):
         pass
 
     def hear(self, speech: Speech):

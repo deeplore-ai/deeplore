@@ -1,34 +1,30 @@
 import time
-from ...classes import Conversation, InstantiatedCharacter, PeopleList, Speech
-from .FileDatastore import FileDatastore
+from ...domain import Conversation, InstantiatedCharacter, Speech, BaseDatastore
 from google.cloud import firestore
 from google.cloud.firestore_v1.base_query import FieldFilter, Or
 
-class FirestoreDatastore(FileDatastore):
+class FirestoreDatastore(BaseDatastore):
     def __init__(self, project_id: str):
         self.db = firestore.Client(project=project_id)
 
-    async def start_session(self, people_list: PeopleList):
-        pass
-
-    async def get_instructions(self):
+    def get_instructions(self):
         instructions_refs = self.db.collection("instructions")
         instructions = instructions_refs.stream()
         return next(instructions).to_dict()["content"]
     
-    async def get_context(self):
+    def get_context(self):
         context_refs = self.db.collection("context")
         context = context_refs.stream()
         return next(context).to_dict()["content"]
     
-    async def hear(self, speech: Speech):
-        await self.add_speech(speech)
+    def hear(self, speech: Speech):
+        self.add_speech(speech)
     
-    async def converse(self, speech: Speech, answer: Speech):
-        await self.add_speech(speech)
-        await self.add_speech(answer)
+    def converse(self, speech: Speech, answer: Speech):
+        self.add_speech(speech)
+        self.add_speech(answer)
 
-    async def get_all_conversed(self, npc: InstantiatedCharacter):
+    def get_all_conversed(self, npc: InstantiatedCharacter):
         speech_refs = self.db.collection("speeches")
         speeches = speech_refs.where(
             filter=FieldFilter("session_id", "==", npc.session_id)
@@ -48,7 +44,7 @@ class FirestoreDatastore(FileDatastore):
             conversations.append(conversation)
         return conversations
     
-    async def get_all_heard(self, npc: InstantiatedCharacter):
+    def get_all_heard(self, npc: InstantiatedCharacter):
         speech_refs = self.db.collection("speeches")
         speeches = speech_refs.where(
             filter=FieldFilter("session_id", "==", npc.session_id)
@@ -65,7 +61,7 @@ class FirestoreDatastore(FileDatastore):
             conversations.append(conversation)
         return conversations
     
-    async def get_behavior(self, npc: InstantiatedCharacter):
+    def get_behavior(self, npc: InstantiatedCharacter):
         character_refs = self.db.collection("character")
         character = character_refs.where(
             filter=FieldFilter("firstname", "==", npc.firstname)
@@ -77,7 +73,7 @@ class FirestoreDatastore(FileDatastore):
             behavior += "## " + behaviorPart["name"] + "\n" + behaviorPart["content"] + "\n"
         return behavior
 
-    async def get_knowledge(self, npc: InstantiatedCharacter):
+    def get_knowledge(self, npc: InstantiatedCharacter):
         character_refs = self.db.collection("character")
         character = character_refs.where(
             filter=FieldFilter("firstname", "==", npc.firstname)
@@ -89,7 +85,7 @@ class FirestoreDatastore(FileDatastore):
             knowledge += "## " + knowledgePart["name"] + "\n" + knowledgePart["content"] + "\n"
         return knowledge
     
-    async def add_speech(self, speech: Speech):
+    def add_speech(self, speech: Speech):
         speech_refs = self.db.collection("speeches")
         speech_refs.add({
             "session_id": speech.target.session_id,

@@ -1,6 +1,6 @@
 from ..utils import getPrompt
 from ..config import GOOGLE_API_KEY, DEBUG, MODEL_NAME, USE_GEMINI
-from ..classes import Speech
+from ..domain import Speech
 
 import google.generativeai as genai
 
@@ -11,7 +11,7 @@ if USE_GEMINI :
         print(e)
 
 
-async def chat_gemini(speech: Speech) -> str:
+def chat_gemini(speech: Speech) -> str:
     """
     This function is used to generate a chat response using the Gemini model.
 
@@ -30,7 +30,7 @@ async def chat_gemini(speech: Speech) -> str:
 
     model = genai.GenerativeModel(model_name=MODEL_NAME)
     chat_response = model.generate_content(f"""
-                           {await getPrompt(speech)} \n
+                           {getPrompt(speech)} \n
                             """)  
 
     if DEBUG :
