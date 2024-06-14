@@ -6,11 +6,12 @@ const URL = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
 export async function initialize(characterList: Character[]) {
   const persons = {
     people: characterList.map(character => ({
+      session_id: settings.gameId,
       firstname: character.firstName,
       lastname: character.lastName,
     })),
   };
-  await fetch(`${URL}/initialize?id=${settings.gameId}`, {
+  await fetch(`${URL}/initialize`, {
     method: "POST",
     headers: {
       "Access-Control-Allow-Origin": "*",

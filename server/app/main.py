@@ -1,13 +1,13 @@
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from concurrent.futures import ThreadPoolExecutor
-import asyncio
+
 from .model.mistral import *
 from .config import DEBUG
-from .classes import PeopleList, Speech, People
+from .classes import PeopleList, Speech
 from .model.gemini import chat_gemini
 from .model.langchain import *
+from .dependencies import datastore, executor, loop
 
 ##### API #################################
 origins = ["*"]
@@ -20,9 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-##### Nombre de workers ###################
-executor = ThreadPoolExecutor(max_workers=8)
-loop = asyncio.get_event_loop()
 
 
 @app.get("/", tags=["root"])
@@ -42,74 +39,36 @@ async def root():
     return {"Status": "Alive"}
 
 @app.post("/initialize")
-async def initialize(personList: PeopleList, id: str):
-    """
-    Initialize a conversation file for a specific user.
-
-    This function creates a new file in the 'data/provisoire/' directory to store the conversation
-    history for a specific user identified by their unique 'id'. If the file already exists, no action
-    is taken.
-
-    Parameters:
-    id (str): The unique identifier of the user for whom the conversation file is being initialized.
-
-    Returns:
-    dict: A dictionary containing a no response.
-
-    Raises:
-    None
-    """
-    Path("data/provisoire").mkdir(parents=True, exist_ok=True)
-    # create the conversations file for each person
-    for person in personList.people:
-        open("data/provisoire/conversations_"+person.firstname+'_'+person.lastname + '_' + id + '.txt', 'a', encoding='utf-8').close()
-    return {"send": ""}
-
+async def initialize(personList: PeopleList):
+    await datastore.start_session(personList)
+    return
 
 
 @app.post("/hear/{model}")
-async def hear(speech: Speech, model: str):  # TODO move npc to listener
-    """
-    This function handles the '/hear/{model}' endpoint. It simulates an NPC hearing a speech and responding.
-
-    Parameters:
-    speech (Speech): An instance of the Speech class representing the speech heard by the NPC.
-    model (str): A string representing the NLP model to use for generating the response.
-
-    Returns:
-    dict: A dictionary containing the NPC's name, the speaker's name, and the NPC's response.
-
-    Raises:
-    None
-    """
-    # create a variable using to create files
-    var = speech.firstname+'_'+speech.lastname + '_' + speech.id + '.txt'
-
-    # Store the speech heard by the NPC in a file
-    with open("data/provisoire/heard_conversation_" + var, 'a', encoding='utf-8') as f:
-        f.write("\n"+speech.speaker + " ; " +
-                (speech.distance if speech.distance else '0') + ' ; ' + speech.content)
-
-    # Get the NPC's response to the speech if needed
-    if not speech.noAnswerExpected:
-        # Get the NPC's response to the speech using the specified NLP model
-        if model == "Gemini":
-            result = await loop.run_in_executor(executor, chat_gemini, speech)
-        elif model == "LangChain":
-            result = await loop.run_in_executor(executor, chat_langchain, speech)
-        else:
-            result = await loop.run_in_executor(executor, chat, speech)
-
-        # Store the NPC's response to the speech in a file
-        with open("data/provisoire/conversations_" + var, 'a', encoding='utf-8') as f:
-            f.write("\n"+speech.speaker + ' : ' + speech.content)
-            f.write("\n" + speech.firstname + ' ' +
-                    speech.lastname + ':' + result)
-
-    # Return the NPC's name, the speaker's name, and the NPC's response
-        return {"NPC": speech.speaker, "Speaker": f"{speech.firstname} {speech.lastname}", "Speech": f"{result}"}
+async def hear(speech: Speech, model: str):
+    if speech.noAnswerExpected:
+        await datastore.hear(speech)
+        return
+    
+    # Get the NPC's response to the speech using the specified NLP model
+    if model == "Gemini":
+        result = await loop.run_in_executor(executor, chat_gemini, speech)
+    elif model == "LangChain":
+        result = await chat_langchain(speech)
     else:
-        return {"NPC": speech.speaker, "Speaker": f"{speech.firstname} {speech.lastname}", "Speech": ""}
+        result = await loop.run_in_executor(executor, chat, speech)
+
+    answer_speech = speech.answer_speech(result)
+
+    await datastore.converse(speech, answer_speech)
+
+# Return the NPC's name, the speaker's name, and the NPC's response
+    return {
+        "NPC": answer_speech.target.fullname(), 
+        "Speaker": answer_speech.speaker.fullname(), 
+        "Speech": f"{answer_speech.content}"
+    }
+        
 
 
 @app.get("/files/{file}")
