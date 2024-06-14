@@ -8,8 +8,12 @@ encoding = "utf-8"
 
 class FileDatastore(BaseDatastore):
     async def get_vectorizable_content(self):
-        loader = DirectoryLoader('data', glob="**/static/*.txt")
-        return loader.load()
+        vectorizable_content = ""
+        with open("data/static/context.txt", 'r', encoding=encoding) as f:
+            vectorizable_content += f.read()
+        with open("data/static/instructions.txt", 'r', encoding=encoding) as f:
+            vectorizable_content += f.read()
+        return vectorizable_content
     
     async def start_session(self, people_list: PeopleList):
         Path("data/provisoire").mkdir(parents=True, exist_ok=True)

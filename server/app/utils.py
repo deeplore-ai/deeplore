@@ -1,11 +1,10 @@
 from .dependencies import datastore
 from .classes import Speech
 
-context = datastore.get_context()
-instructions = datastore.get_instructions()
-
 
 async def getPrompt(speech: Speech):
+    context = await datastore.get_context()
+    instructions = await datastore.get_instructions()
     conversations = await datastore.get_all_conversed(speech.target)
     heard_conversations = await datastore.get_all_heard(speech.target)
     npc = await datastore.get_behavior(speech.target)

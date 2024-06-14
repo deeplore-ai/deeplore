@@ -2,19 +2,17 @@ from pydantic import BaseModel
 
 
 class InstantiatedCharacter(BaseModel):
-    """
-    """
     firstname: str
     lastname: str
     session_id: str
 
     def fullname(self):
         return f"{self.firstname} {self.lastname}"
+    
+    def to_dict(self):
+        return self.model_dump(mode="json")
 
 class Speech(BaseModel):
-    """
-    A class representing what a PNJ say.
-    """
     target: InstantiatedCharacter | None = None # Who is speaking
     speaker: InstantiatedCharacter | None = None # Who is speaking
     distance: str | None = None # How far is the speaker
@@ -29,6 +27,9 @@ class Speech(BaseModel):
         answer_speech.distance = self.distance
         answer_speech.noAnswerExpected = False
         return answer_speech
+    
+    def to_dict(self):
+        return self.model_dump(mode="json")
 
 
 class Conversation(BaseModel):
@@ -49,23 +50,3 @@ class PeopleList(BaseModel):
     A class representing a list of people.
     """
     people: list[InstantiatedCharacter]
-        
-def test_speech():
-    """
-    This function is used to create a Speech object with predefined values for testing purposes.
-
-    Parameters:
-    None
-
-    Returns:
-    Speech: A Speech object with the following attributes:
-        id: "Priest"
-        firstname: "Matthieu"
-        lastname: "Mancini"
-        speaker: "Mancini"
-        distance: "1m"
-        content: "Bonjour, je suis un policier, je suis en train d'enquêter sur un meurtre dans la ville. Avez-vous vu ou entendu quelque chose d'étrange?"
-        noAnswerExpected: False
-    """
-    return Speech(id="Priest", firstname="Matthieu", lastname="Mancini", speaker="Mancini", distance="1m", content="Bonjour, je suis un policier, je suis en train d'enquêter sur un meurtre dans la ville. Avez-vous vu ou entendu quelque chose d'étrange ?")
-        
