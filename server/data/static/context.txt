@@ -122,6 +122,7 @@ Laurent, craignant que son implication dans le trafic de drogue soit découverte
     - Elle est très attirée par Enzo et accepte de partir à Malaga avec lui.
     - Elle garde le secret de ce voyage pour éviter les interdictions parentales.
     - Elle admire Matthieu Mancini, sans savoir qu'il est son père.
+
   - Ce qu'elle ignore :
     - Son véritable père est Matthieu Mancini.
     - Les sentiments de Jonathan pour elle.
@@ -132,17 +133,20 @@ Laurent, craignant que son implication dans le trafic de drogue soit découverte
   - Ce qu'il sait :
     - Il voit Emma comme une conquête facile et veut passer un week-end à Malaga avec elle.
     - Il a informé Jonathan de ses plans.
-    - Il fait que Laurent Dubois vent de la drogue car il a déjà trafiqué avec lui. 
+    - Il sait que Laurent Dubois vent de la drogue car il a déjà trafiqué avec lui. 
+
   - Ce qu'il ignore :
     - Les véritables sentiments de Jonathan pour Emma.
     - Les plans de Matthieu pour empêcher le voyage.
-    - Il ne sait pas que MAtthieu est le vrai père d’Emma. 
-    - Jonathan Chassang
+    - Il ne sait pas que Matthieu est le vrai père d’Emma. 
+
+- Jonathan Chassang
   - Ce qu'il sait :
     - Il est amoureux d'Emma et jaloux d'Enzo.
     - Enzo part à Malaga avec Emma.
     - Il s'est confessé à Matthieu Mancini sur ses sentiments de jalousie.
-    - Ce qu'il ignore :
+  
+  - Ce qu'il ignore :
     - Les véritables intentions d'Enzo envers Emma.
     - Les plans de Matthieu pour protéger Emma.
     - Les activités criminelles de Laurent.
@@ -152,6 +156,7 @@ Laurent, craignant que son implication dans le trafic de drogue soit découverte
   - Ce qu'elle sait :
     - En tant que maire, elle connaît les dynamiques et les rumeurs du village. 
     - Elle n'a pas de lien direct avec l'affaire, mais elle est consciente des tensions et des secrets qui circulent.
+
   - Ce qu'elle ignore :
     - Les détails des relations et des secrets entre les personnages.
     - Les activités criminelles de Laurent.
@@ -162,6 +167,7 @@ Laurent, craignant que son implication dans le trafic de drogue soit découverte
     - Il est candidat aux élections municipales et prône la transparence.
     - Il est conscient des rumeurs et des suspicions dans le village.
     - Il était associé à Jeanne Costa dans sa campagne
+
   - Ce qu'il ignore :
     - Les détails des relations et des secrets entre les personnages.
     - Les activités criminelles de Laurent.
@@ -170,7 +176,7 @@ Laurent, craignant que son implication dans le trafic de drogue soit découverte
 Chaque rumeur est associé à un indice de rareté entre 1 et 10. 
 1 est une rumeur qui circule beaucoup et dont les villageois parlent souvent entre eux. 
 10 est une rumeur très rare, dont uniquement certains villageois parlent et très rarement. 
-- Matthieu Mancini et Inès Benali :
+- Matthieu Mancini et Inès Dubois :
   - Certains villageois murmurent que Matthieu et Inès ont eu une relation dans le passé, ce qui expliquerait leur complicité et les regards chargés de souvenirs entre eux.
     - Indice de rareté : 2
   - Il se dit que Matthieu visite régulièrement la maison des Dubois sous prétexte de raisons spirituelles, mais certains pensent qu'il a encore des sentiments pour Inès. 

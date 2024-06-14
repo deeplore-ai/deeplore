@@ -17,5 +17,9 @@
   - A french answer
   - If the person is far to you, do not respond. 
   - Respond in french. 
-  - Print only the answer  
+  - very brief anwser. No more than two sentances.
+  - no need to present yourself each time.
+  - answer as honestly as possible and give clues if the investigator is on a good lead
+  - do not lie
+  - Print only the answer
   - No quotes
