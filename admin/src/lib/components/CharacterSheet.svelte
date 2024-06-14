@@ -10,16 +10,18 @@
         draftCharacter[attr] = value;
     }
 
-    function onCategoryChange(index: number, value: string) {
-        draftCharacter.categories[index].content = value;
+    function onCategoryChange(type: "behavior" | "knowledges", index: number, value: string) {
+        draftCharacter[type][index].content = value;
     }
 
-    function onCategoryNameChange(index: number, value: string) {
-        draftCharacter.categories[index].name = value;
+    function onCategoryNameChange(type: "behavior" | "knowledges", index: number, value: string) {
+        draftCharacter[type][index].name = value;
     }
 
-    function addCategory() {
-        draftCharacter.categories = [...draftCharacter.categories, new Category()];
+    function addCategory(type: "behavior" | "knowledges") {
+        return () => {
+            draftCharacter[type] = [...draftCharacter[type], new Category()];
+        }
     }
 
     function save() {
@@ -28,10 +30,10 @@
 
     function onRender(_element: HTMLElement) {
         document.querySelectorAll('.category').forEach((category: Element) => {
-            category.innerHTML = draftCharacter.categories[Number(category.getAttribute('data-index'))].content.replaceAll('\n', '<br>');
+            category.innerHTML = draftCharacter[category.getAttribute('data-type') || ""][Number(category.getAttribute('data-index'))].content.replaceAll('\n', '<br>');
         });
         document.querySelectorAll('.category-name').forEach((category: Element) => {
-            category.innerHTML = draftCharacter.categories[Number(category.getAttribute('data-index'))].name;
+            category.innerHTML = draftCharacter[category.getAttribute('data-type') || ""][Number(category.getAttribute('data-index'))].name;
         });
         const firstname = document.querySelector('.firstname');
         const lastname = document.querySelector('.lastname');
@@ -50,22 +52,39 @@
             <span contenteditable class="firstname" oninput={(e: Event) => onNameChange('firstname', (e.target as HTMLSpanElement).innerText)}></span>
             <span contenteditable class="lastname" oninput={(e: Event) => onNameChange('lastname', (e.target as HTMLSpanElement).innerText)}></span>
         </h1>
+        <h2>Comportement</h2>
         <div>
-        {#each draftCharacter.categories as category, i}
-            <details>
-                <summary>
-                    <span contenteditable class="category-name" data-index={i}
-                        oninput={(e: Event) => onCategoryNameChange(i, (e.target as HTMLSpanElement).innerText)}
-                    ></span>
-                </summary>
-                <div contenteditable class="category" data-index={i}
-                    oninput={(e: Event) => onCategoryChange(i, (e.target as HTMLDivElement).innerText)}
-                ></div>
-            </details>
-        {/each}
+            {#each draftCharacter.behavior as category, i}
+                <details>
+                    <summary>
+                        <span contenteditable class="category-name" data-index={i} data-type="behavior"
+                            oninput={(e: Event) => onCategoryNameChange('behavior', i, (e.target as HTMLSpanElement).innerText)}
+                        ></span>
+                    </summary>
+                    <div contenteditable class="category" data-index={i} data-type="behavior"
+                        oninput={(e: Event) => onCategoryChange('behavior', i, (e.target as HTMLDivElement).innerText)}
+                    ></div>
+                </details>
+            {/each}
         </div>
+        <button onclick={addCategory('behavior')}>Ajouter une catégorie</button>
+        <h2>Connaissances</h2>
+        <div>
+            {#each draftCharacter.knowledges as category, i}
+                <details>
+                    <summary>
+                        <span contenteditable class="category-name" data-index={i} data-type="knowledges"
+                            oninput={(e: Event) => onCategoryNameChange('knowledges', i, (e.target as HTMLSpanElement).innerText)}
+                        ></span>
+                    </summary>
+                    <div contenteditable class="category" data-index={i} data-type="knowledges"
+                        oninput={(e: Event) => onCategoryChange('knowledges', i, (e.target as HTMLDivElement).innerText)}
+                    ></div>
+                </details>
+            {/each}
+        </div>
+        <button onclick={addCategory('knowledges')}>Ajouter une catégorie</button>
         <footer>
-            <button onclick={addCategory}>Ajouter une catégorie</button>
             <button onclick={save}>Enregistrer</button>
         </footer>
     </div>

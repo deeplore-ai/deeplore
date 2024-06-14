@@ -87,6 +87,3 @@ async def get_file(file: str):
     """
     with open("data/provisoire/"+file, 'r', encoding='utf-8') as f:
         return f.read()
-
-
-# print(chat_langchain(test_speech()))

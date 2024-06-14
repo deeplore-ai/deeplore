@@ -11,3 +11,4 @@ faiss-cpu==1.8.0
 IPython==8.8.0
 langchain-google-vertexai==1.0.5
 nest-asyncio==1.6.0
+google-cloud-firestore==2.16.0

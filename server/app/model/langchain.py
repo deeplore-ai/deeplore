@@ -34,9 +34,9 @@ try:
             vector = FAISS.load_local("data/provisoire/vector_store.faiss", embeddings, allow_dangerous_deserialization=True)
         except:
             text_splitter = RecursiveCharacterTextSplitter()
-            docs = loop.run_until_complete(datastore.get_vectorizable_content())
-            documents = text_splitter.split_documents(docs)
-            vector = FAISS.from_documents(documents, embeddings)
+            world_info = loop.run_until_complete(datastore.get_vectorizable_content())
+            splitted_world_info = text_splitter.split_text(world_info)
+            vector = FAISS.from_texts(splitted_world_info, embeddings)
             vector.save_local("data/provisoire/vector_store.faiss")
         
         # Define a retriever interface
