@@ -55,7 +55,7 @@ async function* callDeepLoreApi(input: {
   noAnswerExpected: boolean;
 }) {
   const response = await fetch(
-    `${URL}/hear/${settings.endpoint}`,
+    `${URL}/hear`,
     {
       method: "POST",
       // no cors

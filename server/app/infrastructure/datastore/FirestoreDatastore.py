@@ -1,9 +1,10 @@
 import time
-from ...domain import Conversation, InstantiatedCharacter, Speech, BaseDatastore
+from ...domain import Conversation, InstantiatedCharacter, Speech
 from google.cloud import firestore
 from google.cloud.firestore_v1.base_query import FieldFilter, Or
+from .FileDatastore import FileDatastore
 
-class FirestoreDatastore(BaseDatastore):
+class FirestoreDatastore(FileDatastore):
     def __init__(self, project_id: str):
         self.db = firestore.Client(project=project_id)
 

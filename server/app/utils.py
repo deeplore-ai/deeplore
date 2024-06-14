@@ -18,7 +18,9 @@ def getPrompt(speech: Speech):
         *CONVERSATION
         {'\n'.join([conversation.to_prompt() for conversation in conversations])} \n\n
         
-        {speech.speaker} is speaking and says : "{speech.content}" \n\n
+        {speech.speaker} is speaking and says : "{speech.content}"\n\n
+
+        {instructions}
         
-        {instructions}     
+        Question : {speech.content}
         """

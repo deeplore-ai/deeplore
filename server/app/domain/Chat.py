@@ -2,5 +2,5 @@ from . import Speech
 
 
 class BaseChat:
-    def chat(self, speech: Speech):
+    def chat(self, prompt: str):
         pass
