@@ -18,7 +18,7 @@ nest_asyncio.apply()
 executor = ThreadPoolExecutor(max_workers=8)
 loop = asyncio.get_event_loop()
 
-if os.getenv("GOOGLE_PROJECT_NAME") is not None:
+if os.getenv("USE_FIRESTORE") is not None:
     datastore = FirestoreDatastore(project_id=os.getenv("GOOGLE_PROJECT_NAME"))
 else:
     datastore = FileDatastore()
