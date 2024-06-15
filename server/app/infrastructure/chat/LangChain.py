@@ -14,7 +14,34 @@ from langchain.chains import create_retrieval_chain
 from ...domain import BaseChat, BaseDatastore
 
 class LangChain(BaseChat):
+    """
+    A class to manage a LangChain chatbot.
+
+    ...
+
+    Attributes
+    ----------
+    retriever : Retriever
+        A retriever interface for retrieving relevant documents.
+
+    Methods
+    -------
+    __init__(self, datastore: BaseDatastore)
+        Initializes the LangChain chatbot with a datastore and creates a retriever interface.
+
+    chat(self, prompt: str) -> str
+        Chats with the user using a language model and a retriever interface.
+    """
+
     def __init__(self, datastore: BaseDatastore):
+        """
+        Initializes the LangChain chatbot with a datastore and creates a retriever interface.
+
+        Parameters
+        ----------
+        datastore : BaseDatastore
+            The datastore to retrieve vectorizable content from.
+        """
         embeddings = LangchainFactory().getEmbeddings()
         try:
             vector = FAISS.load_local("data/provisoire/vector_store", embeddings, allow_dangerous_deserialization=True)
@@ -28,8 +55,21 @@ class LangChain(BaseChat):
         
         # Define a retriever interface
         self.retriever = vector.as_retriever()
-    
-    def chat(self, prompt: str):
+
+    def chat(self, prompt: str) -> str:
+        """
+        Chats with the user using a language model and a retriever interface.
+
+        Parameters
+        ----------
+        prompt : str
+            The user's question or input.
+
+        Returns
+        -------
+        str
+            The chatbot's response to the user's question.
+        """
         promptTemplate = ChatPromptTemplate.from_template("""
             <context> {context} </context> \n {input}"""
         )
@@ -55,7 +95,23 @@ class LangChain(BaseChat):
         return response["answer"]
 
 class LangchainFactory:
+    """
+    A factory class for creating Langchain embeddings and models based on the provided model name.
+    """
+
     def getEmbeddings(self):
+        """
+        Returns an instance of the appropriate Langchain embedding class based on the model name.
+
+        Parameters:
+        None
+
+        Returns:
+        An instance of the Langchain embedding class.
+
+        Raises:
+        ValueError: If the model name is not supported.
+        """
         model_name = os.getenv("MODEL_NAME")
         if os.getenv("LOCAL") is not None and os.getenv("LOCAL") == "true" :
             return OllamaEmbeddings(model=model_name)
@@ -69,6 +125,18 @@ class LangchainFactory:
             raise ValueError(f"Model {model_name} not supported")
 
     def getModel(self):
+        """
+        Returns an instance of the appropriate Langchain model class based on the model name.
+
+        Parameters:
+        None
+
+        Returns:
+        An instance of the Langchain model class.
+
+        Raises:
+        ValueError: If the model name is not supported.
+        """
         temperature = 0.4
         model_name = os.getenv("MODEL_NAME")
         if "mistral" in model_name :
