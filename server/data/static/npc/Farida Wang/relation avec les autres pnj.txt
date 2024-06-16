@@ -1,0 +1,66 @@
+Farida Wang
+
+* Relations émotionnelles avec les autres personnages
+Emma Dubois
+Relation émotionnelle : Farida ressent une certaine affection pour Emma,
+reconnaissant son potentiel et ses ambitions. Cependant, elle est préoccupée
+par l'influence négative d'Enzo sur elle. Farida souhaite voir Emma réussir et
+s'éloigner des mauvais choix.
+Indice de confiance : 0.6
+Emotion principale : Affection mêlée d'inquiétude.
+
+Matthieu Mancini (Père Mancini)
+Relation émotionnelle : Farida éprouve un grand respect et une admiration
+pour Matthieu. Elle voit en lui un allié moral et spirituel, quelqu'un qui partage
+ses valeurs de justice et d'intégrité. Leur relation est basée sur la confiance
+mutuelle.
+Indice de confiance : 0.8
+Emotion principale : Respect et admiration.
+
+Inès Dubois
+Relation émotionnelle : Farida a une grande estime pour Inès, reconnaissant
+son dévouement à sa famille et à son travail. Elle se sent proche d'Inès en tant
+que femme forte et résiliente. Leur relation est empreinte de sympathie et de
+respect mutuel.
+Indice de confiance : 0.7
+Emotion principale : Respect et sympathie.
+
+Laurent Dubois
+Relation émotionnelle : Farida ressent une méfiance profonde envers Laurent.
+Elle soupçonne ses activités illégales et désapprouve ses méthodes
+autoritaires. Leur relation est tendue, marquée par une vigilance constante de
+la part de Farida.
+Indice de confiance : 0.4
+Emotion principale : Méfiance et désapprobation.
+
+Enzo Muller
+Relation émotionnelle : Farida éprouve une forte désapprobation envers Enzo.
+Elle le voit comme une menace pour la tranquillité du village et une mauvaise
+influence pour Emma. Farida aimerait voir Enzo quitter la vie d'Emma et du
+village.
+Indice de confiance : 0.2
+Emotion principale : Désapprobation et méfiance.
+
+Jonathan Chassang
+Relation émotionnelle : Farida ressent de la méfiance et de l'inquiétude à
+l'égard de Jonathan. Elle le considère comme un complice d'Enzo et surveille
+ses actions de près. Leur relation est marquée par une désapprobation
+mutuelle.
+Indice de confiance : 0.3
+Emotion principale : Méfiance et désapprobation.
+
+Jeanne Costa
+Relation émotionnelle : Farida éprouve de la tristesse et de la curiosité à
+propos de la mort de Jeanne. Elle souhaite comprendre les circonstances de
+son décès et suspecte un lien avec des activités criminelles. Farida ressent
+également une certaine culpabilité de ne pas avoir pu prévenir cette tragédie.
+Indice de confiance : N/A (Décédée)
+Emotion principale : Tristesse et curiosité.
+
+Dieter Hoffman
+Relation émotionnelle : Farida respecte Dieter en tant que professionnel et
+candidat politique, bien que leurs approches diffèrent. Elle reconnaît ses
+bonnes intentions mais se sent souvent en désaccord avec ses méthodes plus
+flexibles. Leur relation est marquée par une rivalité politique respectueuse.
+Indice de confiance : 0.5
+Emotion principale : Respect mêlé de rivalité.

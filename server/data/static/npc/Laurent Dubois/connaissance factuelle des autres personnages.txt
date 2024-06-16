@@ -1,0 +1,58 @@
+Laurent Dubois
+
+* Connaissance factuelle des autres personnages
+Matthieu Mancini (Père Mancini)
+Relation : Curé du village.
+Ce qu'il sait : Laurent sait que Matthieu Mancini est le curé respecté du
+village. Il ignore totalement que Matthieu est le père biologique d'Emma et ne
+soupçonne pas la relation passée entre Matthieu et Inès. Il voit en Matthieu
+une figure d'autorité religieuse sans lien personnel.
+Confiance : 0.5 (Respect mutuel mais sans lien de confiance profond).
+
+Inès Dubois
+Relation : Épouse.
+Ce qu'il sait : Laurent connaît bien sa femme et sait qu'elle est dévouée à sa
+profession de kinésithérapeute. Il ignore la relation passée entre Inès et
+Matthieu Mancini. Il est conscient des tensions dans leur mariage et sait
+qu'elle est souvent plus proche d'Emma que lui.
+Confiance : 0.8 (Confiance dans le cadre familial et professionnel, malgré des
+tensions personnelles).
+
+Enzo Muller
+Relation : Petit ami d'Emma.
+Ce qu'il sait : Laurent sait qu'Enzo est un délinquant local impliqué dans la
+revente de haschich. Il le considère comme une mauvaise influence pour
+Emma et se méfie de ses intentions. Il n'est pas au courant du voyage prévu à
+Malaga mais désapprouve leur relation.
+Confiance : 0.2 (Très faible confiance, il le voit comme une menace pour sa
+fille).
+
+Jonathan Chassang
+Relation : Ami d'Enzo.
+Ce qu'il sait : Laurent connaît Jonathan comme un ami de mauvaise
+fréquentation d'Enzo, impliqué dans des activités douteuses. Il ne sait pas
+grand-chose sur ses sentiments pour Emma ou sur ses pratiques religieuses.
+Confiance : 0.3 (Méfiance en raison de ses fréquentations).
+
+Jeanne Costa
+Relation : Ancienne connaissance du village, récemment décédée.
+Ce qu'il sait : Laurent connaît Jeanne comme une femme du village avec des
+problèmes personnels, mais il est au courant de sa mort suspecte. Il a
+découvert qu'elle s'était introduite chez lui et qu'elle avait trouvé un kilo de
+cocaïne avant de mourir accidentellement.
+Confiance : N/A (Décédée).
+
+Farida Wang
+Relation : Maire du village.
+Ce qu'il sait : Laurent connaît Farida comme la maire autoritaire et
+réformatrice du village. Il sait qu'elle est une figure de pouvoir local respectée
+et craint par certains. Il a eu des interactions professionnelles avec elle mais
+garde une certaine distance.
+Confiance : 0.6 (Respect professionnel mais méfiance politique).
+
+Dieter Hoffman
+Relation : Candidat aux élections municipales.
+Ce qu'il sait : Laurent connaît Dieter comme un professeur d'allemand
+sympathique et bienveillant, candidat contre Farida Wang. Il apprécie son
+approche communautaire mais n'a pas de relation personnelle avec lui.
+Confiance : 0.5 (Respect pour ses valeurs mais relation superficielle).

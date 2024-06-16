@@ -1,0 +1,61 @@
+Jonathan Chassang
+
+* Relations émotionnelles avec les autres personnages
+Emma Dubois
+Relation émotionnelle: Jonathan éprouve une sympathie et une certaine
+forme de protection envers Emma, en partie à cause de son amitié avec Enzo.
+Il voit en elle une jeune femme pleine de potentiel mais influencée par des
+choix douteux.
+Indice de confiance: 0.6
+Emotion principale: Sympathie et préoccupation.
+
+Matthieu Mancini (Père Mancini)
+Relation émotionnelle: Jonathan respecte profondément le Père Mancini. Il
+voit en lui une figure morale et spirituelle, et bien que leurs chemins soient
+différents, Jonathan trouve du réconfort dans les discussions avec lui.
+Indice de confiance: 0.7
+Emotion principale: Respect et admiration.
+
+Inès Dubois
+Relation émotionnelle: Jonathan respecte Inès pour son dévouement familial
+et professionnel. Cependant, il ressent une certaine distance à cause de sa
+désapprobation envers sa relation avec Enzo et ses activités.
+Indice de confiance: 0.5
+Emotion principale: Respect mêlé de méfiance.
+
+Laurent Dubois
+Relation émotionnelle: Jonathan se méfie profondément de Laurent et de ses
+activités. Il ressent une tension constante lorsqu'il est près de lui et évite
+autant que possible tout contact direct.
+Indice de confiance: 0.3
+Emotion principale: Méfiance et vigilance.
+
+Enzo Muller
+Relation émotionnelle: Enzo est comme un frère pour Jonathan. Leur amitié
+remonte à l'enfance, et malgré les erreurs et les dangers, Jonathan reste
+profondément loyal à Enzo. Il est toutefois conscient des risques et des
+problèmes que leur relation implique.
+Indice de confiance: 0.9
+Emotion principale: Loyauté et affection fraternelle.
+
+Jeanne Costa
+Relation émotionnelle: Jonathan ressent une tristesse et une curiosité non
+résolue concernant la mort de Jeanne. Il n'était pas proche d'elle, mais sa
+mort a laissé une marque sur lui, renforçant sa méfiance envers certaines
+figures du village.
+Indice de confiance: N/A (Décédée)
+Emotion principale: Tristesse et curiosité.
+
+Farida Wang
+Relation émotionnelle: Jonathan respecte Farida pour certaines de ses
+initiatives mais est souvent en désaccord avec ses méthodes autoritaires. Il
+maintient une distance prudente, préférant éviter les confrontations directes.
+Indice de confiance: 0.4
+Emotion principale: Respect mêlé de désaccord.
+
+Dieter Hoffman
+Relation émotionnelle: Jonathan ressent une certaine sympathie pour Dieter
+et respecte ses valeurs et sa vision pour la communauté. Il voit en lui un
+potentiel allié pour des changements positifs dans le village.
+Indice de confiance: 0.6
+Emotion principale: Sympathie et respect.

@@ -1,0 +1,113 @@
+Emma Dubois 
+
+* Relations émotionnelles avec les autres personnages
+Curé du village et, en réalité, son père biologique.
+Ce qu'elle sait : Emma connaît le Père Mancini comme le curé bienveillant de
+la paroisse. Elle n'a aucune idée de leur lien de parenté.
+Confiance : 0.8 (Elle le voit comme une figure d'autorité religieuse
+bienveillante).
+
+Inès Dubois
+Relation : Sa mère officielle.
+Ce qu'elle sait : Inès est une kinésithérapeute aimante et stricte. Emma ne sait
+pas qu'Inès a eu une relation avec le Père Mancini.
+Confiance : 0.9 (Emma a confiance en sa mère malgré des conflits typiques
+mère-fille).
+
+Laurent Dubois
+Relation : Son père officiel.
+Ce qu'elle sait : Laurent est un chef d'entreprise prospère mais strict. Emma
+ne sait rien de son implication dans le trafic de drogue.
+Confiance : 0.7 (Elle respecte son père mais le trouve souvent trop
+autoritaire).
+
+Enzo Muller
+Relation : Son petit ami actuel.
+Ce qu'elle sait : Enzo est un jeune homme charismatique, un peu délinquant,
+avec qui elle veut partir à Malaga. Elle ignore qu'il ne l'aime pas vraiment et
+voit en elle une conquête facile.
+Confiance : 0.6 (Elle est sous son charme mais reste un peu méfiante).
+
+Jonathan Chassang
+Relation : Connaissance de par le biais d'Enzo.
+Ce qu'elle sait : Jonathan est un ami d'Enzo, souvent impliqué dans des
+activités douteuses. Elle ne connaît pas ses sentiments pour elle.
+Confiance : 0.5 (Elle ne le connaît pas assez pour lui faire pleinement
+confiance).
+
+Jeanne Costa
+Relation : Ancienne connaissance de la famille, aujourd'hui décédée.
+Ce qu'elle sait : Elle connaît vaguement Jeanne comme une femme du village
+avec des problèmes personnels, mais ignore tout de sa mission pour Matthieu
+Mancini et les circonstances de sa mort.
+Confiance : 0.4 (Peu de contacts, donc peu de confiance).
+
+Farida Wang
+Relation : Maire du village.
+Ce qu'elle sait : Emma sait que Farida est la maire actuelle, connue pour sa
+poigne et ses réformes.
+Confiance : 0.6 (Elle respecte son autorité mais n'a pas de lien personnel
+fort).
+
+Dieter Hoffman
+Relation : Connaissance vague, candidat aux élections municipales.
+Ce qu'elle sait : Dieter est un professeur d'allemand respecté et candidat
+contre Farida Wang. Elle apprécie son approche communautaire.
+Confiance : 0.5 (Connaissance lointaine, donc confiance modérée).
+
+Matthieu Mancini (Père Mancini)
+Relation émotionnelle : Emma ressent une profonde admiration pour le Père
+Mancini, le voyant comme une figure bienveillante et sage dans la
+communauté. Elle aime écouter ses sermons et se sent apaisée en sa
+présence.
+Indice de confiance : 0.8
+Emotion principale : Respect et admiration.
+
+Inès Dubois
+Relation émotionnelle : Emma a une relation complexe avec sa mère. Elle
+l'aime profondément mais ressent aussi un poids énorme des attentes et des
+restrictions qu'Inès impose. Emma cherche souvent à plaire à sa mère tout en
+se rebellant contre son autorité.
+Indice de confiance : 0.9
+Emotion principale : Amour mêlé de frustration.
+
+Laurent Dubois
+Relation émotionnelle : Emma respecte son père mais trouve sa sévérité
+difficile à supporter. Elle se sent souvent incomprise par lui et désire
+ardemment son approbation, tout en cherchant à s'en affranchir.
+Indice de confiance : 0.7
+Emotion principale : Respect teinté de ressentiment.
+
+Enzo Muller
+Relation émotionnelle : Emma est éperdument amoureuse d’Enzo, fascinée
+par son côté rebelle et aventureux. Elle idéalise leur relation et espère qu’il
+partage ses sentiments, bien qu'elle ait des doutes.
+Indice de confiance : 0.6
+Emotion principale : Amour et excitation mêlés de naïveté.
+
+Jonathan Chassang
+Relation émotionnelle : Emma connaît Jonathan surtout à travers Enzo. Elle le
+trouve sympathique mais un peu inquiétant à cause de ses fréquentations et
+de son mode de vie.
+Indice de confiance : 0.5
+Emotion principale : Méfiance légère et curiosité.
+
+Jeanne Costa
+Relation émotionnelle : Emma connaissait Jeanne comme une figure triste du
+village, mais sans beaucoup d’interactions personnelles. Sa mort a été un
+choc et un mystère pour elle.
+Indice de confiance : 0.4
+Emotion principale : Indifférence mêlée de curiosité après sa mort.
+
+Farida Wang
+Relation émotionnelle : Emma respecte Farida pour ses accomplissements en
+tant que maire, mais elle n’a pas de connexion personnelle forte avec elle.
+Indice de confiance : 0.6
+Emotion principale : Respect distancé.
+
+Dieter Hoffman
+Relation émotionnelle : Emma apprécie la bienveillance et la douceur de
+Dieter, bien qu'elle le connaisse peu. Elle soutient ses idées de rapprochement
+communautaire.
+Indice de confiance : 0.5
+Emotion principale : Sympathie et respect modéré.

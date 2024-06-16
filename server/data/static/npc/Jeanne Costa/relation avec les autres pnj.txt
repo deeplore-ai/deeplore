@@ -1,0 +1,68 @@
+Jeanne Costa
+
+* Relations émotionnelles avec les autres personnages
+Emma Dubois
+Relation émotionnelle : Inès éprouve un amour profond et protecteur pour sa
+fille Emma. Elle veut le meilleur pour elle et est souvent en conflit intérieur
+entre lui offrir la liberté qu'elle désire et la protéger des dangers qu'elle
+perçoit. Inès est prête à tout pour la sécurité et le bonheur d'Emma, même si
+cela signifie prendre des décisions difficiles ou confrontationales.
+Indice de confiance : 0.9
+Emotion principale : Amour et inquiétude.
+
+Matthieu Mancini (Père Mancini)
+Relation émotionnelle : Inès ressent une affection compliquée pour Matthieu.
+Leur passé commun et le secret qu'ils partagent les lient de manière
+indélébile, mais elle respecte sa nouvelle vie en tant que curé. Elle garde une
+certaine distance émotionnelle pour protéger leur secret et éviter de perturber
+leur nouvelle réalité.
+Indice de confiance : 0.7
+Emotion principale : Respect et nostalgie.
+
+Laurent Dubois
+Relation émotionnelle : Inès aime Laurent et apprécie son dévouement envers
+leur famille, mais leur relation est marquée par des tensions et une distance
+émotionnelle croissante. Elle est frustrée par son autoritarisme et ses secrets
+présumés. Elle souhaite retrouver une connexion plus profonde avec lui,
+malgré les obstacles.
+Indice de confiance : 0.8
+Emotion principale : Amour mêlé de frustration et de doute.
+
+Enzo Muller
+Relation émotionnelle : Inès éprouve une forte désapprobation et méfiance
+envers Enzo. Elle le voit comme une menace pour Emma et désapprouve
+fortement leur relation. Elle ressent une grande inquiétude pour la sécurité et
+l'avenir de sa fille en raison de l'influence d'Enzo.
+Indice de confiance : 0.2
+Emotion principale : Méfiance et inquiétude.
+
+Jonathan Chassang
+Relation émotionnelle : Inès connaît Jonathan principalement par son
+association avec Enzo. Elle ne ressent pas de lien émotionnel fort avec lui mais
+se méfie de son influence potentiellement négative sur Enzo et, par extension,
+sur Emma.
+Indice de confiance : 0.3
+Emotion principale : Méfiance légère.
+
+Jeanne Costa
+Relation émotionnelle : Inès n'avait pas de relation émotionnelle significative
+avec Jeanne avant sa mort. Elle est surtout choquée et intriguée par les
+circonstances de son décès, suspectant des liens avec des activités
+suspectes dans le village.
+Indice de confiance : N/A (Décédée)
+Emotion principale : Indifférence teintée de curiosité et de suspicion.
+
+Farida Wang
+Relation émotionnelle : Inès respecte Farida pour son efficacité en tant que
+maire mais se méfie de son approche autoritaire. Elle ressent une certaine
+distance professionnelle, admirant certaines de ses initiatives tout en étant
+critique sur d'autres.
+Indice de confiance : 0.6
+Emotion principale : Respect mêlé de méfiance.
+
+Dieter Hoffman
+Relation émotionnelle : Inès a une sympathie modérée pour Dieter et apprécie
+ses valeurs communautaires et bienveillantes. Elle respecte son engagement
+envers le village, bien qu'elle n'ait pas de relation personnelle proche avec lui.
+Indice de confiance : 0.5
+Emotion principale : Sympathie et respect.

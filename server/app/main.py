@@ -2,11 +2,11 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .utils import getPrompt
-
 from .config import DEBUG
-from .domain import Speech, PeopleList
 from .dependencies import datastore, executor, loop, chat
+from .utils import getPrompt, getPromptWHATIDO
+
+from .domain import Speech, PeopleList, InstantiatedCharacter
 
 ##### API #################################
 origins = ["*"]
@@ -30,13 +30,8 @@ async def initialize(personList: PeopleList):
     datastore.start_session(personList)
     return
 
-
-@app.post("/hear")
-async def hear(speech: Speech):
-    if speech.noAnswerExpected:
-        datastore.hear(speech)
-        return
-    
+@app.post("/speak")
+async def speak(speech: Speech):
     prompt = getPrompt(speech)
     result = await loop.run_in_executor(executor, chat.chat, prompt)
 
@@ -44,13 +39,32 @@ async def hear(speech: Speech):
 
     datastore.converse(speech, answer_speech)
 
-# Return the NPC's name, the speaker's name, and the NPC's response
+    # Return the NPC's name, the speaker's name, and the NPC's response
     return {
         "NPC": answer_speech.target.fullname(), 
         "Speaker": answer_speech.speaker.fullname(), 
-        "Speech": f"{answer_speech.content}"
+        "Speech": answer_speech.content
     }
-        
+
+@app.post("/hear")
+async def hear(speech: Speech):
+    datastore.hear(speech)
+    
+@app.post("/action")
+async def action(character: InstantiatedCharacter, entourage: PeopleList, trigger: str):
+    prompt = getPromptWHATIDO(npc=character, current_action=None, npc_aroud=entourage)
+    result = await loop.run_in_executor(executor, chat.chat, prompt)
+    try:
+        action, to = result.split(',')
+        # Return the NPC's name, the speaker's name, and the NPC's response
+        return {
+            "type": action, 
+            "Payload": to 
+        }
+    except ValueError:
+        print("Retry get action")
+        action(character, entourage, trigger)
+        # Return the NPC's name, the speaker's name, and the NPC's respon
 
 @app.get("/files/{file}")
 async def get_file(file: str):

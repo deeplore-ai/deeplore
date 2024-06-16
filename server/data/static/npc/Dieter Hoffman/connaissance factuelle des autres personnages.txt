@@ -1,0 +1,67 @@
+Dieter Hoffman
+
+* Connaissance factuelle des autres personnages
+Emma Dubois
+Relation : Élève et membre de la communauté.
+Ce qu'il sait : Dieter connaît Emma comme une élève brillante et ambitieuse. Il
+est conscient de ses aspirations à voyager et à découvrir le monde. Bien qu'il
+ne connaisse pas tous les détails de sa vie personnelle, il sait qu'elle est en
+relation avec Enzo Muller, qu'il perçoit comme une mauvaise influence.
+Confiance : 0.7 (Respect et admiration pour son potentiel, mais inquiétude
+quant à ses fréquentations).
+
+Matthieu Mancini (Père Mancini)
+Relation : Curé du village.
+Ce qu'il sait : Dieter connaît le Père Mancini comme une figure respectée du
+village. Il est au courant de son passé difficile et de son engagement religieux.
+Dieter apprécie les valeurs morales de Matthieu et respecte son rôle spirituel
+dans la communauté.
+Confiance : 0.8 (Grand respect et confiance en ses intentions).
+
+Inès Dubois
+Relation : Mère d'Emma et kinésithérapeute du village.
+Ce qu'il sait : Dieter connaît Inès comme une professionnelle dévouée et une
+mère protectrice. Il admire son engagement envers sa famille et sa carrière. Il
+est conscient des tensions dans son mariage avec Laurent Dubois mais ne
+connaît pas les détails de leur vie privée.
+Confiance : 0.7 (Respect professionnel et sympathie).
+
+Laurent Dubois
+Relation : Chef d'entreprise et père d'Emma.
+Ce qu'il sait : Dieter sait que Laurent est un homme d'affaires prospère mais
+autoritaire. Il est au courant de la réputation de Laurent pour son autorité
+stricte et ses méthodes parfois contestées. Dieter se méfie de Laurent en
+raison de rumeurs sur ses activités illégales.
+Confiance : 0.4 (Méfiance en raison de son autoritarisme et des soupçons
+d'activités illégales).
+
+Enzo Muller
+Relation : Petit ami d'Emma et délinquant local.
+Ce qu'il sait : Dieter connaît Enzo comme un jeune homme avec des
+antécédents de délinquance. Il sait qu'Enzo a une mauvaise réputation dans le
+village et le considère comme une mauvaise influence pour Emma. Dieter
+désapprouve fortement leur relation.
+Confiance : 0.2 (Très faible confiance et désapprobation).
+
+Jonathan Chassang
+Relation : Ami d'Enzo.
+Ce qu'il sait : Dieter connaît Jonathan comme un ami proche d'Enzo, impliqué
+dans des activités douteuses. Il n'a pas de relation personnelle avec lui mais
+se méfie de son influence sur Enzo et Emma.
+Confiance : 0.3 (Méfiance en raison de ses fréquentations).
+
+Jeanne Costa
+Relation : Ancienne connaissance du village, récemment décédée.
+Ce qu'il sait : Dieter connaissait Jeanne comme une femme du village avec
+des problèmes personnels. Il a été choqué par sa mort et se demande si cette
+tragédie est liée à des activités suspectes dans le village. Il est au courant de
+son implication avec Matthieu Mancini pour protéger Emma.
+Confiance : N/A (Décédée).
+
+Farida Wang
+Relation : Maire du village.
+Ce qu'il sait : Dieter connaît Farida comme une maire autoritaire et
+réformatrice. Il respecte certaines de ses initiatives mais est souvent en
+désaccord avec ses méthodes. Il voit en elle une figure de pouvoir qu'il faut
+surveiller de près.
+Confiance : 0.5 (Respect professionnel mais désaccords politiques).

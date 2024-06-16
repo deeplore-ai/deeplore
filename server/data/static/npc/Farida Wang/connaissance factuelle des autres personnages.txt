@@ -1,0 +1,66 @@
+Farida Wang
+
+* Connaissance factuelle des autres personnages
+Emma Dubois
+Relation : Jeune résidente du village et fille de Laurent et Inès Dubois.
+Ce qu'elle sait : Farida sait qu'Emma est une jeune femme intelligente et
+ambitieuse, mais elle est préoccupée par son association avec Enzo Muller,
+qu'elle considère comme une influence négative. Elle est au courant des
+tensions familiales et des aspirations d'Emma à quitter le village pour explorer
+le monde.
+Confiance : 0.6 (Respect pour son potentiel mais inquiétude concernant ses
+fréquentations).
+
+Matthieu Mancini (Père Mancini)
+Relation : Curé du village.
+Ce qu'elle sait : Farida connaît Matthieu comme une figure respectée du
+village, appréciée pour sa sagesse et son engagement spirituel. Elle sait qu'il
+est un confident pour beaucoup de villageois et qu'il a une influence positive
+dans la communauté.
+Confiance : 0.8 (Grand respect et confiance).
+
+Inès Dubois
+Relation : Kinésithérapeute du village et mère d'Emma.
+Ce qu'elle sait : Farida connaît Inès comme une professionnelle dévouée et
+une mère protectrice. Elle est consciente des tensions dans son mariage avec
+Laurent et de son désir de protéger Emma des influences négatives.
+Confiance : 0.7 (Respect pour son professionnalisme et sympathie).
+
+Laurent Dubois
+Relation : Homme d'affaires et père d'Emma.
+Ce qu'elle sait : Farida connaît Laurent comme un homme d'affaires prospère
+mais autoritaire. Elle a entendu des rumeurs sur ses activités illégales et se
+méfie de ses intentions. Farida garde un œil sur lui, soupçonnant qu'il pourrait
+être impliqué dans des affaires douteuses.
+Confiance : 0.4 (Méfiance et vigilance).
+
+Enzo Muller
+Relation : Jeune homme du village et petit ami d'Emma.
+Ce qu'elle sait : Farida sait qu'Enzo a des antécédents de délinquance et qu'il
+est souvent associé à des activités illégales. Elle désapprouve fortement sa
+relation avec Emma et le considère comme une menace pour la tranquillité du
+village.
+Confiance : 0.2 (Très faible confiance et désapprobation).
+
+Jonathan Chassang
+Relation : Ami proche d'Enzo.
+Ce qu'elle sait : Farida connaît Jonathan comme un ami d'Enzo, souvent
+impliqué dans des activités suspectes. Elle se méfie de lui et surveille ses
+actions, suspectant qu'il pourrait causer des problèmes dans la communauté.
+Confiance : 0.3 (Méfiance et désapprobation).
+
+Jeanne Costa
+Relation : Ancienne résidente du village récemment décédée.
+Ce qu'elle sait : Farida connaissait Jeanne comme une femme avec des
+difficultés personnelles. Sa mort mystérieuse a soulevé des questions et des
+soupçons, et Farida cherche à comprendre les circonstances entourant son
+décès. Elle soupçonne un lien avec des activités illégales dans le village.
+Confiance : N/A (Décédée).
+
+Dieter Hoffman
+Relation : Professeur d'allemand et candidat aux élections municipales.
+Ce qu'elle sait : Farida connaît Dieter comme un professeur respecté et un
+rival politique. Bien qu'elle respecte ses idées et son engagement pour la
+communauté, elle est souvent en désaccord avec ses méthodes et son
+approche plus participative.
+Confiance : 0.5 (Respect professionnel mais rivalité politique).

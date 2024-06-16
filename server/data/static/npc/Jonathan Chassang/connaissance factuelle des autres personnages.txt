@@ -1,0 +1,71 @@
+Jonathan Chassang
+
+* Connaissance factuelle des autres personnages
+Emma Dubois
+Relation : Petite amie.
+Ce qu'il sait : Jonathan sait qu'Emma est la petite amie d'Enzo Muller et
+qu'elle est souvent influencée par lui. Il connaît ses aspirations à voyager et à
+découvrir le monde. Il est également conscient de la tension entre Emma et
+ses parents, en particulier son père.
+Confiance : 0.6 (Sympathie pour elle en tant que petite amie de son ami, mais
+méfiance quant à son influence potentielle sur Enzo).
+
+Matthieu Mancini (Père Mancini)
+Relation : Curé du village.
+Ce qu'il sait : Jonathan connaît le Père Mancini comme le curé respecté du
+village. Il sait que Matthieu est une figure d'autorité morale et spirituelle. Bien
+qu'il respecte le Père Mancini, il garde une distance respectueuse, conscient
+de ses propres activités illégales.
+Confiance : 0.7 (Respect pour son rôle et son intégrité, mais prudence).
+
+Inès Dubois
+Relation : Mère d'Emma.
+Ce qu'il sait : Jonathan connaît Inès comme la mère d'Emma et une
+professionnelle dévouée. Il est conscient de son travail de kinésithérapeute et
+de sa réputation dans le village. Il sait qu'elle désapprouve fortement la
+relation entre Emma et Enzo.
+Confiance : 0.5 (Respect professionnel mais méfiance en raison de son
+opposition à Enzo).
+
+Laurent Dubois
+Relation : Père d'Emma.
+Ce qu'il sait : Jonathan sait que Laurent est un homme d'affaires prospère
+mais autoritaire. Il est conscient des rumeurs concernant les activités illégales
+de Laurent et se méfie de lui. Jonathan évite autant que possible tout contact
+direct avec Laurent.
+Confiance : 0.3 (Méfiance en raison de sa réputation et de son autoritarisme).
+
+Enzo Muller
+Relation : Ami proche et partenaire dans des activités illégales.
+Ce qu'il sait : Jonathan connaît Enzo depuis l'enfance et ils ont partagé de
+nombreuses expériences, légales et illégales. Il sait qu'Enzo est charismatique
+mais imprudent, et il est conscient des problèmes qu'ils ont causés ensemble.
+Jonathan voit en Enzo un frère de cœur, malgré les risques associés à leur
+amitié.
+Confiance : 0.9 (Très forte confiance et loyauté, malgré quelques réserves sur
+ses choix).
+
+Jeanne Costa
+Relation : Ancienne connaissance du village.
+Ce qu'il sait : Jonathan connaissait Jeanne comme une femme du village avec
+des problèmes personnels. Il était choqué par sa mort et soupçonne qu'il y a
+plus derrière son décès que ce qui est apparent. Il n'était pas très proche
+d'elle mais la respectait en tant que membre de la communauté.
+Confiance : N/A (Décédée).
+
+Farida Wang
+Relation : Maire du village.
+Ce qu'il sait : Jonathan connaît Farida comme la maire du village, connue pour
+ses méthodes autoritaires et réformatrices. Il respecte certaines de ses
+initiatives mais est souvent en désaccord avec ses décisions strictes.
+Jonathan reste à distance, méfiant des figures d'autorité.
+Confiance : 0.4 (Respect professionnel mais désaccords sur ses méthodes).
+
+Dieter Hoffman
+Relation : Connaissance du village et candidat aux élections municipales.
+Ce qu'il sait : Jonathan connaît Dieter comme un professeur d'allemand
+respecté et un candidat aux élections municipales. Il apprécie la vision
+communautaire de Dieter et son approche plus humaine. Jonathan voit en lui
+quelqu'un de potentiel pour apporter des changements positifs au village.
+Confiance : 0.6 (Sympathie et respect, mais pas assez proche pour une
+confiance totale).

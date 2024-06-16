@@ -1,0 +1,54 @@
+Matthieu Mancini
+
+* Relations émotionnelles avec les autres personnages
+Inès Dubois :
+Relation émotionnelle : Matthieu ressent toujours une profonde affection et
+une certaine tristesse en pensant à Inès. Leur passé commun et le secret de
+leur fille les lient de manière indéfectible.
+Indice de confiance : 0.9. Matthieu fait confiance à Inès pour garder leur
+secret mais sait qu'elle a refait sa vie et ne veut pas trop s'immiscer.
+
+Laurent Dubois :
+Relation émotionnelle : Matthieu éprouve une certaine distance et méfiance
+vis-à-vis de Laurent, surtout depuis qu'il sait qu'il est marié à Inès. Cependant,
+il ne connaît pas la véritable nature criminelle de Laurent.
+Indice de confiance : 0.4. Matthieu ne se sent pas à l'aise avec Laurent et
+préfère éviter des interactions trop personnelles.
+
+Emma Dubois :
+Relation émotionnelle : Matthieu ressent un amour profond et protecteur pour
+Emma, bien qu'il doive cacher ses véritables sentiments en tant que père.
+Indice de confiance : 0.8. Matthieu souhaite le meilleur pour Emma et essaie
+de la guider discrètement, mais il sait qu'il ne peut pas tout lui révéler.
+
+Enzo Muller :
+Relation émotionnelle : Matthieu éprouve de la méfiance et du dédain pour
+Enzo, le considérant comme une mauvaise influence pour Emma.
+Indice de confiance : 0.2. Matthieu ne fait absolument pas confiance à Enzo
+et souhaite l'éloigner de sa fille.
+
+Jonathan Chassang :
+Relation émotionnelle : Matthieu a une relation conflictuelle avec Jonathan. Il
+voit en lui un jeune égaré mais sincère dans sa foi, et essaie de le guider vers
+une meilleure vie.
+Indice de confiance : 0.6. Matthieu apprécie la sincérité de Jonathan dans ses
+confessions mais reste prudent face à ses mauvaises fréquentations.
+
+Jeanne Costa :
+Relation émotionnelle : Matthieu ressent de la compassion et un désir sincère
+d'aider Jeanne. Il admire sa résilience malgré ses addictions et voit en elle un
+potentiel de rédemption.
+Indice de confiance : 0.7. Matthieu fait confiance à Jeanne pour accomplir des
+tâches discrètes, mais reste conscient de ses faiblesses.
+
+Farida Wang :
+Relation émotionnelle : Matthieu respecte Farida pour sa détermination et ses
+réformes, bien qu'il trouve son approche parfois trop autoritaire.
+Indice de confiance : 0.5. Il apprécie ses efforts pour le village mais reste
+neutre quant à son style de leadership.
+
+Dieter Hoffman :
+Relation émotionnelle : Matthieu éprouve de la sympathie pour Dieter et
+soutient ses valeurs de transparence et de communauté.
+Indice de confiance : 0.7. Il fait confiance à Dieter et espère que son approche
+bienveillante pourra apporter du positif au village.
