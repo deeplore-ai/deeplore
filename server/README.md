@@ -65,9 +65,13 @@ In the [requirements file](https://github.com/deeplore-ai/deeplore/blob/master/s
 pip install -r requirements.txt
 ```
 
-# Local
+# Environment variables
 
-## Model
+All used environment variables can be found in the server/app/config.py file. You can either set them directly in your system or use the .env.yaml file to include them in the application. An example of the .env.yaml file can be found in the server/.env.yaml.example file.
+
+# Models
+
+## Local model
 
 To install a model in local and use in the application, please follow the instructions.
 
@@ -83,36 +87,32 @@ ollama run [model_name]
 
 Choose you model and that's it ! Now you have a model in your computer
 
-## FastAPI run
+## Online models
+
+There is multiple ways to use online models. The recommended is gemini-1.5-pro.
+
+To have it working, you will need to set the USE_LANGCHAIN to True and the MODEL_NAME to "gemini-1.5-pro".
+
+You will also need an up and running google cloud account and you will need to be connected to it using the gcloud CLI ([full documentation](https://cloud.google.com/sdk/docs)).
+
+You will also need to run this command :
+```
+gcloud auth application-default login
+```
+It will create a credential file that the google package will be able to find. If you want to specify a different folder for this file, you can change en evn variable `GOOGLE_APPLICATION_CREDENTIALS`.
+
+# Data storage
+
+By default, all data are stored locally. It contains conversations and heard conversations by the NPC. But if you deploy on the cloud, it's not recommended, you will lose data at each deployment. Instead you can use a Firestore database by setting the USE_FIRESTORE env var to True. But beware, it will also use this database as the source for your npc, context and instructions.
+
+To see how it work, you can look at the server/app/infrastructure/datastore/FirestoreDatasource.py file.
+
+# Run
 
 In the requirements.txt file, you have installed *fastapi*. You will use it to run in local the back. The command line is :
 
 ```cmd.exe
 fastapi dev app/main.py
-```
-
-# Online
-
-If you choose to use an online model with there APIs. Please, set the environment variables in a `.env.yaml` file.
-
-```bash
-cp .env.yaml.example .env.yaml
-```
-
-Put your API key in the file.
-
-# Config
-
-In the [.env.file](.env.yaml.example), adpat those lines to correspond to your setup :  
-
-```python
-# Serveur adresse
-# Serveur adresse
-LOCAL: True # Boolean to indicate if the model is local or not
-MODEL_NAME: "llama3-chatqa:70b" # Model name used for the chatbot
-USE_GEMINI: False # (API Key required)
-USE_LANGCHAIN: False # (API Key required)
-USE_MISTRAL: False # (API Key required)
 ```
 
 # Deployment
