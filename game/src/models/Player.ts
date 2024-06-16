@@ -41,5 +41,11 @@ export class Player extends Character {
         this.stopMovement();
       });
     }
+    k.onKeyDown("shift", () => {
+      this.speed = 400;
+    });
+    k.onKeyRelease("shift", () => {
+      this.speed = 250;
+    });
   }
 }
