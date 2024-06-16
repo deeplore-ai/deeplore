@@ -92,7 +92,7 @@ export const createMainScene = () => {
 
     // Close chat with escape
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && isUIOpen()) {
+      if ((e.key === "Escape" || e.key.includes("Arrow")) && isUIOpen()) {
         Game.getInstance().isGamePaused = false;
         canvas.focus();
         closeUI();
