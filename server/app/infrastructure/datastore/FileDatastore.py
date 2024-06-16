@@ -23,10 +23,12 @@ class FileDatastore(BaseDatastore):
         with open("data/provisoire/heard_conversation_" + self._get_npc_id(speech.target) + ".txt", 'a', encoding=encoding) as f:
             f.write("\n"+speech.speaker.fullname() + " ; " +
                     (speech.distance if speech.distance else '0') + ' ; ' + speech.content)
+        if not speech.noAnswerExpected:
+            with open("data/provisoire/conversations_" + self._get_npc_id(speech.target) + ".txt", 'a', encoding=encoding) as f:
+                f.write("\n"+speech.speaker.fullname() + ' : ' + speech.content)
 
-    def converse(self, speech: Speech, answer: Speech):
-        with open("data/provisoire/conversations_" + self._get_npc_id(speech.target) + ".txt", 'a', encoding=encoding) as f:
-            f.write("\n"+speech.speaker.fullname() + ' : ' + speech.content)
+    def answer(self, answer: Speech):
+        with open("data/provisoire/conversations_" + self._get_npc_id(answer.speaker) + ".txt", 'a', encoding=encoding) as f:
             f.write("\n"+answer.speaker.fullname() + ' : ' + answer.content)
 
     def get_all_conversed(self, npc: InstantiatedCharacter):

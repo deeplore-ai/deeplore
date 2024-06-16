@@ -11,7 +11,7 @@ class BaseDatastore:
     def hear(self, speech: Speech):
         pass
 
-    def converse(self, speech: Speech):
+    def answer(self, answer: Speech):
         pass
 
     def get_all_conversed(self, npc: InstantiatedCharacter):

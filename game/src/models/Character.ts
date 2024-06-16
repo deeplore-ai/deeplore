@@ -15,7 +15,7 @@ import {
 import EventBus from "./EventBus";
 import { Color } from "../color";
 import { js as Easystar } from "easystarjs";
-import { hear } from "../lib/hear";
+import { hear, speak } from "../lib/hear";
 import { Player } from "./Player";
 
 export const characterNames = [
@@ -213,7 +213,13 @@ export default class Character {
     }
     const obfuscatedText = this.obfuscateBasedOnDistance(text, speaker);
     try {
-      const responseStream = hear({
+      await hear({
+        speaker: speaker,
+        listener: this,
+        text: obfuscatedText,
+        shouldAnswer,
+      });
+      const responseStream = speak({
         speaker: speaker,
         listener: this,
         text: obfuscatedText,

@@ -21,8 +21,7 @@ class FirestoreDatastore(FileDatastore):
     def hear(self, speech: Speech):
         self.add_speech(speech)
     
-    def converse(self, speech: Speech, answer: Speech):
-        self.add_speech(speech)
+    def answer(self, answer: Speech):
         self.add_speech(answer)
 
     def get_all_conversed(self, npc: InstantiatedCharacter):
