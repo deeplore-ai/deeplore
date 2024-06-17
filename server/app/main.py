@@ -37,7 +37,7 @@ async def speak(speech: Speech):
 
     answer_speech = speech.answer_speech(result)
 
-    datastore.converse(speech, answer_speech)
+    datastore.answer(answer_speech)
 
     # Return the NPC's name, the speaker's name, and the NPC's response
     return {
@@ -63,7 +63,7 @@ async def action(character: InstantiatedCharacter, entourage: PeopleList, trigge
         }
     except ValueError:
         print("Retry get action")
-        action(character, entourage, trigger)
+        return action(character, entourage, trigger)
         # Return the NPC's name, the speaker's name, and the NPC's respon
 
 @app.get("/files/{file}")
