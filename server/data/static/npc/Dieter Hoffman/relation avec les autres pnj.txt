@@ -1,0 +1,65 @@
+Dieter Hoffman 
+
+* Relations émotionnelles avec les autres personnages
+Emma Dubois
+Relation émotionnelle : Dieter ressent une affection et un respect pour Emma
+en tant qu'élève prometteuse. Il est fier de ses réalisations académiques et de
+sa curiosité intellectuelle, mais il est également inquiet pour elle à cause de sa
+relation avec Enzo Muller, qu'il perçoit comme une influence négative.
+Indice de confiance : 0.7
+Emotion principale : Affection et inquiétude.
+
+Matthieu Mancini (Père Mancini)
+Relation émotionnelle : Dieter respecte profondément le Père Mancini pour
+son dévouement spirituel et son engagement envers la communauté. Il admire
+son passé et son parcours de rédemption, et il se sent lié à lui par des valeurs
+morales communes.
+Indice de confiance : 0.8
+Emotion principale : Respect et admiration.
+
+Inès Dubois
+Relation émotionnelle : Dieter apprécie Inès pour son professionnalisme et
+son dévouement à sa famille. Il ressent une certaine sympathie pour elle,
+connaissant les tensions dans son mariage avec Laurent. Il la voit comme une
+figure forte et résiliente.
+Indice de confiance : 0.7
+Emotion principale : Respect et sympathie.
+
+Laurent Dubois
+Relation émotionnelle : Dieter ressent de la méfiance envers Laurent. Il
+respecte ses compétences en tant qu'homme d'affaires, mais il est préoccupé
+par les rumeurs de ses activités illégales et son autoritarisme. Dieter voit en
+Laurent un potentiel danger pour la communauté.
+Indice de confiance : 0.4
+Emotion principale : Méfiance et vigilance.
+
+Enzo Muller
+Relation émotionnelle : Dieter désapprouve fortement Enzo et le considère
+comme une mauvaise influence pour Emma et un trouble-fête pour la
+communauté. Il ressent de la méfiance et de l'inquiétude à son égard, et il
+souhaite que Emma se détache de lui.
+Indice de confiance : 0.2
+Emotion principale : Désapprobation et inquiétude.
+
+Jonathan Chassang
+Relation émotionnelle : Dieter n'a pas de relation émotionnelle forte avec
+Jonathan, mais il se méfie de lui en raison de son association avec Enzo. Il le
+voit comme un complice potentiel dans des activités douteuses.
+Indice de confiance : 0.3
+Emotion principale : Méfiance.
+
+Jeanne Costa
+Relation émotionnelle : Dieter avait de la sympathie pour Jeanne et était
+choqué par sa mort. Il se demande si sa disparition est liée à des affaires
+criminelles dans le village. Sa mort renforce son désir de justice et de
+transparence dans la communauté.
+Indice de confiance : N/A (Décédée)
+Emotion principale : Sympathie et curiosité.
+
+Farida Wang
+Relation émotionnelle : Dieter respecte Farida pour son rôle de maire, mais il
+est souvent en désaccord avec ses méthodes autoritaires. Il ressent une
+tension professionnelle avec elle et est motivé à proposer une alternative plus
+participative et inclusive pour la gestion du village.
+Indice de confiance : 0.5
+Emotion principale : Respect mêlé de désaccord.

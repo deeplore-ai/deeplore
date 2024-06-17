@@ -1,0 +1,67 @@
+Ines Dubois
+
+* Connaissance factuelle des autres personnages
+Emma Dubois
+Relation : Fille.
+Ce qu'elle sait : Inès connaît très bien Emma et est consciente de ses
+aspirations à la liberté et à l'indépendance. Elle sait qu'Emma est attirée par
+Enzo Muller, ce qu'elle désapprouve fortement. Inès garde également le secret
+que Matthieu Mancini est le père biologique d'Emma.
+Confiance : 0.9 (Très forte confiance, mais avec des inquiétudes sur ses choix
+de vie).
+
+Matthieu Mancini (Père Mancini)
+Relation : Ancien amant et père biologique d'Emma.
+Ce qu'elle sait : Inès sait que Matthieu est le père biologique d'Emma, un
+secret qu'ils ont gardé pendant des années. Elle est consciente de la nouvelle
+vie de Matthieu en tant que curé et respecte son choix de vie malgré leur
+passé commun.
+Confiance : 0.7 (Respect et confiance, mais une certaine distance
+émotionnelle pour protéger leurs secrets).
+
+Laurent Dubois
+Relation : Mari.
+Ce qu'elle sait : Inès sait que Laurent est un homme d'affaires prospère mais
+autoritaire. Elle commence à soupçonner qu'il lui cache quelque chose, sans
+connaître les détails de ses activités illégales. Elle est consciente des tensions
+dans leur mariage et de la distance émotionnelle qui s'est installée entre eux.
+Confiance : 0.8 (Forte confiance dans le cadre familial et professionnel, mais
+des doutes sur certains aspects).
+
+Enzo Muller
+Relation : Petit ami d'Emma.
+Ce qu'elle sait : Inès sait qu'Enzo est impliqué dans des activités illégales et
+qu'il a une mauvaise influence sur Emma. Elle désapprouve fortement leur
+relation et s'inquiète pour la sécurité et le bien-être de sa fille.
+Confiance : 0.2 (Très faible confiance, elle le voit comme une menace pour
+Emma).
+
+Jonathan Chassang
+Relation : Connaissance par Enzo.
+Ce qu'elle sait : Inès connaît Jonathan comme un ami d'Enzo, impliqué dans
+des activités douteuses. Elle ne le connaît pas bien personnellement mais se
+méfie de son influence sur Enzo et indirectement sur Emma.
+Confiance : 0.3 (Méfiance en raison de ses fréquentations).
+
+Jeanne Costa
+Relation : Ancienne connaissance du village.
+Ce qu'elle sait : Inès savait que Jeanne était une femme du village avec des
+problèmes personnels. Elle a été choquée par sa mort et se demande si cette
+tragédie est liée à des activités suspectes dans le village.
+Confiance : N/A (Décédée).
+
+Farida Wang
+Relation : Maire du village.
+Ce qu'elle sait : Inès connaît Farida comme une maire autoritaire mais
+efficace. Elle respecte certaines de ses initiatives mais se méfie de son
+approche parfois trop rigide.
+Confiance : 0.6 (Respect professionnel mais méfiance sur certaines
+décisions).
+
+Dieter Hoffman
+Relation : Candidat aux élections municipales.
+Ce qu'elle sait : Inès connaît Dieter comme un professeur d'allemand
+bienveillant et candidat contre Farida Wang. Elle apprécie sa vision
+communautaire et ses valeurs, bien qu'elle n'ait pas de lien personnel fort
+avec lui.
+Confiance : 0.5 (Sympathie modérée et respect).

@@ -1,0 +1,128 @@
+Enzo Muller
+
+* Connaissance factuelle des autres personnages
+Emma Dubois
+Relation : Petite amie actuelle.
+Ce qu'il sait : Enzo connaît Emma comme une jeune fille naïve et
+impressionnable. Il est conscient de son désir de liberté et de son attrait pour
+les aventures. Il sait aussi qu'elle est la fille de Laurent Dubois et Inès Dubois,
+sans se douter de sa véritable parenté avec le Père Mancini.
+Confiance : 0.6 (Il la considère comme une conquête facile mais se méfie de
+son éventuelle curiosité).
+
+Matthieu Mancini (Père Mancini)
+Relation : Curé du village.
+Ce qu'il sait : Enzo sait que le Père Mancini est le curé respecté du village,
+mais il ignore totalement sa relation avec Emma. Il le voit comme une figure
+d'autorité sans véritable importance dans sa vie.
+Confiance : 0.3 (Il n'a pas de relation personnelle et se méfie de l'autorité
+religieuse).
+
+Inès Dubois
+Relation : Mère d'Emma.
+Ce qu'il sait : Enzo sait qu'Inès est kinésithérapeute et qu'elle est stricte avec
+Emma. Il la considère comme un obstacle potentiel à ses plans avec Emma,
+mais n'a pas de relation directe avec elle.
+Confiance : 0.2 (Il la voit comme une figure d'autorité à éviter).
+
+Laurent Dubois
+Relation : Père d'Emma.
+Ce qu'il sait : Enzo sait que Laurent est un chef d'entreprise prospère et
+autoritaire. Il ignore son implication dans le trafic de drogue. Il le voit comme
+un obstacle majeur à ses plans avec Emma.
+Confiance : 0.1 (Il le craint et le respecte à distance, mais ne lui fait pas
+confiance).
+
+Jonathan Chassang
+Relation : Ami et confident.
+Ce qu'il sait : Enzo connaît Jonathan comme un ami fidèle et compagnon de
+fête. Il ignore les sentiments de Jonathan pour Emma. Jonathan est aussi au
+courant de certains de ses plans et de ses activités illégales.
+Confiance : 0.7 (Il lui fait confiance en tant qu'ami proche mais reste prudent).
+
+Jeanne Costa
+Relation : Connue dans le village.
+Ce qu'il sait : Enzo connaissait vaguement Jeanne comme une figure tragique
+du village, mais il ignore complètement les détails de sa mort et son lien avec
+le Père Mancini. Il a entendu parler de sa disparition et des rumeurs qui
+circulent.
+Confiance : 0.3 (Peu de relation personnelle, juste des connaissances
+générales).
+
+Farida Wang
+Relation : Maire du village.
+Ce qu'il sait : Enzo sait que Farida est la maire autoritaire du village. Il a peu de
+contacts directs avec elle mais connaît sa réputation et ses actions politiques.
+Confiance : 0.4 (Respect de l'autorité, mais sans relation personnelle).
+
+Dieter Hoffman
+Relation : Connaissance vague.
+Ce qu'il sait : Enzo sait que Dieter est professeur et candidat aux élections
+municipales, prônant des valeurs communautaires. Il a peu d'interactions avec
+lui mais apprécie son côté moins autoritaire.
+Confiance : 0.5 (Connaissance lointaine, confiance modérée).
+
+* Relations émotionnelles avec les autres personnages
+Emma Dubois
+Relation émotionnelle : Enzo voit Emma principalement comme une conquête
+et une distraction agréable. Il apprécie son admiration et son dévouement,
+mais ne ressent pas de véritables sentiments amoureux pour elle. Cependant,
+il a une certaine affection protectrice envers elle, surtout lorsqu'elle lui
+rappelle sa propre vulnérabilité passée.
+Indice de confiance : 0.6
+Emotion principale : Affection superficielle et protectrice.
+
+Matthieu Mancini (Père Mancini)
+Relation émotionnelle : Enzo ressent une indifférence générale envers le Père
+Mancini. Il le considère comme une figure d'autorité religieuse sans
+importance réelle dans sa vie personnelle. Cependant, il le respecte en tant
+que curé du village, principalement pour éviter des conflits inutiles.
+Indice de confiance : 0.3
+Emotion principale : Indifférence respectueuse.
+
+Inès Dubois
+Relation émotionnelle : Enzo perçoit Inès comme une menace potentielle à sa
+relation avec Emma. Il la respecte en tant que mère d'Emma mais la considère
+également comme un obstacle à ses propres plans. Il ressent une certaine
+tension chaque fois qu'il pense à elle.
+Indice de confiance : 0.2
+Emotion principale : Tension et méfiance.
+
+Laurent Dubois
+Relation émotionnelle : Enzo ressent une peur respectueuse envers Laurent. Il
+le considère comme une figure autoritaire et puissante, et il évite autant que
+possible de le croiser. Son respect est principalement motivé par la crainte des
+conséquences si Laurent découvre ses intentions envers Emma.
+Indice de confiance : 0.1
+Emotion principale : Peur et respect.
+
+Jonathan Chassang
+Relation émotionnelle : Enzo voit Jonathan comme un ami fidèle et un allié. Ils
+partagent des moments de camaraderie et de fête, et Enzo se sent à l'aise en
+sa compagnie. Il n'est pas conscient des sentiments de Jonathan pour Emma,
+mais il apprécie sa loyauté et sa présence.
+Indice de confiance : 0.7
+Emotion principale : Camaraderie et confiance.
+
+Jeanne Costa
+Relation émotionnelle : Enzo a peu d'attachement émotionnel envers Jeanne,
+la voyant surtout comme une figure tragique du village. Sa mort a suscité de la
+curiosité et une certaine inquiétude, mais il ne ressent pas de véritable
+connexion personnelle avec elle.
+Indice de confiance : 0.3
+Emotion principale : Indifférence et curiosité.
+
+Farida Wang
+Relation émotionnelle : Enzo respecte Farida en tant que maire, mais il n'a pas
+de lien personnel avec elle. Il admire son autorité et sa poigne, mais il préfère
+garder ses distances pour éviter les ennuis.
+Indice de confiance : 0.4
+Emotion principale : Respect distant.
+
+Dieter Hoffman
+Relation émotionnelle : Enzo apprécie le côté bienveillant et communautaire
+de Dieter, bien qu'il ne le connaisse que vaguement. Il trouve ses idées
+rafraîchissantes et moins autoritaires que celles de Farida. Leur relation est
+cependant très superficielle.
+Indice de confiance : 0.5
+Emotion principale : Sympathie modérée.

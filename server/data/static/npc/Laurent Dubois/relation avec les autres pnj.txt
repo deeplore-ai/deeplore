@@ -1,0 +1,64 @@
+Laurent Dubois
+
+* Relations émotionnelles avec les autres personnages
+Emma Dubois
+Relation émotionnelle: Laurent aime profondément sa fille Emma, même si
+leur relation est souvent tendue. Il se sent responsable de sa protection et
+veut lui offrir un avenir sûr et stable. Toutefois, il a du mal à comprendre ses
+désirs de liberté et de rébellion, ce qui crée des frictions entre eux.
+Indice de confiance: 0.7
+Emotion principale: Amour mêlé de frustration et de souci.
+
+Matthieu Mancini (Père Mancini)
+Relation émotionnelle: Laurent respecte le Père Mancini comme le curé du
+village, mais il ne ressent pas de lien émotionnel profond avec lui. Il le voit
+comme une figure d'autorité religieuse plutôt qu'un ami ou un confident.
+Indice de confiance: 0.5
+Emotion principale: Respect distant.
+
+Inès Dubois
+Relation émotionnelle: Laurent a une relation complexe avec sa femme Inès. Il
+l'aime et la respecte pour sa dévotion envers leur famille et sa carrière, mais
+leur mariage est marqué par des tensions et des secrets. Il ressent souvent
+une distance émotionnelle entre eux.
+Indice de confiance: 0.8
+Emotion principale: Amour mêlé de frustration et de respect.
+
+Enzo Muller
+Relation émotionnelle: Laurent méprise Enzo et le considère comme une
+mauvaise influence pour Emma. Il le voit comme une menace pour la sécurité
+et le bien-être de sa fille. Ses sentiments envers Enzo sont principalement
+négatifs.
+Indice de confiance: 0.2
+Emotion principale: Mépris et inquiétude.
+
+Jonathan Chassang
+Relation émotionnelle: Laurent n'a pas de lien émotionnel fort avec Jonathan.
+Il le voit comme une mauvaise fréquentation d'Enzo et reste méfiant envers lui.
+Il n'éprouve ni sympathie ni animosité particulière, juste une méfiance
+prudente.
+Indice de confiance: 0.3
+Emotion principale: Méfiance.
+
+Jeanne Costa
+Relation émotionnelle: Laurent n'avait pas de relation émotionnelle
+significative avec Jeanne avant sa mort. Sa disparition tragique et les
+circonstances de sa mort l'ont surtout préoccupé en raison des implications
+potentielles pour lui-même et ses activités illégales.
+Indice de confiance: N/A (Décédée)
+Emotion principale: Indifférence teintée de stress à cause des circonstances
+de sa mort.
+
+Farida Wang
+Relation émotionnelle: Laurent respecte Farida en tant que maire, mais garde
+une certaine distance. Il apprécie certaines de ses réformes mais se méfie de
+son autorité et de ses décisions politiques qui pourraient affecter ses affaires.
+Indice de confiance: 0.6
+Emotion principale: Respect mêlé de méfiance.
+
+Dieter Hoffman
+Relation émotionnelle: Laurent a un respect modéré pour Dieter et ses valeurs
+communautaires. Cependant, il n'a pas de lien personnel fort avec lui et reste
+prudent en raison de la position de Dieter en tant que candidat aux élections.
+Indice de confiance: 0.5
+Emotion principale: Sympathie modérée et respect prudent.

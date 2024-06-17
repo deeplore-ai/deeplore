@@ -1,0 +1,6 @@
+*ACTIONS
+- L'action déplacer (Move) est de se rendre jusqu'à quelqu'un. Toutes les actions peuvent se produire suite à celle-ci.
+- L'action parler (Speak) est de parler à quelqu'un. Toutes les actions peuvent se produire suite à celle-ci.
+- L'action d'écouter est de rester à sa position pour écouter quelqu'un parler. Toutes les actions peuvent se produire suite à celle-ci.
+- L'action de s'arrêter (Stop) est de rester à sa position. Une fois stop, l'action ne peut plus se produire.
+- L'action de continuer sont action (ContinueAction) est de continuer à suivre son objectif. Peut se produire seulement si  une action est en cours

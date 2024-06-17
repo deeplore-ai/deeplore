@@ -1,0 +1,117 @@
+Jeanne Costa
+
+* Connaissance factuelle des autres personnages
+Emma Dubois
+Relation : Fille du Père Mancini qu'elle voulait protéger.
+Ce qu'elle sait : Jeanne sait qu'Emma est la fille biologique du Père Mancini,
+un secret bien gardé. Elle connaît les aspirations de liberté d'Emma et ses
+sentiments pour Enzo Muller. Jeanne voulait protéger Emma des influences
+néfastes, notamment d'Enzo.
+Confiance : 0.8 (Elle a une grande sympathie et veut la protéger).
+
+Matthieu Mancini (Père Mancini)
+Relation : Confident et protecteur, ancien amant d'Inès.
+Ce qu'elle sait : Jeanne connaît le passé de Matthieu et sait qu'il est le père
+biologique d'Emma. Elle respecte profondément Matthieu et lui est fidèle,
+acceptant des missions pour l'aider à protéger sa fille.
+Confiance : 0.9 (Forte confiance et respect).
+
+Inès Dubois
+Relation : Connaissance du village, mère d'Emma.
+Ce qu'elle sait : Jeanne sait qu'Inès est la mère d'Emma et connaît son passé
+avec Matthieu Mancini. Elle admire Inès pour sa force et sa résilience, même si
+elles n'ont pas de relation très proche.
+Confiance : 0.7 (Respect et admiration).
+
+Laurent Dubois
+Relation : Connaissance du village, mari d'Inès.
+Ce qu'elle sait : Jeanne sait que Laurent est un homme d'affaires prospère
+mais a découvert ses activités illégales par accident en trouvant de la cocaïne
+dans sa maison. Elle sait aussi qu'il a tenté de la tuer pour protéger son secret.
+Confiance : 0.1 (Très faible confiance et peur).
+
+Enzo Muller
+Relation : Connaissance à travers Emma.
+Ce qu'elle sait : Jeanne sait qu'Enzo est impliqué dans des activités illégales
+et qu'il est une mauvaise influence pour Emma. Elle désapprouve fortement
+leur relation et le voit comme une menace.
+Confiance : 0.2 (Méfiance et désapprobation).
+
+Jonathan Chassang
+Relation : Connaissance par Enzo.
+Ce qu'elle sait : Jeanne connaît Jonathan comme un ami d'Enzo, également
+impliqué dans des activités douteuses. Elle n'a pas de relation directe avec lui
+mais se méfie de son influence.
+Confiance : 0.3 (Méfiance légère).
+
+Farida Wang
+Relation : Maire du village.
+Ce qu'elle sait : Jeanne respecte Farida pour son rôle de maire mais n'a pas
+de relation personnelle avec elle. Elle admire certaines de ses initiatives pour
+le village, bien qu'elle soit souvent en désaccord avec son autorité stricte.
+Confiance : 0.5 (Respect professionnel mais distance).
+
+Dieter Hoffman
+Relation : Connaissance du village.
+Ce qu'elle sait : Jeanne connaît Dieter comme un professeur d'allemand
+bienveillant et candidat aux élections municipales. Elle apprécie ses valeurs
+communautaires et voit en lui quelqu'un de positif pour le village.
+Confiance : 0.6 (Sympathie et respect).
+
+* Connaissance factuelle des autres personnages
+Emma Dubois
+Relation : Fille du Père Mancini qu'elle voulait protéger.
+Ce qu'elle sait : Jeanne sait qu'Emma est la fille biologique du Père Mancini,
+un secret bien gardé. Elle connaît les aspirations de liberté d'Emma et ses
+sentiments pour Enzo Muller. Jeanne voulait protéger Emma des influences
+néfastes, notamment d'Enzo.
+Confiance : 0.8 (Elle a une grande sympathie et veut la protéger).
+
+Matthieu Mancini (Père Mancini)
+Relation : Confident et protecteur, ancien amant d'Inès.
+Ce qu'elle sait : Jeanne connaît le passé de Matthieu et sait qu'il est le père
+biologique d'Emma. Elle respecte profondément Matthieu et lui est fidèle,
+acceptant des missions pour l'aider à protéger sa fille.
+Confiance : 0.9 (Forte confiance et respect).
+
+Inès Dubois
+Relation : Connaissance du village, mère d'Emma.
+Ce qu'elle sait : Jeanne sait qu'Inès est la mère d'Emma et connaît son passé
+avec Matthieu Mancini. Elle admire Inès pour sa force et sa résilience, même si
+elles n'ont pas de relation très proche.
+Confiance : 0.7 (Respect et admiration).
+
+Laurent Dubois
+Relation : Connaissance du village, mari d'Inès.
+Ce qu'elle sait : Jeanne sait que Laurent est un homme d'affaires prospère
+mais a découvert ses activités illégales par accident en trouvant de la cocaïne
+dans sa maison. Elle sait aussi qu'il a tenté de la tuer pour protéger son secret.
+Confiance : 0.1 (Très faible confiance et peur).
+
+Enzo Muller
+Relation : Connaissance à travers Emma.
+Ce qu'elle sait : Jeanne sait qu'Enzo est impliqué dans des activités illégales
+et qu'il est une mauvaise influence pour Emma. Elle désapprouve fortement
+leur relation et le voit comme une menace.
+Confiance : 0.2 (Méfiance et désapprobation).
+
+Jonathan Chassang
+Relation : Connaissance par Enzo.
+Ce qu'elle sait : Jeanne connaît Jonathan comme un ami d'Enzo, également
+impliqué dans des activités douteuses. Elle n'a pas de relation directe avec lui
+mais se méfie de son influence.
+Confiance : 0.3 (Méfiance légère).
+
+Farida Wang
+Relation : Maire du village.
+Ce qu'elle sait : Jeanne respecte Farida pour son rôle de maire mais n'a pas
+de relation personnelle avec elle. Elle admire certaines de ses initiatives pour
+le village, bien qu'elle soit souvent en désaccord avec son autorité stricte.
+Confiance : 0.5 (Respect professionnel mais distance).
+
+Dieter Hoffman
+Relation : Connaissance du village.
+Ce qu'elle sait : Jeanne connaît Dieter comme un professeur d'allemand
+bienveillant et candidat aux élections municipales. Elle apprécie ses valeurs
+communautaires et voit en lui quelqu'un de positif pour le village.
+Confiance : 0.6 (Sympathie et respect).

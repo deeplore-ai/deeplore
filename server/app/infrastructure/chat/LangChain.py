@@ -31,7 +31,8 @@ class LangChain(BaseChat):
     
     def chat(self, prompt: str):
         promptTemplate = ChatPromptTemplate.from_template("""
-            <context> {context} </context> \n {input}"""
+            <context> {context} </context> \n 
+            {input}"""
         )
 
         model = LangchainFactory().getModel()

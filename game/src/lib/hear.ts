@@ -10,7 +10,7 @@ interface DeepLoreCharacter {
   lastname: string;
 }
 
-export function hear({
+export function speak({
   listener,
   speaker,
   text,
@@ -20,7 +20,7 @@ export function hear({
   speaker: Character;
   text: string;
   shouldAnswer?: boolean;
-}): AsyncGenerator<string, void, unknown> {
+}): AsyncGenerator<string, void, unknown> | Promise<string>[] {
   if (settings.useOpenAiSdk) {
     return openai.talk({
       listener: listener.name,
@@ -29,8 +29,7 @@ export function hear({
       shouldAnswer,
     });
   } else {
-    return callDeepLoreApi({
-      content: text,
+    const speech = {content: text,
       target: {
         session_id: settings.gameId,
         firstname: listener.firstName,
@@ -43,35 +42,76 @@ export function hear({
       },
       distance: "0",
       noAnswerExpected: !shouldAnswer,
-    });
+    }
+    return [deepLoreApi.speak(speech)];
   }
 }
 
-async function* callDeepLoreApi(input: {
+export async function hear({
+  listener,
+  speaker,
+  text,
+  shouldAnswer = true,
+}: {
+  listener: Character;
+  speaker: Character;
+  text: string;
+  shouldAnswer?: boolean;
+}) {
+  if (settings.useOpenAiSdk) {
+    return;
+  }
+  const speech = {content: text,
+    target: {
+      session_id: settings.gameId,
+      firstname: listener.firstName,
+      lastname: listener.lastName,
+    },
+    speaker: {
+      session_id: settings.gameId,
+      firstname: speaker.firstName,
+      lastname: speaker.lastName,
+    },
+    distance: "0",
+    noAnswerExpected: !shouldAnswer,
+  }
+  await deepLoreApi.hear(speech);
+}
+
+interface Speech {
   content: string;
   target: DeepLoreCharacter;
   speaker: DeepLoreCharacter;
   distance: string;
   noAnswerExpected: boolean;
-}) {
-  const response = await fetch(
-    `${URL}/hear`,
-    {
-      method: "POST",
-      // no cors
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(input),
-    }
-  );
-
-  const data = (await response.json()) as {
-    NPC: CharacterName;
-    Speaker: CharacterName;
-    Speech: string;
-  };
-
-  yield data.Speech;
 }
+
+
+class DeepLoreApi {
+  callApi(uri: string, payload: object) {
+    return fetch(`${URL}/${uri}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(payload),
+    }).then((response) => response.json());
+  }
+
+  async hear(speech: Speech) {
+    await this.callApi("hear", speech);
+  }
+
+  async speak(speech: Speech) {
+    const response = await this.callApi("speak", speech) as {
+      NPC: CharacterName;
+      Speaker: CharacterName;
+      Speech: string;
+    };
+
+    return response.Speech;
+  }
+}
+
+export const deepLoreApi = new DeepLoreApi();

@@ -1,0 +1,34 @@
+Laurent Dubois
+
+* Tonalité et manière de parler
+Mécaniques de langage :
+Ton assertif et confiant : Laurent utilise souvent des phrases comme "C'est
+comme ça qu'on fait des affaires" et "Je sais ce que je fais" pour montrer sa
+confiance et son assurance.
+Langage dynamique et énergique : Il parle rapidement et avec énergie,
+utilisant des expressions comme "Allez, on y va !" et "Pas de temps à perdre !"
+pour refléter son dynamisme.
+Usage fréquent de jargon entrepreneurial : Laurent inclut souvent des termes
+liés au monde des affaires, par exemple "ROI" pour "Retour sur
+investissement", "benchmark" pour "comparatif", et "networking" pour
+"réseautage".
+Phrases motivantes et inspirantes : Il aime motiver les autres avec des
+phrases comme "Rien n'est impossible" et "On vise le sommet" pour
+encourager et inspirer son entourage.
+Références à des succès personnels : Il n'hésite pas à parler de ses succès
+passés, disant des choses comme "Quand j'ai lancé ma première entreprise..."
+et "Regardez où nous en sommes aujourd'hui" pour rappeler ses
+accomplissements.
+Tons d'agacement et d'impatience : Laurent montre souvent son agacement
+avec des phrases comme "C'est pas sorcier !" et "Faut se bouger !" quand il
+est confronté à des obstacles ou des retards.
+* Connaissance factuelle des autres personnages
+Emma Dubois
+Relation : il pense que c’est sa Fille officielle.
+Ce qu'il sait : Laurent connaît bien sa fille Emma et est conscient de son désir
+de liberté et de sa relation avec Enzo Muller. Il n'est pas au courant de ses
+intentions de partir en week-end avec Enzo, mais il pressent qu'elle lui cache
+des choses. Il ignore complètement qu'elle est en réalité la fille biologique du
+Père Mancini.
+Confiance : 0.7 (Il aime sa fille mais se méfie de ses fréquentations et de son
+désir de rébellion).

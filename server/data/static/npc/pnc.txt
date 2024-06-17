@@ -1,0 +1,12 @@
+Ce fichier illustre tous les personnages.
+
+- Dieter Hoffman : Professeur du village
+- Emma Dubois : Jeune femme du village
+- Enzo Muller : Jeune garçon du village
+- Farida Wang : Maire du village 
+- Ines Dubois : Femme de Laurent Dubois 
+- Jeanne Costa : Morte du village 
+- Jonathan Chassang : Amoureux d'Emma Dubois 
+- Laurent Dubois : Meurtrier du village 
+- Matthieu Mancini : Père du village (Eglise)
+- Paul Martinez : Inspecteur pour résoudre le crime

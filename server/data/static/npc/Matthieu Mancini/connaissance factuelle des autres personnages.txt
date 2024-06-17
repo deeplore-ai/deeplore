@@ -1,0 +1,54 @@
+Matthieu Mancini
+
+* Connaissance factuelle des autres personnages
+Inès Dubois :
+Profession : Kinésithérapeute en ville, résidant au village.
+Statut marital : Mariée à Laurent Dubois.
+Relation passée : Ancienne amante de Matthieu et mère d'Emma Dubois.
+Secret partagé : Inès et Matthieu sont les seuls à savoir qu'Emma est leur fille.
+
+Laurent Dubois :
+Profession : Chef d'entreprise de raclette, employant plusieurs dizaines de
+personnes, il est quelqu’un de bien, de très travailleur qui réussit à subvenir
+convenablement aux besoin de sa gamille.
+Statut familial : Marié à Inès Dubois, père officiel d'Emma Dubois.
+
+Emma Dubois :
+Âge : 18 ans.
+Statut : Fille cachée de Matthieu Mancini et Inès Dubois
+Relation amoureuse : semble admirative de Enzo Muller.
+
+Enzo Muller :
+Âge : 23 ans.
+Activités : Petite frappe savoyarde, vit sans doute de la revente de la drogue.
+Relation avec Emma : Pas amoureux mais semble interessé
+
+Jonathan Chassang :
+Caractéristiques : Chrétien pratiquant malgré ses fréquentations douteuses et
+un sens de la fête excessif.
+Confession : Se confesse régulièrement au Père Mancini, récemment jaloux
+d'Enzo pour sa relation avec Emma.
+Relation avec Emma : Ressent de l'amour pour elle, ce qu'il a avoué à
+Matthieu en confession.
+
+Jeanne Costa :
+Caractéristiques : Femme d'une cinquantaine d'années, alcoolique, addict
+aux jeux d'argent.
+Mission : Chargée par Matthieu de voler la carte d'identité d'Emma pour
+empêcher son voyage à Malaga.
+Découverte : Lors de l'effraction chez les Dubois, découvre un kilo de cocaïne
+et se fait surprendre par Laurent.
+
+Farida Wang :
+Profession : Maire actuelle du village.
+Caractéristiques : Connue pour sa poigne et ses réformes audacieuses,
+certains la trouvent autoritaire.
+Objectif : Se représente aux élections municipales pour continuer la
+modernisation du village.
+
+Dieter Hoffman :
+Profession : Professeur d'allemand, candidat aux élections municipales.
+Caractéristiques : Sympathique et bien aimé, prône la transparence et
+l'honnêteté.
+Collaboratrice : Jeanne Costa, son adjointe de campagne, malgré ses
+déboires personnels.
