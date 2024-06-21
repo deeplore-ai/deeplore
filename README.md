@@ -38,3 +38,7 @@ cd deeplore/game
 npm install 
 npm run dev
 ```
+
+## Remerciements
+
+Merci à notre sponsor principal, **Google** et **Google Cloud Platform** qui nous permet de développer et de travailler autour des modèles de langages.
